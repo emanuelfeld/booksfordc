@@ -24,18 +24,19 @@ pubyears = ["2015","2014"]
 
 try:
     scraperwiki.sql.execute('DROP TABLE `current`')                            
-    current = {'title' : "",
-                'url' : "",
-                'ils' : "",
-                'pub' : "",
-                'format' : "",
-                'audience' : "",
-                'pubDate' : ""
-                }
-    scraperwiki.sql.save(unique_keys=['ils'],data=current,table_name="current")
 except:
     print 'No current table to drop'
-    
+
+current = {'title' : "",
+            'url' : "",
+            'ils' : "",
+            'pub' : "",
+            'format' : "",
+            'audience' : "",
+            'pubDate' : ""
+            }
+scraperwiki.sql.save(unique_keys=['ils'],data=current,table_name="current")
+  
 i=0
 for f in formats:
     for a in audiences:
