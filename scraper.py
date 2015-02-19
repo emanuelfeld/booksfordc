@@ -9,15 +9,6 @@ except ImportError: import json
 import urllib2
 from datetime import datetime
 
-#existing_records = urllib2.urlopen('https://free-ec2.scraperwiki.com/r2frpmx/sqtharyhyev1kwe/sql/?q=select%20%0A%09format%2C%0A%09url%2C%0A%09title%2C%0A%20%20%20%20ils%0Afrom%20swdata%0A--%20where%20title%20%3E%20%0Aorder%20by%20ils%0A').read()
-#existing_records = json.loads(existing_records)
-
-#ex_list=[]
-#for x in existing_records:
-#    ex_list.append(x['ils'])
-#print ex_list
-
-
 def clean_xml(x):
     x = re.sub(r'<link rel="self" href="/client" />',r'<link href="http://catalog.dclibrary.orghttps//catalog.dclibrary.org/client/rss/hitlist/dcpl/"/>',x)
     x = re.sub(r'rel="alternate" type="html" href="https://catalog.dclibrary.org/client/en_US/dcpl/search/detailnonmodal\?d=ent%3A%2F%2FSD_ILS%2F0%2FSD_ILS%3A(\d+)%7EILS%7E0%7E451243&amp;ps=1000" title.*/>',r'href="https://catalog.dclibrary.org/client/en_US/dcpl/search/detailnonmodal/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:\1"/>',x)
@@ -51,6 +42,5 @@ for f in formats:
                         'audience' : re.sub(r'.*09',r'',str(a)),
                         'date' : datetime.now()
                         }
-                    #if not data['ils'] in ex_list:
                     scraperwiki.sql.save(unique_keys=['ils'], data=data)
         
