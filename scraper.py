@@ -30,17 +30,20 @@ for f in formats:
             for l in libraries:
                 print i
                 i=i+1
-                html = scraperwiki.scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
-                root = lxml.html.fromstring(clean_xml(html))
-                for entry in root.cssselect('feed entry'):
-                    data = {
-                        'title' : entry[0].text_content(),
-                        'url' : entry.xpath('child::link/@href')[0],
-                        'ils' : entry.xpath('child::ils/text()')[0],
-                        'pub' : str(p),
-                        'format' : re.sub(r'.*09',r'',str(f)),
-                        'audience' : re.sub(r'.*09',r'',str(a)),
-                        'date' : datetime.now()
-                        }
-                    scraperwiki.sql.save(unique_keys=['ils'], data=data)
+                try:
+                    html = scraperwiki.scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
+                    root = lxml.html.fromstring(clean_xml(html))
+                    for entry in root.cssselect('feed entry'):
+                        data = {
+                            'title' : entry[0].text_content(),
+                            'url' : entry.xpath('child::link/@href')[0],
+                            'ils' : entry.xpath('child::ils/text()')[0],
+                            'pub' : str(p),
+                            'format' : re.sub(r'.*09',r'',str(f)),
+                            'audience' : re.sub(r'.*09',r'',str(a)),
+                            'date' : datetime.now()
+                            }
+                        scraperwiki.sql.save(unique_keys=['ils'], data=data)
+                except:
+                    print "Could not scrape"
         
