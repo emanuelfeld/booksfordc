@@ -44,30 +44,27 @@ for f in formats:
                 print i
                 i=i+1
                 print l+" "+p+" "+a
-                try:
-                    html = scraperwiki.scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
-                    root = lxml.html.fromstring(clean_xml(html))
-                    j=0
-                    k=0
-                    for entry in root.cssselect('feed entry'):
-                        current = {
-                            'title' : entry[0].text_content(),
-                            'url' : entry.xpath('child::link/@href')[0],
-                            'ils' : entry.xpath('child::ils/text()')[0],
-                            'pub' : str(p),
-                            'format' : re.sub(r'.*09',r'',str(f)),
-                            'audience' : re.sub(r'.*09',r'',str(a)),
-                            'pubDate' : str(datetime.now())
-                            }
-                        if len(scraperwiki.sql.select("* from current where ils=(?)", (current['ils'])))==0:
-                            k=k+1
-                            scraperwiki.sql.save(unique_keys=['ils'], data=current,table_name="current")
-                            #scraperwiki.sql.save(unique_keys=['ils'], data={'ils' : current['ils'], 'scrape_date' : current['pubDate']},table_name="store")
-                        else:
-                            j=j+1
-                    print str(k)+" added\n"+str(j)+" already in catalog\n"
-                except:
-                    print "Could not scrape\n"
+                html = scraperwiki.scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
+                root = lxml.html.fromstring(clean_xml(html))
+                j=0
+                k=0
+                for entry in root.cssselect('feed entry'):
+                    current = {
+                        'title' : entry[0].text_content(),
+                        'url' : entry.xpath('child::link/@href')[0],
+                        'ils' : entry.xpath('child::ils/text()')[0],
+                        'pub' : str(p),
+                        'format' : re.sub(r'.*09',r'',str(f)),
+                        'audience' : re.sub(r'.*09',r'',str(a)),
+                        'pubDate' : str(datetime.now())
+                        }
+                    if len(scraperwiki.sql.select("* from current where ils=(?)", (current['ils'])))==0:
+                        k=k+1
+                        scraperwiki.sql.save(unique_keys=['ils'], data=current,table_name="current")
+                        #scraperwiki.sql.save(unique_keys=['ils'], data={'ils' : current['ils'], 'scrape_date' : current['pubDate']},table_name="store")
+                    else:
+                        j=j+1
+                print str(k)+" added\n"+str(j)+" already in catalog\n"
                 time.sleep(5)
 
 
