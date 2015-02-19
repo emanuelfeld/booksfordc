@@ -57,4 +57,5 @@ for f in formats:
                         'pubDate' : str(datetime.now())
                         }
                     print data['url']
+                    scraperwiki.sql.save(unique_keys=['ils'], data=data)
 
