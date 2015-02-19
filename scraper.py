@@ -18,23 +18,26 @@ def clean_xml(x):
 
 
 formats = ["BOOK%09Books"]
-libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library","BENNING%09Dorothy+I.+Height%2FBenning+Neighborhood+Library", "ANACOSTIA%09Anacostia+Neighborhood+Library", "CAP-VIEW%09Capitol+View+Neighborhood+Library", "CHEVYCHASE%09Chevy+Chase+Neighborhood+Library", "CLEVE-PARK%09Cleveland+Park+Neighborhood+Library", "DEANWOOD%09Deanwood+Neighborhood+Library", "FR-GREGORY%09Francis+A.+Gregory+Neighborhood+Library", "SHEPARK-JT%09Juanita+E.+Thornton+%2F+Shepherd+Park+Neighborhood+Library", "LAMD-RIGGS%09Lamond-Riggs+Neighborhood+Library", "ML-KING%09Martin+Luther+King+Jr.+Memorial+Library", "MTPLEASANT%09Mt.+Pleasant+Neighborhood+Library", "NORTHEAST%09Northeast+Neighborhood+Library", "NORTHWEST1%09Northwest+One+Neighborhood+Library", "PALISADES%09Palisades+Neighborhood+Library", "PARKLANDS%09Parklands-Turner+Neighborhood+Library", "PETWORTH%09Petworth+Neighborhood+Library", "ROSEDALE%09Rosedale+Neighborhood+Library", "SCHOOLPBEC%09School+Pilot+Charter+BEC", "SOUTHEAST%09Southeast+Neighborhood+Library", "SOUTHWEST%09Southwest+Neighborhood+Library", "TAKOMA-PK%09Takoma+Park+Neighborhood+Library", "TENLEY%09Tenley-Friendship+Neighborhood+Library", "WT-DANIEL%09Watha+T.+Daniel%2FShaw++Neighborhood+Library", "WESTEND%09West+End+Neighborhood+Library", "BELLEVUE%09William+O.+Lockridge%2FBellevue+Neighborhood+Library", "WOODRIDGE%09Woodridge+Neighborhood+Library"]
-audiences = ["ADULT%09Adults", "JUVENILE%09Children", "YOUNGADULT%09Teens"]
-pubyears = ["2015","2014"]
+libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library"]
+#,"BENNING%09Dorothy+I.+Height%2FBenning+Neighborhood+Library", "ANACOSTIA%09Anacostia+Neighborhood+Library", "CAP-VIEW%09Capitol+View+Neighborhood+Library", "CHEVYCHASE%09Chevy+Chase+Neighborhood+Library", "CLEVE-PARK%09Cleveland+Park+Neighborhood+Library", "DEANWOOD%09Deanwood+Neighborhood+Library", "FR-GREGORY%09Francis+A.+Gregory+Neighborhood+Library", "SHEPARK-JT%09Juanita+E.+Thornton+%2F+Shepherd+Park+Neighborhood+Library", "LAMD-RIGGS%09Lamond-Riggs+Neighborhood+Library", "ML-KING%09Martin+Luther+King+Jr.+Memorial+Library", "MTPLEASANT%09Mt.+Pleasant+Neighborhood+Library", "NORTHEAST%09Northeast+Neighborhood+Library", "NORTHWEST1%09Northwest+One+Neighborhood+Library", "PALISADES%09Palisades+Neighborhood+Library", "PARKLANDS%09Parklands-Turner+Neighborhood+Library", "PETWORTH%09Petworth+Neighborhood+Library", "ROSEDALE%09Rosedale+Neighborhood+Library", "SCHOOLPBEC%09School+Pilot+Charter+BEC", "SOUTHEAST%09Southeast+Neighborhood+Library", "SOUTHWEST%09Southwest+Neighborhood+Library", "TAKOMA-PK%09Takoma+Park+Neighborhood+Library", "TENLEY%09Tenley-Friendship+Neighborhood+Library", "WT-DANIEL%09Watha+T.+Daniel%2FShaw++Neighborhood+Library", "WESTEND%09West+End+Neighborhood+Library", "BELLEVUE%09William+O.+Lockridge%2FBellevue+Neighborhood+Library", "WOODRIDGE%09Woodridge+Neighborhood+Library"]
+audiences = ["ADULT%09Adults"]
+#, "JUVENILE%09Children", "YOUNGADULT%09Teens"]
+pubyears = ["2015"]
+#,"2014"]
 
-try:
-    #scraperwiki.sql.execute('DROP TABLE `current`')                            
-    current = {'title' : "",
-                'url' : "",
-                'ils' : "",
-                'pub' : "",
-                'format' : "",
-                'audience' : "",
-                'pubDate' : ""
-                }
-    scraperwiki.sql.save(unique_keys=['ils'],data=current,table_name="current")
-except:
-    print 'No current table to drop'
+# try:
+#     #scraperwiki.sql.execute('DROP TABLE `current`')                            
+#     current = {'title' : "",
+#                 'url' : "",
+#                 'ils' : "",
+#                 'pub' : "",
+#                 'format' : "",
+#                 'audience' : "",
+#                 'pubDate' : ""
+#                 }
+#     scraperwiki.sql.save(unique_keys=['ils'],data=current,table_name="current")
+# except:
+#     print 'No current table to drop'
     
 i=0
 for f in formats:
@@ -58,7 +61,7 @@ for f in formats:
                         'audience' : re.sub(r'.*09',r'',str(a)),
                         'pubDate' : str(datetime.now())
                         }
-                    if len(scraperwiki.sql.select("* from current where ils=(?)", (current['ils'])))==0:
+                    if len(scraperwiki.sql.select("ils from current where ils=(?)", (current['ils'])))==0:
                         k=k+1
                         scraperwiki.sql.save(unique_keys=['ils'], data=current,table_name="current")
                         #scraperwiki.sql.save(unique_keys=['ils'], data={'ils' : current['ils'], 'scrape_date' : current['pubDate']},table_name="store")
