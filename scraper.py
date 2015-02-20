@@ -22,11 +22,11 @@ def clean_xml(x):
     return x
 
 def check_store(y):
-    try:
-        print len(scraperwiki.sql.select("* from store where ils=(?)", (y['ils'])))
-        return len(scraperwiki.sql.select("* from store where ils=(?)", (y['ils'])))
-    except:
-        return 0
+    #try:
+    print len(scraperwiki.sql.select("* from store where ils=(?)", (y['ils'])))
+    return len(scraperwiki.sql.select("* from store where ils=(?)", (y['ils'])))
+    #except:
+    #    return 0
     
 formats = ["BOOK%09Books"]
 libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library"]
