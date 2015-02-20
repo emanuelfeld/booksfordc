@@ -23,7 +23,6 @@ def clean_xml(x):
 
 def check_store(y):
     try:
-        print len(scraperwiki.sql.select("* from store where ils=(?)", (y['ils'],)))
         return len(scraperwiki.sql.select("* from store where ils=(?)", (y['ils'],)))
     except:
         return 0
