@@ -37,37 +37,37 @@ pubyears = ["2015"]
 
 scraperwiki.sql.execute("drop table if exists current")
 
-# i=0
-# for f in formats:
-#     for a in audiences:
-#         for p in pubyears:
-#             for l in libraries:
-#                 print i
-#                 i=i+1
-#                 print l+" "+p+" "+a
-#                 try:
-#                     html = scraperwiki.scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
-#                     root = lxml.html.fromstring(clean_xml(html))
-#                     j,k=0,0
-#                     for entry in root.cssselect('feed entry'):
-#                         current = {
-#                             'title' : str(entry[0].text_content()),
-#                             'url' : entry.xpath('child::link/@href')[0],
-#                             'ils' : int(entry.xpath('child::ils/text()')[0]),
-#                             'pub' : int(p),
-#                             'format' : re.sub(r'.*09',r'',str(f)),
-#                             'audience' : re.sub(r'.*09',r'',str(a)),
-#                             'pubDate' : str(datetime.now()),
-#                             'author' : entry[6].text_content()
-#                             }
-#                         if check_store(current)==0:
-#                             j=j+1
-#                             print current['title']
-#                             scraperwiki.sql.save(unique_keys=['ils'], data=current,table_name="current")
-#                             scraperwiki.sql.save(unique_keys=['ils'], data={'ils' : current['ils'], 'scrape_date' : current['pubDate']},table_name="store")
-#                         else:
-#                             k=k+1
-#                     print str(j)+" new items\n"+str(k)+" already added\n"
-#                 except:
-#                     print "Could not scrape\n"
-#                 time.sleep(5)
+i=0
+for f in formats:
+    for a in audiences:
+        for p in pubyears:
+            for l in libraries:
+                print i
+                i=i+1
+                print l+" "+p+" "+a
+                try:
+                    html = scraperwiki.scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
+                    root = lxml.html.fromstring(clean_xml(html))
+                    j,k=0,0
+                    for entry in root.cssselect('feed entry'):
+                        current = {
+                            'title' : str(entry[0].text_content()),
+                            'url' : entry.xpath('child::link/@href')[0],
+                            'ils' : int(entry.xpath('child::ils/text()')[0]),
+                            'pub' : int(p),
+                            'format' : re.sub(r'.*09',r'',str(f)),
+                            'audience' : re.sub(r'.*09',r'',str(a)),
+                            'pubDate' : str(datetime.now()),
+                            'author' : entry[6].text_content()
+                            }
+                        if check_store(current)==0:
+                            j=j+1
+                            print current['title']
+                            scraperwiki.sql.save(unique_keys=['ils'], data=current,table_name="current")
+                            scraperwiki.sql.save(unique_keys=['ils'], data={'ils' : current['ils'], 'scrape_date' : current['pubDate']},table_name="store")
+                        else:
+                            k=k+1
+                    print str(j)+" new items\n"+str(k)+" already added\n"
+                except:
+                    print "Could not scrape\n"
+                time.sleep(5)
