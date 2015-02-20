@@ -53,7 +53,7 @@ for f in formats:
                         current = {
                             'title' : str(entry[0].text_content()),
                             'url' : entry.xpath('child::link/@href')[0],
-                            'ils' : int(entry.xpath('child::ils/text()')[0]),
+                            'ils' : entry.xpath('child::ils/text()')[0],
                             'pub' : int(p),
                             'format' : re.sub(r'.*09',r'',str(f)),
                             'audience' : re.sub(r'.*09',r'',str(a)),
