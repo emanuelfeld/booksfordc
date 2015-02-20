@@ -68,7 +68,7 @@ for f in formats:
                             scraperwiki.sql.save(unique_keys=['ils'], data={'ils' : current['ils'], 'scrape_date' : current['pubDate']},table_name="store")
                         else:
                             k=k+1
-                print str(j)+" new items\n"+str(k)+" already added\n"
+                    print str(j)+" new items\n"+str(k)+" already added\n"
                 except:
                     print "Could not scrape\n"
                 time.sleep(5)
