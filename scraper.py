@@ -27,7 +27,7 @@ def check_store(y):
     except:
         return 0
 
-def scrape(y)                
+def scrape(y):                
     try:
         html = scraperwiki.scrape(y)
         root = lxml.html.fromstring(clean_xml(html))
