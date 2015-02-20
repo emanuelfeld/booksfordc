@@ -37,7 +37,10 @@ pubyears = ["2015"]
 #,"2014","2013","2012"]
 
 #scraperwiki.sql.execute("drop table if exists current")
-scraperwiki.sql.execute("delete from current where pub>0")  
+try:
+    scraperwiki.sql.execute("delete from current where pub>0")  
+except:
+    "No current table\n"
 
 i=0
 for f in formats:
