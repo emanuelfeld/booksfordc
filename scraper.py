@@ -61,7 +61,6 @@ formats = ["BOOK%09Books"]
 audiences = ["ADULT%09Adults", "JUVENILE%09Children", "YOUNGADULT%09Teens"]
 libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library",
             "BENNING%09Dorothy+I.+Height%2FBenning+Neighborhood+Library", 
-            "ANACOSTIA%09Anacostia+Neighborhood+Library", 
             "CAP-VIEW%09Capitol+View+Neighborhood+Library", 
             "CHEVYCHASE%09Chevy+Chase+Neighborhood+Library", 
             "CLEVE-PARK%09Cleveland+Park+Neighborhood+Library", 
