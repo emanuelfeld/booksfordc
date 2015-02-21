@@ -26,11 +26,12 @@ $(document).ready(function() {
               "%22&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
             function(data){
             	var dcpl = $.parseXML(data),
-                    $dcpl = $(dcpl),
+                    $dcpl = $(data),
                     $content = $dcpl.find("content");
-                var total = $content.text().replace("/.*copies\": . .([0-9]+),([0-9]+).*/","$2");
-                var available = $content.text().replace("/.*totalAvailable\" : ([0-9]+).*/","$1");
-                container.append("\n"+total+" copies / "+available+" available");
+                var oneline = $content.text().replace(/\n/g,"")
+                var available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1");
+                var total = oneline.replace(/.*copies\" \: [    "[0-9]+\,([0-9]+).*/,"$1");
+                where.append("\n"+total+" copies / "+available+" available");
             }
         );   
     }
