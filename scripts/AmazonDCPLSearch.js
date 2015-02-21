@@ -31,7 +31,11 @@ $(document).ready(function() {
                 var oneline = $content.text().replace(/\n/g,"")
                 var available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1");
                 var total = oneline.replace(/.*copies\" \: [    "[0-9]+\,([0-9]+).*/,"$1");
-                where.append("\n"+total+" copies / "+available+" available");
+                if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
+                    where.append(" — <a href = '" + searchURL + "'>"+total+" copies / "+available+" available</a>");
+                } else {
+	                where.append(" — 0 copies / 0 available");                    
+                }
             }
         );   
     }
