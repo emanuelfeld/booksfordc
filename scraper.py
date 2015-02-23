@@ -86,7 +86,7 @@ libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library",
             "BELLEVUE%09William+O.+Lockridge%2FBellevue+Neighborhood+Library", 
             "WOODRIDGE%09Woodridge+Neighborhood+Library"]
 
-scraperwiki.sql.execute("drop table if exists current")
+scraperwiki.sql.execute("DELETE FROM current")
 
 i=0
 #for o in orders:
