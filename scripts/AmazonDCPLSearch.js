@@ -14,13 +14,15 @@ $(document).ready(function() {
     
     var base = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=";
     var searchURL = base + isbn;
+
+    var purchaseURL = "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X";
     
     var container = $('#productTitle');
     if(isbn.length==13){
-        doAjax(searchURL,container);
+        doAjax(searchURL,container,purchaseURL);
     }
 
-    function doAjax(url,where){
+    function doAjax(url,where,purchase){
         $.get("https://query.yahooapis.com/v1/public/yql?q=select%20content%20from%20data.headers%20where%20url%3D%22"+
               encodeURIComponent(url)+
               "%22&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
@@ -34,7 +36,7 @@ $(document).ready(function() {
                 if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
                     where.append(" — <a href = '" + searchURL + "'>"+total+" copies / "+available+" available</a>");
                 } else {
-	                where.append(" — 0 copies / 0 available");                    
+	                where.append(" — <a href = '" + purchase + "'>Request Purchase</a>");
                 }
             }
         );   
