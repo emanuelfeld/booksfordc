@@ -28,7 +28,7 @@ $(document).ready(function() {
               "%22&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
             function(data){
             	var dcpl = $(data),
-                    $content = $dcpl.find("content");
+                    $content = dcpl.find("content");
                 var oneline = $content.text().replace(/\n/g,"")
                 var available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1");
                 var total = oneline.replace(/.*copies\" \: [    "[0-9]+\,([0-9]+).*/,"$1");
