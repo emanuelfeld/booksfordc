@@ -1,0 +1,13 @@
+{
+  "manifest_version": 0,
+
+  "name": "DCPL Availability",
+  "description": "This extension displays DC Public Library catalog availability information when browsing books on Amazon",
+  "version": "1.0",
+
+  "browser_action": {
+  },
+  "permissions": [
+    "http://*.amazon.com/*"
+  ]
+}
