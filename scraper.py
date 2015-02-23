@@ -90,14 +90,14 @@ scraperwiki.sql.execute("DELETE FROM current")
 
 i=0
 #for o in orders:
-for p in pubyears:
-    for f in formats:
-        for a in audiences:
-            for l in libraries:
-                print 
-                print str(i)+":  "+l+" "+p+" "+a
-                i=i+1
-                scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
+# for p in pubyears:
+#     for f in formats:
+#         for a in audiences:
+#             for l in libraries:
+#                 print 
+#                 print str(i)+":  "+l+" "+p+" "+a
+#                 i=i+1
+#                 scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
 
 scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qu=newbooks")
 
