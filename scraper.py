@@ -27,6 +27,8 @@ def check_store(y):
     except:
         return 0
 
+p = 2015
+
 def scrape(y):                
     # try:
     html = scraperwiki.scrape(y)
