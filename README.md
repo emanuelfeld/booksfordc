@@ -8,5 +8,5 @@ Scraper running on [morph.io](https://morph.io/evonfriedland/booksfordc) and twe
 * ~~Caching~~
 * ~~Check cache~~
 * ~~RSS feed~~
-* Figure out post limiting for IFTTT/Twitter API
-* Implement save_var get_var for sql tables
+* Use Twitter API directly, with staggered posts (<1/min) instead of IFTTT
+* Host cron job elsewhere to trigger more frequent automatic scrapes
