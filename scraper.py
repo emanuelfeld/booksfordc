@@ -55,8 +55,7 @@ def scrape(y):
         print "Could not scrape\n"
     time.sleep(5)
 
-#order = ["PA","PD"]
-pubyears = ["2015"] # Not getting very accurate results for past years: "2014","2013","2012"
+pubyears = ["2015"] # Not getting very accurate results for past years: "2014","2013","2012," since new entries aren't being displayed in XML feeds. Also slow to scrape them all.
 formats = ["BOOK%09Books"]
 audiences = ["ADULT%09Adults", "JUVENILE%09Children", "YOUNGADULT%09Teens"]
 libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library",
@@ -86,10 +85,9 @@ libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library",
             "BELLEVUE%09William+O.+Lockridge%2FBellevue+Neighborhood+Library", 
             "WOODRIDGE%09Woodridge+Neighborhood+Library"]
 
-scraperwiki.sql.execute("DELETE FROM current")
+scraperwiki.sql.execute("DELETE * FROM current")
 
 i=0
-# for o in orders:
 for p in pubyears:
     for f in formats:
         for a in audiences:
@@ -98,5 +96,7 @@ for p in pubyears:
                 i=i+1
                 scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
 
+# MLK Jr Library marks certain fiction books as 'newbooks' so that they can be physically located in 
+# the 'New Book Area.' This allows us to find some new books published in prior years.
 scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qu=newbooks")
 
