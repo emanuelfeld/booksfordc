@@ -85,7 +85,7 @@ libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library",
             "BELLEVUE%09William+O.+Lockridge%2FBellevue+Neighborhood+Library", 
             "WOODRIDGE%09Woodridge+Neighborhood+Library"]
 
-scraperwiki.sql.execute("DELETE * FROM current")
+scraperwiki.sql.execute("DELETE FROM current")
 
 i=0
 for p in pubyears:
