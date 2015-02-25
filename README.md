@@ -10,3 +10,4 @@ Scraper running on [morph.io](https://morph.io/evonfriedland/booksfordc) and twe
 * ~~RSS feed~~
 * Use Twitter API directly, with staggered posts (<1/min) instead of IFTTT
 * Host cron job elsewhere to trigger more frequent automatic scrapes
+* Make script clean and reproduceable for other libraries using SirsiDynix
