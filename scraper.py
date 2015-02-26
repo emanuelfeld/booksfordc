@@ -91,8 +91,8 @@ libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library",
 
 scraperwiki.sql.execute("DELETE FROM current")
 
-auth = tweepy.OAuthHandler(${MORPH_CON_TOK}, ${MORPH_CON_SEC})
-auth.set_access_token(${MORPH_ACC_TOK, ${MORPH_ACC_SEC})
+auth = tweepy.OAuthHandler(os.environ['MORPH_CON_TOK'], os.environ['MORPH_CON_SEC'])
+auth.set_access_token(os.environ['MORPH_ACC_TOK'], os.environ['MORPH_ACC_SEC'])
 api = tweepy.API(auth)
     
 i=0
