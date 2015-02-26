@@ -49,7 +49,7 @@ def scrape(y):
             if check_store(current)==0:
                 j=j+1
                 print current['title']
-                #tweet(current['title'],current['author'],current['url'])
+                tweet(current['title'],current['author'],current['url'])
                 scraperwiki.sql.save(unique_keys=['ils'], data=current,table_name="current")
                 scraperwiki.sql.save(unique_keys=['ils'], data={'ils' : current['ils'], 'scrape_date' : current['pubDate']},table_name="store")
             else:
