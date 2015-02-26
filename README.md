@@ -12,3 +12,10 @@ Scraper running on [morph.io](https://morph.io/evonfriedland/booksfordc) and twe
 * Host cron job elsewhere to trigger more frequent automatic scrapes (Tweepy and Heroku?)
 * Decide where to host the cache if use host without persistent memory (GitHub?)
 * Make script clean and reproduceable for other libraries using SirsiDynix
+
+##Notes##
+* Benning Neighborhood Library RSS fails
+* Shepherd Park Neighbordhood Library RSS fails
+* Watha T. Daniel/Shaw Library RSS fails
+* Bellevue Neighborhood Library RSS fails
+* On occasion, books are not being allocated to an audience (adults, teens, children) and so will fail to show up in search
