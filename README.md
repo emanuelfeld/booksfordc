@@ -8,8 +8,8 @@ Scraper running on [morph.io](https://morph.io/evonfriedland/booksfordc) and twe
 * ~~Caching~~
 * ~~Check cache~~
 * ~~RSS feed~~
-* Use Twitter API directly, with staggered posts (<1/min) instead of IFTTT
-* Host cron job elsewhere to trigger more frequent automatic scrapes (Tweepy and Heroku?)
+* ~~Use Twitter API directly, with staggered posts (<1/min) instead of IFTTT~~
+* ~~Host cron job elsewhere to trigger more frequent automatic scrapes (Tweepy and Heroku?)~~ Using ScraperWiki for now
 * Decide where to host the cache if use host without persistent memory (GitHub?)
 * Make script clean and reproduceable for other libraries using SirsiDynix
 
