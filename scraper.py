@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 
-import scraperwiki
-import requests
-import re
-import lxml.html
+import scraperwiki, requests, re, lxml.html, time, tweepy
 from datetime import datetime
-import time
 
 def clean_xml(x):
     x = re.sub(r'<link rel="self" href="/client" />',r'<link href="http://catalog.dclibrary.orghttps//catalog.dclibrary.org/client/rss/hitlist/dcpl/"/>',x)
@@ -27,6 +23,13 @@ def check_store(y):
     except:
         return 0
 
+def tweet(title,author,link):
+    text = title +" "+u'\u2022'+" "+ author
+    if len(text)>113:
+        text=text[:111]+u'\u2026'
+    api.update_status(text+" "+link)
+    time.sleep(60)
+
 def scrape(y):                
     try:
         html = scraperwiki.scrape(y)
@@ -46,6 +49,7 @@ def scrape(y):
             if check_store(current)==0:
                 j=j+1
                 print current['title']
+                #tweet(current['title'],current['author'],current['url'])
                 scraperwiki.sql.save(unique_keys=['ils'], data=current,table_name="current")
                 scraperwiki.sql.save(unique_keys=['ils'], data={'ils' : current['ils'], 'scrape_date' : current['pubDate']},table_name="store")
             else:
@@ -87,6 +91,10 @@ libraries = ["ANACOSTIA%09Anacostia+Neighborhood+Library",
 
 scraperwiki.sql.execute("DELETE FROM current")
 
+auth = tweepy.OAuthHandler(MORPH_CON_TOK, MORPH_CON_SEC)
+auth.set_access_token(MORPH_ACC_TOK, MORPH_ACC_SEC)
+api = tweepy.API(auth)
+    
 i=0
 for p in pubyears:
     for f in formats:
@@ -99,4 +107,5 @@ for p in pubyears:
 # MLK Jr Library marks certain fiction books as 'newbooks' so that they can be physically located in 
 # the 'New Book Area.' This allows us to find some new books published in prior years.
 scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qu=newbooks")
+
 
