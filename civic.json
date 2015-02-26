@@ -1,0 +1,18 @@
+{
+    "conformsTo": "https://raw.githubusercontent.com/codefordc/guides/master/using-civic.json/specification.md",
+    "status": "Production",
+    "thumbnailUrl":"https://pbs.twimg.com/profile_images/568974012793892864/OybycQH6.jpeg",
+    "contact":
+    {
+        "name": "Emanuel Feld",
+        "email": "",
+        "twitter": "@evonfriedland"
+    },
+    "bornAt": "Code for DC",
+    "geography": "DC",
+    "type": "Web App",
+    "categories": [
+    {"category":"Libraries"},
+    {"category":"Government"}
+    ]
+}
