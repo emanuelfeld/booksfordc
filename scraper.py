@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import scraperwiki, requests, re, lxml.html, time, tweepy
+import scraperwiki, requests, re, lxml.html, time, tweepy, os
 from datetime import datetime
 
 def clean_xml(x):
