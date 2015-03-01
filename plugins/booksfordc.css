@@ -1,1 +1,12 @@
-.
+#dcpl {
+  background-color:rgb(246, 246, 246); 
+  padding:14px 18px 14px 18px; 
+  border:0px; 
+  border-bottom:1px solid rgb(221, 221, 221); 
+  border-radius:0px
+}
+
+#dcpl_title {
+  color:#b12704; 
+  font-size:17px
+}
