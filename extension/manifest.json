@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+
+  "name": "booksfordc",
+  "description": "This extension allows you to determine the availability of books at the DC Public Library when browsing Amazon.",
+  "version": "1.0",
+  
+  "author": "Emanuel Feld",
+
+  "web_accessible_resources": [
+    "css/booksfordc.css",
+    "scripts/booksfordc.js",
+    "assets/ajax-loader.gif"
+  ],
+  
+  "content_scripts": [
+      {
+          "exclude_globs": [],
+          "include_globs": [
+              "*"
+          ],
+          "css": ["css/booksfordc.css"],
+          "js": [
+              "scripts/jquery.min.js",
+              "scripts/booksfordc.js"
+          ],
+          "matches": [
+              "http://*.amazon.com/*",
+              "https://*.amazon.com/*"
+          ],
+          "run_at": "document_end"
+      }
+  ],
+  "permissions": [
+              "http://*.amazon.com/*",
+              "https://*.amazon.com/*",
+              "https://catalog.dclibrary.org/*",
+              "http://dclibrary.org/*"
+  ],
+  "offline_enabled": false
+}
