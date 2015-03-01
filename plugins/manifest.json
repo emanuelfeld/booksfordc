@@ -1,5 +1,5 @@
 {
-  "manifest_version": 1,
+  "manifest_version": 2,
 
   "name": "booksfordc",
   "description": "This extension displays DC Public Library catalog availability information when browsing books on Amazon. If no results are found after searching by ISBN, it will display a link to search the catalog by title and author as well as a link to request that the library purchase the book.",
