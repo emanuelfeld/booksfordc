@@ -5,14 +5,14 @@
   "description": "This extension displays DC Public Library catalog availability information when browsing books on Amazon. If no results are found after searching by ISBN, it will display a link to search the catalog by title and author as well as a link to request that the library purchase the book.",
   "version": "1.0",
   
-  "icons": { "16": "icon16.png",
-             "48": "icon48.png",
-            "128": "icon128.png" },
-  
   "author": "Emanuel Feld",
-  "background": {
-    "scripts": ["booksfordc.js"]
-  },
+
+  "web_accessible_resources": [
+    "booksfordc.css",
+    "booksfordc.js",
+    "ajax-loader.gif"
+  ],
+
   "content_scripts": [
     {
       "matches": ["http://*.amazon.com/*"],
