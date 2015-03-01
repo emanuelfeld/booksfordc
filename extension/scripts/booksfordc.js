@@ -24,7 +24,7 @@ if (/amazon\.com$/.test(document.domain)) {
 	        var container = $('div.a-box.rbbSection.selected.dp-accordion-active');    
 	    }
 	    
-	    container.prepend("<div id='dcpl' class='a-box'><span id='dcpl_title'>DCPL Search</span> <br> Searching catalog by ISBN <img src='https://raw.githubusercontent.com/evonfriedland/booksfordc/master/plugins/ajax-loader.gif'></div>");
+	    container.prepend("<div id='dcpl' class='a-box'><span id='dcpl_title'>DCPL Search</span> <br> Searching catalog by ISBN <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'></div>");
 	    
 	    var modify = $("div#dcpl");
 	    
