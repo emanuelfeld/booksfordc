@@ -22,6 +22,7 @@
   ],
   "offline_enabled": false,
   "permissions": [
-    "http://*.amazon.com/*"
+    "http://*.amazon.com/*",
+    "http://*catalog.dclibrary.org/*"
   ]
 }
