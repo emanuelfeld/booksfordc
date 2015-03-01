@@ -2,7 +2,7 @@
 
 Scrapes DC Public Library's improperly syndicating RSS feeds to generate a listing of new additions to the book catalog.
 
-Scraper running on [morph.io](https://morph.io/evonfriedland/booksfordc) and tweeting at [@booksfordc](https://twitter.com/booksfordc).
+Scraper running on ScraperWiki and tweeting at [@booksfordc](https://twitter.com/booksfordc).
 
 ##To do##
 * ~~Caching~~
