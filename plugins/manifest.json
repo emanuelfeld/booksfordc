@@ -1,12 +1,26 @@
 {
-  "manifest_version": 0,
+  "manifest_version": 1,
 
-  "name": "DCPL Availability",
-  "description": "This extension displays DC Public Library catalog availability information when browsing books on Amazon",
+  "name": "booksfordc",
+  "description": "This extension displays DC Public Library catalog availability information when browsing books on Amazon. If no results are found after searching by ISBN, it will display a link to search the catalog by title and author as well as a link to request that the library purchase the book.",
   "version": "1.0",
-
-  "browser_action": {
+  
+  "icons": { "16": "icon16.png",
+             "48": "icon48.png",
+            "128": "icon128.png" },
+  
+  "author": "Emanuel Feld",
+  "background": {
+    "scripts": ["booksfordc.js"]
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*.amazon.com/*],
+      "css": ["booksfordc.css"],
+      "js": ["booksfordc.js"]
+    }
+  ],
+  "offline_enabled": false,
   "permissions": [
     "http://*.amazon.com/*"
   ]
