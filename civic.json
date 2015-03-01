@@ -1,5 +1,5 @@
 {
-    "conformsTo": "https://raw.githubusercontent.com/codefordc/guides/master/using-civic.json/specification.md",
+    "conformsTo": "http://codefordc.org/resources/specification.html",
     "status": "Production",
     "thumbnailUrl":"https://pbs.twimg.com/profile_images/568974012793892864/OybycQH6.jpeg",
     "contact":
@@ -10,7 +10,7 @@
     },
     "bornAt": "Code for DC",
     "geography": "DC",
-    "type": "Web App",
+    "type": "Scraper",
     "categories": [
     {"category":"Libraries"},
     {"category":"Government"}
