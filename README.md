@@ -24,6 +24,8 @@ Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not 
 ##Browser Plug-in##
 A Chrome extension that displays library holdings and availability when browsing books on Amazon.com. Searches the catalog by  ISBN-13 value. If no match is found (because the edition or book is not held at DCPL), the extension provides a link to search the catalog by title and author, as well as a link to request that the library purchase the material.
 
+Download the booksfordc extension by clicking on extension.crx and then 'Raw.' Open up chrome://extensions, locate the downloaded file, and drag it into the extensions window.
+
 ###To do###
 * Port to Firefox (Safari?)
 * Allow for functionality on Goodreads and, perhaps, Barnes and Noble
