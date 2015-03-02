@@ -10,7 +10,7 @@ Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not 
 * ~~RSS feed~~
 * ~~Use Twitter API directly, with staggered posts (<1/min) instead of IFTTT~~
 * ~~Host cron job elsewhere to trigger more frequent automatic scrapes (Tweepy and Heroku?)~~ Using ScraperWiki for now
-* Decide where to host the cache if use host without persistent memory (GitHub?)
+* ~~Decide where to host the cache if use host without persistent memory (GitHub?)~~ Not currently an issue
 * Make script clean and reproduceable for other libraries using SirsiDynix
 * Add ebooks, if the DCPL makes the Overdrive API accessible
 
@@ -25,9 +25,10 @@ Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not 
 A Chrome extension that displays library holdings and availability when browsing books on Amazon.com. Searches the catalog by  ISBN-13 value. If no match is found (because the edition or book is not held at DCPL), the extension provides a link to search the catalog by title and author, as well as a link to request that the library purchase the material.
 
 ###To do###
-* Port to Firefox
+* Port to Firefox (Safari?)
 * Allow for functionality on Goodreads and, perhaps, Barnes and Noble
 * Search Overdrive, if the DCPL makes the API accessible
 * Auto-fill parts of the purchase request form
+* Determine how transferable the extension is to other SirsiDynix-using libraries
 
 ![image](https://cloud.githubusercontent.com/assets/4269640/6434397/0f72cb74-c056-11e4-8f14-e745bff6e1bc.png)
