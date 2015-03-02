@@ -13,7 +13,7 @@ if (/amazon\.com$/.test(document.domain)) {
 	//assign title and author for search link, if isbn search fails
 	var title = $('#productTitle').text();
 	var author = $('.a-link-normal.contributorNameID:first').text();
-	var altURL = (base + title + " " + author).replace(/ +/g,"%20");
+	var altURL = (base+encodeURIComponent(title+" "+author).replace(/'/g, "%27"));
 
 	if(isbn.length==13){
 
@@ -32,15 +32,14 @@ if (/amazon\.com$/.test(document.domain)) {
 	}
 
 	function doAjax(title,author,url,alt,where,purchase){
+
 			//load and format data from catalog search
 	     	$.get(url,
 	        function(data){
-	        	var dcpl = $(data);
-	            var oneline = dcpl.text().replace(/\n/g,""),
+	        	var dcpl = $(data),
+	            	oneline = dcpl.text().replace(/\n/g,""),
 	                available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1"),
 	                total = oneline.replace(/.*copies\" \: [    "[0-9]+\,([0-9]+).*/,"$1");
-	            console.log(available);
-	            console.log(total);
 	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
 	                where.html("<span id='dcpl_title'>DCPL Search</span> <br>Located in catalog <br> <a href = '" + searchURL + "'>"+total+" Copy ("+available+" Available)</a> </div></div></div>");
 	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){

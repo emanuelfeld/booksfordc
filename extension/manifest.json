@@ -34,8 +34,6 @@
   "permissions": [
               "http://*.amazon.com/*",
               "https://*.amazon.com/*",
-              "https://catalog.dclibrary.org/*",
-              "http://dclibrary.org/*",
               "https://*.catalog.dclibrary.org/*",
               "http://*.dclibrary.org/*"
               ],
