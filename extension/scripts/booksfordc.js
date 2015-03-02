@@ -18,10 +18,10 @@ if (/amazon\.com$/.test(document.domain)) {
 	if(isbn.length==13){
 
 	    //determine where to prepend booksfordc div
-	    if($('div#unqualifiedBuyBox').length){
-	        var container = $('div#unqualifiedBuyBox');
-	    } else if ($('div.a-box.rbbSection.selected.dp-accordion-active').length){
+		if ($('div.a-box.rbbSection.selected.dp-accordion-active').length){
 	        var container = $('div.a-box.rbbSection.selected.dp-accordion-active');    
+	    } else if($('div#unqualifiedBuyBox').length){
+	        var container = $('div#unqualifiedBuyBox');
 	    }
 	    
 	    container.prepend("<div id='dcpl' class='a-box'><span id='dcpl_title'>DCPL Search</span> <br> Searching catalog by ISBN <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'></div>");
@@ -41,11 +41,11 @@ if (/amazon\.com$/.test(document.domain)) {
 	                available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1"),
 	                total = oneline.replace(/.*copies\" \: [    "[0-9]+\,([0-9]+).*/,"$1");
 	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br>Located in catalog <br> <a href = '" + searchURL + "'>"+total+" Copy ("+available+" Available)</a> </div></div></div>");
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br>Located in catalog <br> <a href = '" + searchURL + "'>"+total+" Copy ("+available+" Available)</a>");
 	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + searchURL + "'>"+total+" Copies ("+available+" Available)</a> </div></div></div>");
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + searchURL + "'>"+total+" Copies ("+available+" Available)</a>");
 	            } else {
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found for this edition <br> <a href = '" + alt + "'>Search by Title and Author</a> <br> <a href = '" + purchase + "'>Request Purchase</a> </div></div></div>");
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found for this edition <br> <a href = '" + alt + "'>Search by Title and Author</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
 	            }
 	        }
 	    );   
