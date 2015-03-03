@@ -39,20 +39,23 @@ if (/amazon\.com$/.test(document.domain)) {
 			//load and format data from catalog search
 	     	$.get(url,
 	        function(data){
-	        	var dcpl = $(data),
-	            	oneline = dcpl.text().replace(newline_regex,""),
-	                book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1")),
-	                available = book_json['totalAvailable'].toString(),
-	                total = book_json['copies'][0].match(/(\d+)$/)[1];
-	            console.log(book_json['totalAvailable']);
-	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
-	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
-	            } else {
-	            	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Searching catalog by title and author <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'>")
-	            	altSearch(where,alt,purchase);
-	            }
+	        	var dcpl = $(data);
+	        	console.log(0);
+	            var oneline = dcpl.text().replace(newline_regex,"");
+	            try {
+		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/m,"$1"));
+		            	var available = book_json['totalAvailable'].toString();
+		            	var total = book_json['copies'][0].match(/(\d+)$/)[1];
+		            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
+		                	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
+		            	} else {
+		                	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
+		            	}
+	            	} catch (e) {
+	            		console.log("BAD");
+		            	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Searching catalog by title and author <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'>")
+		            	altSearch(where,alt,purchase);	            	
+	            	}
 	        }
 	    );   
 	}
@@ -61,23 +64,27 @@ if (/amazon\.com$/.test(document.domain)) {
 			//load and format data from catalog search
 	     	$.get(url,
 	        function(data){
-	        	var dcpl = $(data),
-	        		oneline = dcpl.text().replace(newline_regex,""),
-	                book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1")),
-	                available = book_json['totalAvailable'],
-	                total = book_json['copies'][0].match(/(\d+)$/)[1];
-	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Different edition located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
-	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Different edition located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
-	            } else if (oneline.match("This search returned no results.")!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found <br> <a href = '" + url + "'>Search manually</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");	            	
-	            } else {
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Multiple possible matches <br> <a href = '" + url + "'>View results</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
-	            }
+	        	var dcpl = $(data);
+	        	console.log(0);
+	            var oneline = dcpl.text().replace(newline_regex,"");
+	            try {
+		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/m,"$1"));
+		            	var available = book_json['totalAvailable'].toString();
+		            	var total = book_json['copies'][0].match(/(\d+)$/)[1];
+		            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
+		                	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
+		            	} else {
+		                	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
+		            	}
+	            	} catch (e) {
+						if (oneline.match("This search returned no results.")!=null){
+			                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found <br> <a href = '" + url + "'>Search manually</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");	            	
+			            } else {
+			                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Multiple possible matches <br> <a href = '" + url + "'>View results</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
+			            }	            	
+			        }
 	        }
 	    );   
 	}
-
 
 }
