@@ -26,7 +26,7 @@ A Chrome extension that displays library holdings and availability when browsing
 Download the booksfordc extension by clicking on extension.crx and then 'Raw.' Open up chrome://extensions, locate the downloaded file, and drag it into the extensions window.
 
 ###To do###
-* Improve search functionality to cover multiple editions—is it better to search by title, author, and resource type, then take the first hit (if it exists?). Doesn't appear that it will automatically redirect with this sort of search, even if only one result.
+* ~~Improve search functionality to cover multiple editions—is it better to search by title, author, and resource type, then take the first hit (if it exists?). Doesn't appear that it will automatically redirect with this sort of search, even if only one result.~~
 * Port to Firefox (Safari?)
 * Allow for functionality on Goodreads and, perhaps, Barnes and Noble
 * Search Overdrive, if the DCPL makes the API accessible (and don't require a private key). Possibly just use Sirsi catalog, get Overdrive ID from result URL and go from there.
