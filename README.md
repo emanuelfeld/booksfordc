@@ -11,8 +11,7 @@ Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not 
 * ~~Use Twitter API directly, with staggered posts (<1/min) instead of IFTTT~~
 * ~~Host cron job elsewhere to trigger more frequent automatic scrapes (Tweepy and Heroku?)~~ Using ScraperWiki for now
 * ~~Decide where to host the cache if use host without persistent memory (GitHub?)~~ Not currently an issue
-* Make script clean and reproduceable for other libraries using SirsiDynix
-* Add ebooks, if the DCPL makes the Overdrive API accessible
+* Add ebooks, if the DCPL makes the Overdrive API accessible. Possibly just use Sirsi catalog, though harder to scrape, because resources not divided across libraries (and hence 1000 item XML limit passed)
 
 ###Notes###
 * Benning Neighborhood Library RSS fails
@@ -27,11 +26,10 @@ A Chrome extension that displays library holdings and availability when browsing
 Download the booksfordc extension by clicking on extension.crx and then 'Raw.' Open up chrome://extensions, locate the downloaded file, and drag it into the extensions window.
 
 ###To do###
-* Improve search functionality to cover multiple editions
+* Improve search functionality to cover multiple editions—is it better to search by title, author, and resource type, then take the first hit (if it exists?). Doesn't appear that it will automatically redirect with this sort of search, even if only one result.
 * Port to Firefox (Safari?)
 * Allow for functionality on Goodreads and, perhaps, Barnes and Noble
-* Search Overdrive, if the DCPL makes the API accessible (and don't require a private key)
-* Auto-fill parts of the purchase request form
-* Determine how transferable the extension is to other SirsiDynix-using libraries
+* Search Overdrive, if the DCPL makes the API accessible (and don't require a private key). Possibly just use Sirsi catalog, get Overdrive ID from result URL and go from there.
+* Auto-fill parts of the purchase request form with title, author, etc. info from Amazon page
 
 ![image](https://cloud.githubusercontent.com/assets/4269640/6434397/0f72cb74-c056-11e4-8f14-e745bff6e1bc.png)
