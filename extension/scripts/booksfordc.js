@@ -4,16 +4,17 @@ if (/amazon\.com$/.test(document.domain)) {
 	var isbn = isbn13.split(':')[1].replace(/\D/g,'');
 
 	//format search URL for DCPL
-	var base = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=";
-	var searchURL = base + isbn;
+	var base = "https://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=";
+	var bookURL = base + isbn;
 
 	//URL to request library purchase
 	var purchaseURL = "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X";
 
 	//assign title and author for search link, if isbn search fails
-	var title = $('#productTitle').text().replace(/\(.*\)/g,"");
+	var title = $('#productTitle').text().replace(/\(.*\)/g,"").replace();
 	var author = $('.a-link-normal.contributorNameID:first').text();
-	var altURL = (base+encodeURIComponent(title+" "+author).replace(/'/g, "%27"));
+	var altURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=BOOKS";
+	//var ebookURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=E-BOOK";
 
 	if(isbn.length==13){
 
@@ -28,26 +29,47 @@ if (/amazon\.com$/.test(document.domain)) {
 	    
 	    var modify = $("div#dcpl");
 	    
-	    doAjax(title,author,searchURL,altURL,modify,purchaseURL);
+	    doSearch(modify,bookURL,altURL,purchaseURL);
 	}
 
-	function doAjax(title,author,url,alt,where,purchase){
-
+	function doSearch(where,url,alt,purchase){
 			//load and format data from catalog search
 	     	$.get(url,
 	        function(data){
 	        	var dcpl = $(data),
 	            	oneline = dcpl.text().replace(/\n/g,""),
 	                available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1"),
-	                total = oneline.replace(/.*copies\" \: [    "[0-9]+\,([0-9]+).*/,"$1");
+	                total = oneline.replace(/.*copies\" \: [ *"[0-9]+\,([0-9]+).*/,"$1");
 	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br>Located in catalog <br> <a href = '" + searchURL + "'>"+total+" Copy ("+available+" Available)</a>");
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br>Located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
 	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + searchURL + "'>"+total+" Copies ("+available+" Available)</a>");
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
 	            } else {
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found for this edition <br> <a href = '" + alt + "'>Search by Title and Author</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
+	            	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Searching catalog by title and author <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'>")
+	            	altSearch(where,alt,purchase);
 	            }
 	        }
 	    );   
 	}
+
+	function altSearch(where,url,purchase){
+			//load and format data from catalog search
+	     	$.get(url,
+	        function(data){
+	        	var dcpl = $(data),
+	            	oneline = dcpl.text().replace(/\n/g,""),
+	                available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1"),
+	                total = oneline.replace(/.*copies\" \: [ *"[0-9]+\,([0-9]+).*/,"$1");
+	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br>Located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
+	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
+	            } else {
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found for this edition <br> <a href = '" + alt + "'>Search manually</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
+	            }
+	        }
+	    );   
+	}
+
+
 }
