@@ -43,7 +43,7 @@ if (/amazon\.com$/.test(document.domain)) {
 	        	console.log(0);
 	            var oneline = dcpl.text().replace(newline_regex,"");
 	            try {
-		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/m,"$1"));
+		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1"));
 		            	var available = book_json['totalAvailable'].toString();
 		            	var total = book_json['copies'][0].match(/(\d+)$/)[1];
 		            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
@@ -68,7 +68,7 @@ if (/amazon\.com$/.test(document.domain)) {
 	        	console.log(0);
 	            var oneline = dcpl.text().replace(newline_regex,"");
 	            try {
-		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/m,"$1"));
+		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1"));
 		            	var available = book_json['totalAvailable'].toString();
 		            	var total = book_json['copies'][0].match(/(\d+)$/)[1];
 		            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
