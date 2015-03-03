@@ -11,7 +11,7 @@ if (/amazon\.com$/.test(document.domain)) {
 	var purchaseURL = "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X";
 
 	//assign title and author for search link, if isbn search fails
-	var title = $('#productTitle').text();
+	var title = $('#productTitle').text().replace(/\(.*\)/g,"");
 	var author = $('.a-link-normal.contributorNameID:first').text();
 	var altURL = (base+encodeURIComponent(title+" "+author).replace(/'/g, "%27"));
 
