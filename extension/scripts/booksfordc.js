@@ -57,7 +57,7 @@ if (/amazon\.com$/.test(document.domain)) {
 	     	$.get(url,
 	        function(data){
 	        	var dcpl = $(data),
-	            	oneline = dcpl.text().replace(/\n/g,""),
+	        		oneline = dcpl.text().replace(/\n/g,""),
 	                available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1"),
 	                total = oneline.replace(/.*copies\" \: [ *"[0-9]+\,([0-9]+).*/,"$1");
 	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
@@ -65,7 +65,7 @@ if (/amazon\.com$/.test(document.domain)) {
 	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
 	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Different edition located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
 	            } else {
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found <br> <a href = '" + alt + "'>Search manually</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found <br> <a href = '" + url + "'>Search manually</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
 	            }
 	        }
 	    );   
