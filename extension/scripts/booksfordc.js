@@ -11,9 +11,12 @@ if (/amazon\.com$/.test(document.domain)) {
 	var purchaseURL = "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X";
 
 	//assign title and author for ebook search, and if isbn search fails for physical book
-	var title = $('#productTitle').text().replace(/\(.*\)/g,"").replace();
+	var title_regex = /\(.*\)/g
+	var altURL_regex = /'/g
+	var newline_regex = /\n/g
+	var title = $('#productTitle').text().replace(title_regex,"").replace();
 	var author = $('.a-link-normal.contributorNameID:first').text();
-	var altURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=BOOKS";
+	var altURL = base+encodeURIComponent(title+" "+author).replace(altURL_regex, "%27")+"&te=&lm=BOOKS";
 	//var ebookURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=E-BOOK";
 
 	if(isbn.length==13){
@@ -37,9 +40,11 @@ if (/amazon\.com$/.test(document.domain)) {
 	     	$.get(url,
 	        function(data){
 	        	var dcpl = $(data),
-	            	oneline = dcpl.text().replace(/\n/g,""),
-	                available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1"),
-	                total = oneline.replace(/.*copies\" \: [ *"[0-9]+\,([0-9]+).*/,"$1");
+	            	oneline = dcpl.text().replace(newline_regex,""),
+	                book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1")),
+	                available = book_json['totalAvailable'].toString(),
+	                total = book_json['copies'][0].match(/(\d+)$/)[1];
+	            console.log(book_json['totalAvailable']);
 	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
 	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
 	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
@@ -57,15 +62,18 @@ if (/amazon\.com$/.test(document.domain)) {
 	     	$.get(url,
 	        function(data){
 	        	var dcpl = $(data),
-	        		oneline = dcpl.text().replace(/\n/g,""),
-	                available = oneline.replace(/.*totalAvailable\" : ([0-9]+).*/,"$1"),
-	                total = oneline.replace(/.*copies\" \: [ *"[0-9]+\,([0-9]+).*/,"$1");
+	        		oneline = dcpl.text().replace(newline_regex,""),
+	                book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1")),
+	                available = book_json['totalAvailable'],
+	                total = book_json['copies'][0].match(/(\d+)$/)[1];
 	            if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
 	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Different edition located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
 	            } else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null){
 	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Different edition located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
+	            } else if (oneline.match("This search returned no results.")!=null){
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found <br> <a href = '" + url + "'>Search manually</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");	            	
 	            } else {
-	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found <br> <a href = '" + url + "'>Search manually</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
+	                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Multiple possible matches <br> <a href = '" + url + "'>View results</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
 	            }
 	        }
 	    );   
