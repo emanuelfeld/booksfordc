@@ -10,7 +10,7 @@ if (/amazon\.com$/.test(document.domain)) {
 	//URL to request library purchase
 	var purchaseURL = "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X";
 
-	//assign title and author for search link, if isbn search fails
+	//assign title and author for ebook search, and if isbn search fails for physical book
 	var title = $('#productTitle').text().replace(/\(.*\)/g,"").replace();
 	var author = $('.a-link-normal.contributorNameID:first').text();
 	var altURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=BOOKS";
