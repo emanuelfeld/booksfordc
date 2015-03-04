@@ -32,4 +32,4 @@ Download the booksfordc extension by clicking on extension.crx and then 'Raw.' O
 * Port to Firefox (Safari?)
 * Allow for functionality on Goodreads and, perhaps, Barnes and Noble
 
-![image](https://cloud.githubusercontent.com/assets/4269640/6434397/0f72cb74-c056-11e4-8f14-e745bff6e1bc.png)
+![image](https://cloud.githubusercontent.com/assets/4269640/6477965/8fe3d6ac-c1f7-11e4-82a1-401a4ae68a88.png)
