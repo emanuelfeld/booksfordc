@@ -27,9 +27,9 @@ Download the booksfordc extension by clicking on extension.crx and then 'Raw.' O
 
 ###To do###
 * ~~Improve search functionality to cover multiple editions—is it better to search by title, author, and resource type, then take the first hit (if it exists?). Doesn't appear that it will automatically redirect with this sort of search, even if only one result.~~
+* ~~Search Overdrive, if the DCPL makes the API accessible (and don't require a private key). Possibly just use Sirsi catalog, get Overdrive ID from result URL and go from there.~~
+* Auto-fill parts of the purchase request form with title, author, etc. info from Amazon page
 * Port to Firefox (Safari?)
 * Allow for functionality on Goodreads and, perhaps, Barnes and Noble
-* Search Overdrive, if the DCPL makes the API accessible (and don't require a private key). Possibly just use Sirsi catalog, get Overdrive ID from result URL and go from there.
-* Auto-fill parts of the purchase request form with title, author, etc. info from Amazon page
 
 ![image](https://cloud.githubusercontent.com/assets/4269640/6434397/0f72cb74-c056-11e4-8f14-e745bff6e1bc.png)
