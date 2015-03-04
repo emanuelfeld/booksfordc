@@ -4,8 +4,6 @@ if (/amazon\.com$/.test(document.domain)) {
 	var isbn13 = $("#productDetailsTable .content li:contains('ISBN-13:')").text();
 	var isbn = isbn13.split(':')[1].replace(/\D/g,'');
 
-	console.log(isbn);
-
 	//locate book title and author
 	var title_regex = /\(.*\)/g,
 		title = $('#productTitle').text().replace(title_regex,"").replace(),
@@ -46,23 +44,17 @@ if (/amazon\.com$/.test(document.domain)) {
 
 	     	$.get(isbnURL,
 		        function(data){
-		        	console.log(isbnURL);
 		            var oneline = $(data).text().replace(/\n/g,"");
 		            try {
-		            		console.log("I'm trying!");
 			      			var availabilityJSON = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1"));
-			      			console.log(availabilityJSON);
 			            	var available = availabilityJSON['totalAvailable'].toString();
-			            	console.log(typeof available);
 			            	var total = availabilityJSON['copies'][0].match(/(\d+)$/)[1];
-			            	console.log(typeof total);
 			            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
 			                	modify_book.html("Located in catalog <br> <a href = '" + isbnURL + "'>"+total+" Copy ("+available+" Available)</a>");
 			            	} else {
 			                	modify_book.html("Located in catalog <br> <a href = '" + isbnURL + "'>"+total+" Copies ("+available+" Available)</a>");
 			            	}
 		            	} catch (e) {
-		            		console.log("BAD");
 			            	taSearch(modify_book,taURL,purchaseURL);	            	
 		            	}
 		        }
@@ -73,7 +65,11 @@ if (/amazon\.com$/.test(document.domain)) {
 		            var oneline = $(data).text().replace(/\n/g,""),
 		            	overdrive_id = oneline.replace(/.*fOVERDRIVE\:(.+?)\$.*/,"$1"),
 		            	overdriveURL = "http://overdrive.dclibrary.org/ContentDetails.htm?id="+overdrive_id;
-		            overdriveSearch(modify_digital,overdriveURL,purchaseURL);
+		            if(overdrive_id.length>100){
+	                	modify_digital.html("Not located in digital catalog <br> <a href = 'http://overdrive.dclibrary.org/'>Search manually</a>");            		
+		            } else {
+			            overdriveSearch(modify_digital,overdriveURL,purchaseURL);		            	
+		            }
 		        }
 		    );   
 	}
@@ -106,12 +102,12 @@ if (/amazon\.com$/.test(document.domain)) {
 	function overdriveSearch(modify_digital,overdriveURL,purchaseURL){
 		$.get(overdriveURL,
 			function(data){
-				var oneline = $(data).text().replace(/\n/g,""),
-	            	available = oneline.replace(/.*Available:(\d+).*/,"$1"),
-	            	total = oneline.replace(/.*Library copies:(\d+).*/,"$1");
+				var oneline = $(data).text().replace(/\n/g,"");
+	            var available = oneline.replace(/.*Available:(\d+).*/,"$1");
+	            var total = oneline.replace(/.*Library copies:(\d+).*/,"$1");
             	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
                 	modify_digital.html("E-book located in catalog <br> <a href = '" + overdriveURL + "'>"+total+" Copy ("+available+" Available)</a>");
-            	} else if (available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null) {
+            	} else if(available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null) {
                 	modify_digital.html("E-book located in catalog <br> <a href = '" + overdriveURL + "'>"+total+" Copies ("+available+" Available)</a>");
             	} else {
                 	modify_digital.html("Not located in digital catalog <br> <a href = 'http://overdrive.dclibrary.org/'>Search manually</a>");            		
