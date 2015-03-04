@@ -12,6 +12,7 @@ Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not 
 * ~~Host cron job elsewhere to trigger more frequent automatic scrapes (Tweepy and Heroku?)~~ Using ScraperWiki for now
 * ~~Decide where to host the cache if use host without persistent memory (GitHub?)~~ Not currently an issue
 * Add ebooks, if the DCPL makes the Overdrive API accessible. Possibly just use Sirsi catalog, though harder to scrape, because resources not divided across libraries (and hence 1000 item XML limit passed)
+* Put up flyers at libraries to reach more patrons
 
 ###Notes###
 * Benning Neighborhood Library RSS fails
