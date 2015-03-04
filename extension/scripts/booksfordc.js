@@ -1,23 +1,29 @@
 if (/amazon\.com$/.test(document.domain)) {
+
 	//locate ISBN13
 	var isbn13 = $("#productDetailsTable .content li:contains('ISBN-13:')").text();
 	var isbn = isbn13.split(':')[1].replace(/\D/g,'');
 
-	//format search URL for DCPL
-	var base = "https://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=";
-	var bookURL = base + isbn;
+	console.log(isbn);
 
+	//locate book title and author
+	var title_regex = /\(.*\)/g,
+		title = $('#productTitle').text().replace(title_regex,"").replace(),
+		author = $('.a-link-normal.contributorNameID:first').text();
+
+	//URLs
+
+	//Base for library catalog search
+	var base = "https://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=";
+	//URL for ISBN search
+	var isbnURL = base + isbn;
+	//URL to search catalog by title and author for books
+	var taURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=BOOKS";
+	//URL to search catalog for ebooks
+	var ebookURL = base+"TITLE%3D"+encodeURIComponent(title+" ").replace(/'/g, "%27")+"&qu=AUTHOR%3D"+encodeURIComponent(author).replace(/'/g, "%27")+"&qf=FORMAT%09Bibliographic+Format%09E_BOOK%09eBook";
 	//URL to request library purchase
 	var purchaseURL = "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X";
 
-	//assign title and author for ebook search, and if isbn search fails for physical book
-	var title_regex = /\(.*\)/g
-	var altURL_regex = /'/g
-	var newline_regex = /\n/g
-	var title = $('#productTitle').text().replace(title_regex,"").replace();
-	var author = $('.a-link-normal.contributorNameID:first').text();
-	var altURL = base+encodeURIComponent(title+" "+author).replace(altURL_regex, "%27")+"&te=&lm=BOOKS";
-	//var ebookURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=E-BOOK";
 
 	if(isbn.length==13){
 
@@ -28,63 +34,91 @@ if (/amazon\.com$/.test(document.domain)) {
 	        var container = $('div#unqualifiedBuyBox');
 	    }
 	    
-	    container.prepend("<div id='dcpl' class='a-box'><span id='dcpl_title'>DCPL Search</span> <br> Searching catalog by ISBN <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'></div>");
-	    
-	    var modify = $("div#dcpl");
-	    
-	    doSearch(modify,bookURL,altURL,purchaseURL);
+	    container.prepend("<div id='dcpl' class='a-box'><span id='dcpl_title'>DCPL Search</span> <br> <strong>Book Catalog</strong> <br> <span id='book'>Searching library catalog <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'> </span>  <br> <strong>Digital Catalog</strong> <br> <span id='digital'>Searching digital catalog <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'> </span> </div>");
+
+	    var modify_digital = $("span#digital");
+	    var modify_book = $("span#book");
+
+	    searchCatalog(modify_book,modify_digital,isbnURL,taURL,ebookURL,purchaseURL);
 	}
 
-	function doSearch(where,url,alt,purchase){
-			//load and format data from catalog search
-	     	$.get(url,
-	        function(data){
-	        	var dcpl = $(data);
-	        	console.log(0);
-	            var oneline = dcpl.text().replace(newline_regex,"");
-	            try {
-		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1"));
-		            	var available = book_json['totalAvailable'].toString();
-		            	var total = book_json['copies'][0].match(/(\d+)$/)[1];
-		            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
-		                	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
-		            	} else {
-		                	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
+	function searchCatalog(modify_book,modify_digital,isbnURL,taURL,ebookURL,purchaseURL) {
+
+	     	$.get(isbnURL,
+		        function(data){
+		        	console.log(isbnURL);
+		            var oneline = $(data).text().replace(/\n/g,"");
+		            try {
+		            		console.log("I'm trying!");
+			      			var availabilityJSON = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1"));
+			      			console.log(availabilityJSON);
+			            	var available = availabilityJSON['totalAvailable'].toString();
+			            	console.log(typeof available);
+			            	var total = availabilityJSON['copies'][0].match(/(\d+)$/)[1];
+			            	console.log(typeof total);
+			            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
+			                	modify_book.html("Located in catalog <br> <a href = '" + isbnURL + "'>"+total+" Copy ("+available+" Available)</a>");
+			            	} else {
+			                	modify_book.html("Located in catalog <br> <a href = '" + isbnURL + "'>"+total+" Copies ("+available+" Available)</a>");
+			            	}
+		            	} catch (e) {
+		            		console.log("BAD");
+			            	taSearch(modify_book,taURL,purchaseURL);	            	
 		            	}
-	            	} catch (e) {
-	            		console.log("BAD");
-		            	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Searching catalog by title and author <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'>")
-		            	altSearch(where,alt,purchase);	            	
-	            	}
-	        }
-	    );   
+		        }
+		    );
+
+			$.get(ebookURL,
+		        function(data){
+		            var oneline = $(data).text().replace(/\n/g,""),
+		            	overdrive_id = oneline.replace(/.*fOVERDRIVE\:(.+?)\$.*/,"$1"),
+		            	overdriveURL = "http://overdrive.dclibrary.org/ContentDetails.htm?id="+overdrive_id;
+		            overdriveSearch(modify_digital,overdriveURL,purchaseURL);
+		        }
+		    );   
 	}
 
-	function altSearch(where,url,purchase){
+	function taSearch(modify_book,taURL,purchaseURL){
 			//load and format data from catalog search
-	     	$.get(url,
+	     	$.get(taURL,
 	        function(data){
-	        	var dcpl = $(data);
-	        	console.log(0);
-	            var oneline = dcpl.text().replace(newline_regex,"");
+	            var oneline = $(data).text().replace(/\n/g,"");
 	            try {
 		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1"));
 		            	var available = book_json['totalAvailable'].toString();
 		            	var total = book_json['copies'][0].match(/(\d+)$/)[1];
 		            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
-		                	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copy ("+available+" Available)</a>");
+		                	modify_book.html("Located in catalog <br> <a href = '" + taURL + "'>"+total+" Copy ("+available+" Available)</a>");
 		            	} else {
-		                	where.html("<span id='dcpl_title'>DCPL Search</span> <br> Located in catalog <br> <a href = '" + url + "'>"+total+" Copies ("+available+" Available)</a>");
+		                	modify_book.html("Located in catalog <br> <a href = '" + taURL + "'>"+total+" Copies ("+available+" Available)</a>");
 		            	}
 	            	} catch (e) {
 						if (oneline.match("This search returned no results.")!=null){
-			                where.html("<span id='dcpl_title'>DCPL Search</span> <br> No results found <br> <a href = '" + url + "'>Search manually</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");	            	
+			                modify_book.html("Not located in catalog <br> <a href = '" + taURL + "'>Search manually</a> <br> <a href = '" + purchaseURL + "'>Request Purchase</a>");	            	
 			            } else {
-			                where.html("<span id='dcpl_title'>DCPL Search</span> <br> Multiple possible matches <br> <a href = '" + url + "'>View results</a> <br> <a href = '" + purchase + "'>Request Purchase</a>");
+			                modify_book.html("Multiple possible matches <br> <a href = '" + taURL + "'>View results</a> <br> <a href = '" + purchaseURL + "'>Request Purchase</a>");
 			            }	            	
 			        }
 	        }
 	    );   
 	}
 
-}
+	function overdriveSearch(modify_digital,overdriveURL,purchaseURL){
+		$.get(overdriveURL,
+			function(data){
+				var oneline = $(data).text().replace(/\n/g,""),
+	            	available = oneline.replace(/.*Available:(\d+).*/,"$1"),
+	            	total = oneline.replace(/.*Library copies:(\d+).*/,"$1");
+            	if(available.match(/^[0-9]+$/)!=null && total.match(/^1$/)!=null){
+                	modify_digital.html("E-book located in catalog <br> <a href = '" + overdriveURL + "'>"+total+" Copy ("+available+" Available)</a>");
+            	} else if (available.match(/^[0-9]+$/)!=null && total.match(/^[0-9]+$/)!=null) {
+                	modify_digital.html("E-book located in catalog <br> <a href = '" + overdriveURL + "'>"+total+" Copies ("+available+" Available)</a>");
+            	} else {
+                	modify_digital.html("Not located in digital catalog <br> <a href = 'http://overdrive.dclibrary.org/'>Search manually</a>");            		
+            	}
+			});
+	}
+
+	}
+
+
