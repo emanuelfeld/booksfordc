@@ -40,7 +40,7 @@ if (/amazon\.com$/.test(document.domain)) {
 
 			if ($('div.kicsBoxContents').length){
 
-		        var container = $('div.kicsBoxContents');    
+		        var container = $('div.kicsBoxContents:first');    
 			    container.before("<div id='dcpl_digital'><div id='dcpl_title'>DCPL Search</div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'> </div>  <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='"+chrome.extension.getURL('assets/ajax-loader.gif')+"'> </div> </div>");
 		    	var modify_digital = $("div#digital");
 			    var modify_book = $("div#book");
