@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import scraperwiki, requests, re, lxml.html, time, tweepy, os
+import scraperwiki, requests, re, lxml.html, time, tweepy, os, pytz, HTMLParser
 from datetime import datetime
 
 def clean_xml(x):
@@ -30,6 +30,11 @@ def tweet(title,author,link):
     api.update_status(text+" "+link)
     time.sleep(60)
 
+def update_twitter_profile():
+    profile_text = "Tweeting new books in the DC Public Library catalog. Not affiliated with (but fan of) @dcpl. Send questions to @evonfriedland. Updated "
+    profile_update_time = str(datetime.now(tz).strftime("%Y-%m-%d %I:%M %p"))
+    api.update_profile("booksfordc","https://github.com/evonfriedland/booksfordc","Washington, DC",profile_text+profile_update_time)
+
 def scrape(y):                
     try:
         html = scraperwiki.scrape(y)
@@ -37,14 +42,14 @@ def scrape(y):
         j,k=0,0
         for entry in root.cssselect('feed entry'):
             current = {
-                'title' : str(entry[0].text_content()),
+                'title' : parse.unescape(str(entry[0].text_content())),
                 'url' : entry.xpath('child::link/@href')[0],
                 'ils' : entry.xpath('child::ils/text()')[0],
                 'pub' : int(p),
                 'format' : re.sub(r'.*09',r'',str(f)),
                 'audience' : re.sub(r'.*09',r'',str(a)),
                 'pubDate' : str(datetime.now()),
-                'author' : entry[6].text_content()
+                'author' : parse.unescape(entry[6].text_content())
                 }
             if check_store(current)==0:
                 j=j+1
@@ -94,18 +99,26 @@ scraperwiki.sql.execute("DELETE FROM current")
 auth = tweepy.OAuthHandler(os.environ['MORPH_CON_TOK'], os.environ['MORPH_CON_SEC'])
 auth.set_access_token(os.environ['MORPH_ACC_TOK'], os.environ['MORPH_ACC_SEC'])
 api = tweepy.API(auth)
+
+tz = pytz.timezone('US/Eastern')
+
+parse = HTMLParser.HTMLParser()
     
-i=0
-for p in pubyears:
-    for f in formats:
-        for a in audiences:
-            for l in libraries:
-                print str(i)+":  "+l+" "+p+" "+a
-                i=i+1
-                scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
+if 7<= int(datetime.now(tz).strftime('%H')) < 21:
+    
+    scraperwiki.sql.execute("DELETE FROM current")
 
-# MLK Jr Library marks certain fiction books as 'newbooks' so that they can be physically located in 
-# the 'New Book Area.' This allows us to find some new books published in prior years.
-scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qu=newbooks")
-
-
+    i=0
+    for p in pubyears:
+        for f in formats:
+            for a in audiences:
+                for l in libraries:
+                    print str(i)+":  "+l+" "+p+" "+a
+                    i=i+1
+                    scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qf=LIBRARY%09Library%091%3A"+l+"&qf=PUBDATE%09Publication+Date%09"+p+"%09"+p+"&qf=ITEMCAT2%09Audience%091%3A"+a+"&qf=FORMAT%09Bibliographic+Format%09"+f)
+    
+    # MLK Jr Library marks certain fiction books as 'newbooks' so that they can be physically located in 
+    # the 'New Book Area.' This allows us to find some new books published in prior years.
+    scrape("https://catalog.dclibrary.org/client/rss/hitlist/dcpl/qu=newbooks")
+    
+    update_twitter_profile()
