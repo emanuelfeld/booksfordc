@@ -108,7 +108,7 @@ if (/amazon\.com$/.test(document.domain)) {
 			            		if (oneline.match("This search returned no results.")!=null){
 			                		modify_book.html("Book not located <br> <a id='results' href = '" + taURL + "'>Search manually</a> <br> <a id='results' href = '" + purchaseURL + "'>Request purchase</a>");	            	
 			            		} else {
-			               			 modify_book.html("Multiple possible matches <br> <a id='results' href = '" + taURL + "'>View results</a> <br> <a id='results' href = '" + purchaseURL + "'>Request purchase</a>");
+			               			 modify_book.html("Uncertain match <br> <a id='results' href = '" + taURL + "'>View results</a> <br> <a id='results' href = '" + purchaseURL + "'>Request purchase</a>");
 			            		}	            	
 			            	} else {
 				            	taSearch(modify_book,taURL,purchaseURL);	            				            		
@@ -166,7 +166,7 @@ if (/amazon\.com$/.test(document.domain)) {
 						if (oneline.match("This search returned no results.")!=null){
 			                modify_book.html("Book not located <br> <a id='results' href = '" + taURL + "'>Search manually</a> <br> <a id='results' href = '" + purchaseURL + "'>Request purchase</a>");	            	
 			            } else {
-			                modify_book.html("Multiple possible matches <br> <a id='results' href = '" + taURL + "'>View results</a> <br> <a id='results' href = '" + purchaseURL + "'>Request purchase</a>");
+			                modify_book.html("Uncertain match <br> <a id='results' href = '" + taURL + "'>View results</a> <br> <a id='results' href = '" + purchaseURL + "'>Request purchase</a>");
 			            }	            	
 			        }
 	        }
