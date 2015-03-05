@@ -8,8 +8,15 @@ if (/amazon\.com$/.test(document.domain)) {
 
 	if ($('#btAsinTitle').length){
 
-		var title = $('#btAsinTitle').text().replace(/\(.*\)/g,"").replace(/\[.*\]/,""),
-			author = $('.contributorNameTrigger').text();
+		var title = $('#btAsinTitle').text().replace(/\(.*\)/g,"").replace(/\[.*\]/,"");
+		if ($('.contributorNameTrigger a:eq(0)').length){
+			var author = $('.contributorNameTrigger a:eq(0)').text();			
+		} else if ($('.contributorNameTrigger a').length){
+			var author = $('.contributorNameTrigger a').text();			
+		} else {
+			var author = $('div.buying span a').text();			
+		}
+
 		isEBook = true;
 
 	} else if ($('#productTitle').length) {
