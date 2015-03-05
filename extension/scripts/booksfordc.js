@@ -177,7 +177,7 @@ if (/amazon\.com$/.test(document.domain)) {
 		            	if (wait.match(/^[0-9]+$/)!=null && wait.match(/^0$/)==null && available.match(/^0$/)!=null && total.match(/^[0-9]+$/)!=null){
 		                	modify_book.html("<a id='results' href = '" + isbnURL + "'> Book located </a> <br>"+total_statement+" ("+wait_statement+")");
 		                } else {
-		                	modify_book.html("<a id='results' href = '" + taURL + "'> Book located </a> <br> "+total_statement+" copies ("+available+" available)");
+		                	modify_book.html("<a id='results' href = '" + taURL + "'> Book located </a> <br> "+total_statement+" ("+available+" available)");
 		            	}
 
 	            	} catch (e) {
