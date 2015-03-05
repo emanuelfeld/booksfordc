@@ -29,7 +29,7 @@ if (/amazon\.com$/.test(document.domain)) {
 		//URL for ISBN search
 		var isbnURL = base + isbn;
 		//URL to search catalog by title and author for books
-		var taURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&lm=BOOKS";
+		var taURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=BOOKS";
 		//URL to search catalog for ebooks
 		var ebookURL = base+"TITLE%3D"+encodeURIComponent(title+" ").replace(/'/g, "%27")+"&qu=AUTHOR%3D"+encodeURIComponent(author).replace(/'/g, "%27")+"&qf=FORMAT%09Bibliographic+Format%09E_BOOK%09eBook";
 		//URL to request library purchase
@@ -78,7 +78,9 @@ if (/amazon\.com$/.test(document.domain)) {
 			//search by ISBN (or title/author URL if on Amazon ebook page and don't know ISBN)
 	     	$.get(isbnURL,
 		        function(data){
+		            
 		            var oneline = $(data).text().replace(/\n/g,"");
+		            
 		            try {
 			      			var availabilityJSON = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1"));
 			            	var available = availabilityJSON['totalAvailable'].toString();
@@ -120,9 +122,11 @@ if (/amazon\.com$/.test(document.domain)) {
 			//Determine Overdrive ID to search Overdrive catalog
 			$.get(ebookURL,
 		        function(data){
+		            
 		            var oneline = $(data).text().replace(/\n/g,""),
 		            	overdrive_id = oneline.replace(/.*fOVERDRIVE\:(.+?)\$.*/,"$1"),
 		            	overdriveURL = "http://overdrive.dclibrary.org/ContentDetails.htm?id="+overdrive_id;
+		            
 		            if (overdrive_id.length>100){
 	                	modify_digital.html("E-book not located <br> <a id='results' href = 'http://overdrive.dclibrary.org/'>Search manually</a>");            		
 		            } else {
@@ -137,12 +141,14 @@ if (/amazon\.com$/.test(document.domain)) {
 			//Search library catalog by title/author
 	     	$.get(taURL,
 	        function(data){
+	            
 	            var oneline = $(data).text().replace(/\n/g,"");
+
 	            try {
 		      			var book_json = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/,"$1"));
 		            	var available = book_json['totalAvailable'].toString();
 		            	var total = book_json['copies'][0].match(/(\d+)$/)[1];
-		            	var wait = availabilityJSON['holdCounts'][0].match(/(\d+)$/)[1];
+		            	var wait = book_json['holdCounts'][0].match(/(\d+)$/)[1];
 
 				        if (total.match(/^1$/)!=null){
 			            	var total_statement = total + " copy";
@@ -156,10 +162,10 @@ if (/amazon\.com$/.test(document.domain)) {
 			            	var wait_statement = wait + " patrons waiting"	            	
 			            }
 
-		            	if (holds.match(/^[0-9]+$/)!=null && holds.match(/^0$/)==null && available.match(/^0$/)!=null && total.match(/^[0-9]+$/)!=null){
+		            	if (wait.match(/^[0-9]+$/)!=null && wait.match(/^0$/)==null && available.match(/^0$/)!=null && total.match(/^[0-9]+$/)!=null){
 		                	modify_book.html("<a id='results' href = '" + isbnURL + "'> Book located </a> <br>"+total_statement+" ("+wait_statement+")");
 		                } else {
-		                	modify_book.html("Book located <br> <a id='results' href = '" + taURL + "'>"+total_statement+" copies ("+available+" available)</a>");
+		                	modify_book.html("<a id='results' href = '" + taURL + "'> Book located </a> <br> "+total_statement+" copies ("+available+" available)");
 		            	}
 
 	            	} catch (e) {
@@ -178,6 +184,7 @@ if (/amazon\.com$/.test(document.domain)) {
 		//Search Overdrive catalog
 		$.get(overdriveURL,
 			function(data){
+				
 				var oneline = $(data).text().replace(/\n/g,"");
 				var availability = oneline.replace(/.*Copies-Available:(\d+)Library copies:(\d+)var deNumWaiting = (\d+?)\;.*/,"$1,$2,$3");
 	            var available = availability.split(',')[0];
