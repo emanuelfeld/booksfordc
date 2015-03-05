@@ -29,7 +29,7 @@ if (/amazon\.com$/.test(document.domain)) {
 		//URL for ISBN search
 		var isbnURL = base + isbn;
 		//URL to search catalog by title and author for books
-		var taURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&qf=FORMAT%09Bibliographic+Format%09BOOK%09Book";
+		var taURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&lm=BOOKS";
 		//URL to search catalog for ebooks
 		var ebookURL = base+"TITLE%3D"+encodeURIComponent(title+" ").replace(/'/g, "%27")+"&qu=AUTHOR%3D"+encodeURIComponent(author).replace(/'/g, "%27")+"&qf=FORMAT%09Bibliographic+Format%09E_BOOK%09eBook";
 		//URL to request library purchase
