@@ -22,9 +22,14 @@ if (/amazon\.com$/.test(document.domain)) {
 	} else if ($('#productTitle').length) {
 
 		var title = $('#productTitle').text().replace(/\(.*\)/g,"").replace(),
-			author = $('.a-link-normal.contributorNameID:first').text(),
 			isbn13 = $("#productDetailsTable .content li:contains('ISBN-13:')").text(),
 			isbn = isbn13.split(':')[1].replace(/\D/g,'');
+		if	($('.a-link-normal.contributorNameID:first').length){
+			author = $('.a-link-normal.contributorNameID:first').text();			
+		} else {
+			author = $('.author .a-link-normal:eq(0)').text();			
+		}
+
 		isBook = true;
 
 	} 
