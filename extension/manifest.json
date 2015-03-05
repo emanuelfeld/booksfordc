@@ -7,12 +7,17 @@
   
   "author": "Emanuel Feld",
 
+  "icons": { "16": "assets/icon16.png",
+             "48": "assets/icon48.png",
+            "128": "assets/icon128.png" },
+
   "web_accessible_resources": [
     "css/booksfordc.css",
     "scripts/booksfordc.js",
     "assets/ajax-loader.gif"
   ],
   
+
   "content_scripts": [
       {
           "exclude_globs": [],
