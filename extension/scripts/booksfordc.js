@@ -90,7 +90,7 @@ if (/amazon\.com$/.test(document.domain)) {
 			//search by ISBN (or title/author URL if on Amazon ebook page and don't know ISBN)
 	     	$.get(isbnURL,
 		        function(data){
-		            
+
 		            var oneline = $(data).text().replace(/\n/g,"");
 		            
 		            try {
