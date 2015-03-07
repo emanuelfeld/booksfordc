@@ -169,8 +169,8 @@ function sirsiAvailability(oneline, url, search_by, modify, type) {
 	} catch (e) {
 
 		if (search_by==="isbn") {
-			console.log("Now searching for book in Sirsi by title and author");
-			searchSirsi(search_urls['bookURL'], search_by, modify, type);
+			console.log("Sirsi book search by ISBN failed\nSearching instead by title and author");
+			searchSirsi(search_urls['bookURL'], "text", modify, type);
 		} else if (oneline.match("This search returned no results.")!=null){
 			console.log("Book not located in Sirsi");
 			failureMessage(type,"not_located",url,modify);
