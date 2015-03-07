@@ -43,7 +43,7 @@ if (/amazon\.com$/.test(document.domain)) {
 		//URL to search catalog by title and author for books
 		var taURL = base+encodeURIComponent(title+" "+author).replace(/'/g, "%27")+"&te=&lm=BOOKS";
 		//URL to search catalog for ebooks
-		var ebookURL = base+"TITLE%3D"+encodeURIComponent(title+" ").replace(/'/g, "%27")+"&qu=AUTHOR%3D"+encodeURIComponent(author).replace(/'/g, "%27")+"&qf=FORMAT%09Bibliographic+Format%09E_BOOK%09eBook";
+		var ebookURL = base+"TITLE%3D"+encodeURIComponent(title+" ").replace(/'/g, "%27")+"&qu=AUTHOR%3D"+encodeURIComponent(author).replace(/'/g, "%27")+"&te=&lm=E-BOOK";
 		//URL to request library purchase
 		var purchaseURL = "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X";
 
@@ -86,6 +86,11 @@ if (/amazon\.com$/.test(document.domain)) {
 	}
 
 	function searchCatalog(modify_book,modify_digital,isbnURL,taURL,ebookURL,purchaseURL,isBook,isEBook) {
+			
+			// var get_url = "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria=Hello&x=0&y=0"
+			// $.get(get_url,function(data){
+			// 	console.log(data);
+			// });
 
 			//search by ISBN (or title/author URL if on Amazon ebook page and don't know ISBN)
 	     	$.get(isbnURL,
@@ -134,10 +139,12 @@ if (/amazon\.com$/.test(document.domain)) {
 			//Determine Overdrive ID to search Overdrive catalog
 			$.get(ebookURL,
 		        function(data){
-		            
-		            var oneline = $(data).text().replace(/\n/g,""),
-		            	overdrive_id = oneline.replace(/.*fOVERDRIVE\:(.+?)\$.*/,"$1"),
-		            	overdriveURL = "http://overdrive.dclibrary.org/ContentDetails.htm?id="+overdrive_id;
+		            var oneline = $(data).text().replace(/\n/g,"");
+		            var overdrive_id = oneline.replace(/.*{([A-Z0-9\-]+?)}.*/,"$1");
+		            if (overdrive_id.length>100){
+		            	var overdrive_id = oneline.replace(/.*fOVERDRIVE\:(.+?)\$.*/,"$1");
+		            }
+		            overdriveURL = "http://overdrive.dclibrary.org/ContentDetails.htm?id="+overdrive_id;
 		            
 		            if (overdrive_id.length>100){
 	                	modify_digital.html("E-book not located <br> <a id='results' href = 'http://overdrive.dclibrary.org/'>Search manually</a>");            		
