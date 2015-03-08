@@ -1,11 +1,12 @@
 if (/amazon\.com$/.test(document.domain)) {
 
-	makeBox();
-	
-	var page_info = pageInfo(),
-		search_urls = searchURLs(page_info['author'], page_info['title'],page_info['isbn']);
+	var on_page = makeBox();
 
-	if (page_info['success']===true){
+	if (on_page===true){
+
+		var page_info = pageInfo(),
+			search_urls = searchURLs(page_info['author'], page_info['title'],page_info['isbn']);
+
 		if (page_info['isbn']===null){
 			searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book");
 		} else {
@@ -29,6 +30,7 @@ function makeBox() {
 			chrome.extension.getURL('assets/ajax-loader.gif') +
 			"'> </div>  <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
+			return true;
 	} else if ($('div.a-box.rbbSection.selected.dp-accordion-active').length) {
 		console.log("Created book page box");
 		container = $('div.a-box.rbbSection.selected.dp-accordion-active');
@@ -37,6 +39,7 @@ function makeBox() {
 			chrome.extension.getURL('assets/ajax-loader.gif') +
 			"'> </div> <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
+			return true;
 	} else if ($('div#unqualifiedBuyBox').length) {
 		console.log("Created used book page box");
 		container = $('div#unqualifiedBuyBox');
@@ -45,8 +48,10 @@ function makeBox() {
 			chrome.extension.getURL('assets/ajax-loader.gif') +
 			"'> </div> <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
+			return true;
 	} else {
 		console.log("Could not create box")
+			return false;
 	}
 }
 
@@ -56,7 +61,7 @@ function pageInfo() {
 	var success, page_type, title, isbn, isbn13, author;
 
 	if ($('#btAsinTitle').length) {
-		console.log("One ebook page")
+		console.log("On ebook page")
 		success = true;
 		page_type = "ebook_page";
 		title = $('#btAsinTitle').text();
