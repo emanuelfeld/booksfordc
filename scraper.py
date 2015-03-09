@@ -33,7 +33,7 @@ def tweet(title,author,link):
 def update_twitter_profile():
     profile_text = "Tweeting new books in the DC Public Library catalog. Not affiliated with (but fan of) @dcpl. Send questions to @evonfriedland. Updated "
     profile_update_time = str(datetime.now(tz).strftime("%Y-%m-%d %I:%M %p"))
-    api.update_profile("booksfordc","https://github.com/evonfriedland/booksfordc","Washington, DC",profile_text+profile_update_time)
+    api.update_profile("booksfordc","https://github.com/emanuelfeld/booksfordc","Washington, DC",profile_text+profile_update_time)
 
 def scrape(y):                
     try:
