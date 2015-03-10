@@ -9,7 +9,10 @@
         "twitter": "@booksfordc"
     },
     "bornAt": "Code for DC",
-    "geography": "DC",
+    "geography": "Washington, DC",
+    "politicalEntity": {
+        "DC Public Library": "http://dclibrary.org/"
+    },
     "type": "Scraper",
     "categories": [
     {"category":"Libraries"},
