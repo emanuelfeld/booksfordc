@@ -224,15 +224,19 @@ function successMessage(total, available, wait, type, modify, result_url) {
 
 function failureMessage(type,failure,failure_url,modify){
 	if (type==="Book"){
-		var purchase_message =  "<br> <a id='results' href = '" + search_urls['purchaseURL'] + "'>Request purchase</a>"
+		var purchase_message =  "<br> <a id='results' href = '" + search_urls['purchaseURL'] + "'>Request purchase</a>",
+			ebook_message = "";
 	} else {
-		var purchase_message = "";
+		var purchase_message = "",
+			ebook_message =  "<br> <a id='results' href = '" + search_urls['overdriveURL'] + "'>Search manually</a>";
 	}
 
+
+
 	if (failure==="not_located") {
-	      	 modify.html(type + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>"+purchase_message);	            	
+	      	 modify.html(type + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>" + purchase_message);	            	
 	} else {
-	        modify.html("Uncertain match <br> <a id='results' href = '" + failure_url + "'>View results</a>" + purchase_message);
+	        modify.html("Uncertain match <br> <a id='results' href = '" + failure_url + "'>View results</a>" + ebook_message + purchase_message);
 	}
 
 }
