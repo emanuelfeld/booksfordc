@@ -136,12 +136,17 @@ function searchOverdrive(oneline, url, fail_url, modify, type) {
 
 	var overdrive_id, overdrive_url, overdrive_oneline;
 
-	overdrive_id = oneline.replace(/.*{([A-Z0-9\-]+?)}.*/, "$1");
-	if (overdrive_id.length > 100) {
+	if (oneline.match(/\{[A-Z0-9\-]+\}/)){
+		overdrive_id = oneline.replace(/.*{([A-Z0-9\-]+?)}.*/, "$1");
+	} else if (oneline.match(/fOVERDRIVE\:(.+?)\$/)) {
 		overdrive_id = oneline.replace(/.*fOVERDRIVE\:(.+?)\$.*/, "$1");
+	} else {
+		overdrive_id = "";
+		console.log("Ebook not located in Sirsi");
+		failureMessage(type,"not_located",search_urls['overdriveURL'],modify);		
 	}
 
-	if (overdrive_id.length < 100) {
+	if (overdrive_id.length > 1 && overdrive_id.length < 100) {
 		console.log("Ebook found in Sirsi");
 		overdrive_url = "http://overdrive.dclibrary.org/ContentDetails.htm?id=" + overdrive_id;
 		$.get(overdrive_url,function(data){
@@ -149,14 +154,7 @@ function searchOverdrive(oneline, url, fail_url, modify, type) {
 			overdrive_oneline = $(data).text().replace(/\n/g,"");
 			overdriveAvailability(overdrive_oneline, overdrive_url, modify, type);
 		});
-	} else if (oneline.match("This search returned no results.")!=null){
-		console.log("Ebook not located in Sirsi");
-		failureMessage(type,"not_located",search_urls['overdriveURL'],modify);
-	} else {
-		console.log("Uncertain ebook match in Sirsi");
-		failureMessage(type,"uncertain",url,modify);
-    }    
-
+	}    
 	}
 
 function sirsiAvailability(oneline, url, search_by, modify, type) {
@@ -234,7 +232,7 @@ function failureMessage(type,failure,failure_url,modify){
 
 
 	if (failure==="not_located") {
-	      	 modify.html(type + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>" + purchase_message);	            	
+	      	modify.html(type + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>" + purchase_message);	            	
 	} else {
 	        modify.html("Possible match located <br> <a id='results' href = '" + failure_url + "'>View results</a>" + ebook_message + purchase_message);
 	}
