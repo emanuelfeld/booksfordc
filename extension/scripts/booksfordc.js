@@ -236,7 +236,7 @@ function failureMessage(type,failure,failure_url,modify){
 	if (failure==="not_located") {
 	      	 modify.html(type + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>" + purchase_message);	            	
 	} else {
-	        modify.html("Uncertain match <br> <a id='results' href = '" + failure_url + "'>View results</a>" + ebook_message + purchase_message);
+	        modify.html("Possible match located <br> <a id='results' href = '" + failure_url + "'>View results</a>" + ebook_message + purchase_message);
 	}
 
 }
