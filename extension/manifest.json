@@ -3,7 +3,7 @@
 
   "name": "booksfordc",
   "description": "This extension allows you to determine the availability of books at the DC Public Library when browsing Amazon.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   
   "author": "Emanuel Feld",
 
