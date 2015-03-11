@@ -33,4 +33,7 @@ Download the booksfordc extension by clicking on extension.crx and then 'Raw.' O
 * Port to Firefox (Safari?)
 * Allow for functionality on Goodreads and, perhaps, Barnes and Noble
 
+###Notes###
+* Not all ebooks in Overdrive are listed in Sirsi catalog for unknown reason
+
 ![image](https://cloud.githubusercontent.com/assets/4269640/6477965/8fe3d6ac-c1f7-11e4-82a1-401a4ae68a88.png)
