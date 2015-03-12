@@ -139,7 +139,7 @@ function searchOverdrive(oneline, url, fail_url, modify, type) {
 	if (oneline.match(/\{[A-Z0-9\-]+\}/)){
 		overdrive_id = oneline.replace(/.*{([A-Z0-9\-]+?)}.*/, "$1");
 	} else if (oneline.match(/fOVERDRIVE\:(.+?)\$/)) {
-		overdrive_id = oneline.replace(/.*fOVERDRIVE\:(.+?)\$.*/, "$1");
+		overdrive_id = oneline.replace(/(.+?)fOVERDRIVE\:(.+?)\/0\/0.*/, "$2");
 	} else {
 		overdrive_id = "";
 		console.log("Ebook not located in Sirsi");
