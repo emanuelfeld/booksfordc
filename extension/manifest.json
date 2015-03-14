@@ -3,7 +3,7 @@
 
   "name": "booksfordc",
   "description": "This extension allows you to determine the availability of books at the DC Public Library when browsing Amazon and Goodreads.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   
   "author": "Emanuel Feld",
 
@@ -13,8 +13,9 @@
 
   "web_accessible_resources": [
     "css/booksfordc.css",
-    "scripts/booksfordc.js",
+    "scripts/amazon.js",
     "scripts/goodreads.js",
+    "scripts/common.js",
     "assets/ajax-loader.gif"
   ],
   
@@ -28,8 +29,9 @@
           "css": ["css/booksfordc.css"],
           "js": [
               "scripts/jquery.min.js",
-              "scripts/goodreads.js",
-              "scripts/booksfordc.js"
+              "scripts/common.js",
+              "scripts/amazon.js",
+              "scripts/goodreads.js"
           ],
           "matches": [
               "http://*.amazon.com/*",
@@ -39,6 +41,11 @@
           "run_at": "document_end"
       }
   ],
+      "background": {
+        "scripts": ["scripts/background.js"],
+        "persistent": false
+    },
+
   "permissions": [
               "http://*.amazon.com/*",
               "https://*.amazon.com/*",
