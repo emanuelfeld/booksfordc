@@ -19,6 +19,14 @@
 	margin-bottom:12px;
 }
 
+#dcpl_goodreads {
+	padding:8px 12px 8px 12px; 
+	border-radius:6px; 
+	border:1px solid #94c039; 
+	margin-bottom:12px;
+}
+
+
 #book {
 	font-size:13px;
 	line-height: 19px;

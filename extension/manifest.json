@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "booksfordc",
-  "description": "This extension allows you to determine the availability of books at the DC Public Library when browsing Amazon.",
-  "version": "1.0.2",
+  "description": "This extension allows you to determine the availability of books at the DC Public Library when browsing Amazon and Goodreads.",
+  "version": "1.0.3",
   
   "author": "Emanuel Feld",
 
@@ -14,6 +14,7 @@
   "web_accessible_resources": [
     "css/booksfordc.css",
     "scripts/booksfordc.js",
+    "scripts/goodreads.js",
     "assets/ajax-loader.gif"
   ],
   
@@ -27,11 +28,13 @@
           "css": ["css/booksfordc.css"],
           "js": [
               "scripts/jquery.min.js",
+              "scripts/goodreads.js",
               "scripts/booksfordc.js"
           ],
           "matches": [
               "http://*.amazon.com/*",
-              "https://*.amazon.com/*"
+              "https://*.amazon.com/*",
+              "https://*.goodreads.com/book/show/*"
           ],
           "run_at": "document_end"
       }
@@ -39,8 +42,9 @@
   "permissions": [
               "http://*.amazon.com/*",
               "https://*.amazon.com/*",
-              "https://*.catalog.dclibrary.org/*",
-              "http://*.dclibrary.org/*"
+              "https://*.dclibrary.org/*",
+              "http://*.dclibrary.org/*",
+              "https://*.goodreads.com/*"
               ],
   "offline_enabled": false
 }
