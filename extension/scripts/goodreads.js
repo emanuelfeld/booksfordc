@@ -64,7 +64,7 @@ function searchURLs(author, title, isbn) {
   return {
     "isbnURL": base + isbn + "&te=&lm=BOOKS",
     "bookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&te=&lm=BOOKS",
-    "ebookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&te=&lm=E-BOOK",
+    "ebookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&qf=-ERC_FORMAT%09Electronic+Format%09MP3%09MP3&te=&lm=E-BOOK",
     "purchaseURL": "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X",
     "overdriveURL" : "http://overdrive.dclibrary.org"
   }
