@@ -22,14 +22,12 @@ Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not 
 * On occasion, books are not being allocated to an audience (adults, teens, children) and so will fail to show up in search
 
 ##Browser Plug-in##
-A Chrome extension that displays library holdings and availability when browsing books on Amazon.com. Searches the catalog by  ISBN-13 value. If no match is found (because the edition or book is not held at DCPL), the extension provides a link to search the catalog by title and author, as well as a link to request that the library purchase the material.
-
-Download the booksfordc extension by clicking on extension.crx and then 'Raw.' Open up chrome://extensions, locate the downloaded file, and drag it into the extensions window.
+A Chrome extension that displays library holdings and availability when browsing books on Amazon.com, Goodreads.com, or BarnesAndNoble.com. Download for free from the [Chrome store](https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg).
 
 ###To do###
 * ~~Improve search functionality to cover multiple editions—is it better to search by title, author, and resource type, then take the first hit (if it exists?). Doesn't appear that it will automatically redirect with this sort of search, even if only one result.~~
 * ~~Search Overdrive, if the DCPL makes the API accessible (and don't require a private key). Possibly just use Sirsi catalog, get Overdrive ID from result URL and go from there.~~
-* Allow for functionality on ~~Goodreads and, perhaps,~~ Barnes and Noble
+* ~~Allow for functionality on Goodreads and, perhaps, Barnes and Noble~~
 * Auto-fill parts of the purchase request form with title, author, etc. info from Amazon page
 * Port to Firefox (Safari?)
 
