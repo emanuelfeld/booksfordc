@@ -1,16 +1,19 @@
 function cleanTitle(title) {
   console.log("Title cleaned");
-  return title.replace(/\(.*\)/g, "").replace(/\[.*\]/, "");
+  return title.replace(/\(.*\)/g, "").replace(/\[.*\]/, "").replace(/[\n ]*$/,"");
 }
 
-function majorTitle(title) {
-  console.log("Subtitle removed for Overdrive search");
+function overdriveTitle(title) {
   return title.replace(/:.*/,"");
 }
 
 function cleanAuthor(author) {
   console.log("Author cleaned");
-  return author.replace("Ph.D.", "").replace(/ +$/, "").replace(/ ([A-Z]\.)+ /," ");
+  return author.replace("Ph.D.", "").replace(/ +$/, "");
+}
+
+function overdriveAuthor(author) {
+  return author.replace(/([A-Z]\.)+/g,"");
 }
 
 function searchURLs(author, title, isbn) {
@@ -20,7 +23,7 @@ function searchURLs(author, title, isbn) {
     "isbnURL": base + isbn + "&te=&lm=BOOKS",
     "bookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&te=&lm=BOOKS",
     "ebookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&qf=-ERC_FORMAT%09Electronic+Format%09MP3%09MP3&te=&lm=E-BOOK",
-    "overdriveSearchURL" : "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria="+encodeURIComponent(majorTitle(title) + " " + author)+"&x=0&y=0&Format=420%2C50%2C410%2C450%2C610%2C810%2C303",
+    "overdriveSearchURL" : "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria="+encodeURIComponent(overdriveTitle(title) + " " + overdriveAuthor(author))+"&x=0&y=0&Format=420%2C50%2C410%2C450%2C610%2C810%2C303",
     "purchaseURL": "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X",
     "overdriveURL" : "http://overdrive.dclibrary.org"
   }
@@ -38,11 +41,14 @@ function searchSirsi(search_url, search_by, modify, type) {
 
 function searchOverdrive(search_url, fail_url, search_by, modify, type) {
 
+    console.log(search_url);
+
     chrome.runtime.sendMessage({
       method: 'GET',
       action: 'xhttp',
       url: search_url    }, 
       function(response){
+
         var result = $(response);
         overdriveAvailability(result, fail_url, modify, type);
     });
@@ -80,7 +86,7 @@ function sirsiAvailability(oneline, url, search_by, modify, type) {
 
 function overdriveAvailability(result, url, modify, type) {
 
-  try {
+ try {
 
         var availabilityInfo = result.find('.img-and-info-contain:eq(0)'),
             available = availabilityInfo.attr( "data-copiesavail" ),
@@ -90,8 +96,8 @@ function overdriveAvailability(result, url, modify, type) {
         var view = result.find('.li-details a:eq(0)'),
             link = "http://overdrive.dclibrary.org/10/50/en/"+view.attr("href");
 
-      console.log("E-book located in Overdrive");
       successMessage(total, available, wait, type, modify, link);
+      console.log("E-book located in Overdrive");
 
   } catch (e) {
     

@@ -94,7 +94,9 @@ function pageInfo() {
 		isbn = "";
 	}
 
-	return { "success": success, "page_type": page_type, "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
+    var result =  { "success": success, "page_type": page_type, "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
+    console.log(result);
+    return result;
 }
 
 
