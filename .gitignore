@@ -55,3 +55,4 @@ target/
 
 # Chrome Extension
 *.pem
+*.zip
