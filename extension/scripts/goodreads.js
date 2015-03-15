@@ -8,8 +8,10 @@ if (/goodreads\.com$/.test(document.domain)) {
       search_urls = searchURLs(page_info['author'], page_info['title'],page_info['isbn']);
 
     if (page_info['isbn']===null){
+      console.log("Book: Searching catalog by title and author")
       searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book");
     } else {
+      console.log("Book: Searching catalog by ISBN")
       searchSirsi(search_urls['isbnURL'],"isbn",$("div#book"), "Book");
     }
     searchOverdrive(search_urls['overdriveSearchURL'], search_urls['overdriveURL'], "text", $("div#digital"), "E-book");   
@@ -20,6 +22,7 @@ function goodreadsMakeBox() {
   var container;
 
   if ($('div.rightContainer').length) {
+    console.log("Initialize: Creating Goodreads page box");
     container = $('div.rightContainer:first');
     container.prepend(
       "<div id='dcpl_goodreads'><div id='dcpl_title'>DCPL Search</div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
@@ -28,7 +31,7 @@ function goodreadsMakeBox() {
       chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
       return true;
   } else {
-    console.log("Could not create box");
+    console.log("Initialize: Could not create Goodreads page box");
     return false;
   }
 }

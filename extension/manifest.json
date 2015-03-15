@@ -3,7 +3,7 @@
 
   "name": "booksfordc",
   "description": "Determine the availability of (e)books at the DC Public Library when browsing Amazon, Goodreads, Barnes and Noble, or Google Play.",
-  "version": "1.0.7",
+  "version": "1.0.8",
   
   "author": "Emanuel Feld",
 
@@ -17,7 +17,6 @@
     "scripts/amazon.js",
     "scripts/bn.js",
     "scripts/goodreads.js",
-    "scripts/googleplay.js",
     "assets/ajax-loader.gif"
   ],
   
@@ -34,17 +33,14 @@
               "scripts/common.js",
               "scripts/amazon.js",
               "scripts/bn.js",
-              "scripts/goodreads.js",
-              "scripts/googleplay.js"
+              "scripts/goodreads.js"
           ],
           "matches": [
               "http://*.amazon.com/*",
               "https://*.amazon.com/*",
               "http://*.barnesandnoble.com/w/*",
               "https://*.barnesandnoble.com/w/*",
-              "https://*.goodreads.com/book/show/*",
-              "http://*.play.google.com/store/books/details/*",
-              "https://*.play.google.com/store/books/details/*"
+              "https://*.goodreads.com/book/show/*"
           ],
           "run_at": "document_end"
       }
@@ -61,9 +57,7 @@
               "https://*.barnesandnoble.com/*",
               "https://*.dclibrary.org/*",
               "http://*.dclibrary.org/*",
-              "https://*.goodreads.com/*",
-              "http://*.play.google.com/*",
-              "https://*.play.google.com/*"
+              "https://*.goodreads.com/*"
               ],
   "offline_enabled": false
 }
