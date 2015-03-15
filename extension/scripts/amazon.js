@@ -68,8 +68,12 @@ function pageInfo() {
 		page_type = "ebook_page";
 		title = $('#btAsinTitle').text();
 		if ($('#pageCountAvailable').length) {
-			isbn10 = $('#hardcover_meta_binding_winner').find('.bucketBorderTop').attr("id").split('_')[1].replace(/\D/g, '');
-			isbn = convertISBN(isbn10);
+			try {
+				isbn10 = $('#hardcover_meta_binding_winner').find('.bucketBorderTop').attr("id").split('_')[1].replace(/\D/g, '');
+				isbn = convertISBN(isbn10);				
+			} catch (e) {
+				isbn = "";
+			}
 		} else {
 			isbn = "";
 		}

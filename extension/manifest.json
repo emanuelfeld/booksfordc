@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "booksfordc",
-  "description": "Determine the availability of (e)books at the DC Public Library when browsing Amazon, Goodreads, Barnes and Noble, or Google Play.",
-  "version": "1.0.8",
+  "description": "Determine the availability of (e)books at the DC Public Library when browsing Amazon, Goodreads, or Barnes and Noble.",
+  "version": "1.0.10",
   
   "author": "Emanuel Feld",
 
