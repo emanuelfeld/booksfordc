@@ -1,6 +1,6 @@
 function cleanTitle(title) {
   console.log("Title cleaned");
-  return title.replace(/\(.*\)/g, "").replace(/\[.*\]/, "").replace(/[\n ]*$/,"");
+  return title.replace(/\(.*\)/g, "").replace(/\[.*\]/, "").replace(/^\s*(.*?)\s*$/,"$1");
 }
 
 function overdriveTitle(title) {
@@ -22,24 +22,24 @@ function searchURLs(author, title, isbn) {
   return {
     "isbnURL": base + isbn + "&te=&lm=BOOKS",
     "bookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&te=&lm=BOOKS",
-    "ebookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&qf=-ERC_FORMAT%09Electronic+Format%09MP3%09MP3&te=&lm=E-BOOK",
+    "altBookURL": base + encodeURIComponent(overdriveTitle(title) + " " + author).replace(/'/g, "%27") + "&te=&lm=BOOKS",
     "overdriveSearchURL" : "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria="+encodeURIComponent(overdriveTitle(title) + " " + overdriveAuthor(author))+"&x=0&y=0&Format=420%2C50%2C410%2C450%2C610%2C810%2C303",
     "purchaseURL": "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X",
     "overdriveURL" : "http://overdrive.dclibrary.org"
   }
 }
 
-function searchSirsi(search_url, search_by, modify, type) {
+function searchSirsi(search_url, search_by, modify, type, info) {
   $.get(search_url, function(data) {
     oneline = $(data).text().replace(/\n/g, "");
     if (type=="Book") {
       console.log("Searching catalog for book");
-      sirsiAvailability(oneline, search_url, search_by, modify, type);
+      sirsiAvailability(oneline, search_url, search_by, modify, type, info);
     } 
   });
 }
 
-function searchOverdrive(search_url, fail_url, search_by, modify, type) {
+function searchOverdrive(search_url, fail_url, search_by, modify, type, info) {
 
     console.log(search_url);
 
@@ -50,12 +50,12 @@ function searchOverdrive(search_url, fail_url, search_by, modify, type) {
       function(response){
 
         var result = $(response);
-        overdriveAvailability(result, fail_url, modify, type);
+        overdriveAvailability(result, fail_url, modify, type, info);
     });
 
   }
 
-function sirsiAvailability(oneline, url, search_by, modify, type) {
+function sirsiAvailability(oneline, url, search_by, modify, type, info) {
 
   try {
 
@@ -71,7 +71,9 @@ function sirsiAvailability(oneline, url, search_by, modify, type) {
 
     if (search_by==="isbn") {
       console.log("Sirsi book search by ISBN failed\nSearching instead by title and author");
-      searchSirsi(search_urls['bookURL'], "text", modify, type);
+      searchSirsi(search_urls['bookURL'], "text_full", modify, type, info);
+    } else if (search_by==="text_full" && info['title'].match(/:/) !== null){
+      searchSirsi(search_urls['altBookURL'], "text_short", modify, type, info);
     } else if (oneline.match("This search returned no results.")!=null){
       console.log("Book not located in Sirsi");
       failureMessage(type,"not_located",url,modify);
@@ -84,7 +86,7 @@ function sirsiAvailability(oneline, url, search_by, modify, type) {
 
 }
 
-function overdriveAvailability(result, url, modify, type) {
+function overdriveAvailability(result, url, modify, type, info) {
 
  try {
 

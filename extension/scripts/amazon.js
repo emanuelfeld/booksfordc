@@ -8,11 +8,11 @@ if (/amazon\.com$/.test(document.domain)) {
 			search_urls = searchURLs(page_info['author'], page_info['title'],page_info['isbn']);
 
 		if (page_info['isbn']===null){
-			searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book");
+			searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book", page_info);
 		} else {
-			searchSirsi(search_urls['isbnURL'],"isbn",$("div#book"), "Book");
+			searchSirsi(search_urls['isbnURL'],"isbn",$("div#book"), "Book", page_info);
 		}
-    searchOverdrive(search_urls['overdriveSearchURL'], search_urls['overdriveURL'], "text", $("div#digital"), "E-book");   
+    searchOverdrive(search_urls['overdriveSearchURL'], search_urls['overdriveURL'], "text", $("div#digital"), "E-book", page_info);   
 	}
 
 }

@@ -26,6 +26,17 @@
 	margin-bottom:12px;
 }
 
+#dcpl_bn {
+	padding:16px 0px 16px 0px; 
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #e7e7e7;
+	margin-bottom:12px;
+}
+
+#dcpl_play {
+	padding:0px 0px 16px 0px; 
+	margin-bottom:12px;
+}
 
 #book {
 	font-size:13px;
@@ -58,4 +69,8 @@
 
 #loading {
 	line-height: 19px;
+}
+
+#dcpl_play a {
+	color: #1aa1e1;
 }
