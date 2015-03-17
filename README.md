@@ -1,5 +1,6 @@
-# booksfordc
-Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line if you're interested.
+![banner](https://github.com/emanuelfeld/booksfordc/blob/master/banners/PromoLarge.png)
+
+Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line [@evonfriedland](https://twitter.com/evonfriedland) if you're interested.
 
 ##@booksfordc##
 Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog. Follow at [@booksfordc](https://twitter.com/booksfordc).
