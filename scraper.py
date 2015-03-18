@@ -21,4 +21,4 @@ for i in xrange(1,100):
             scraperwiki.sql.save(unique_keys=['url'], data=music)
     except:
         print "Not scraped: "+page
-    time.sleep(60)
+    time.sleep(30)
