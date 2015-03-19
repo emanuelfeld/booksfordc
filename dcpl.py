@@ -11,7 +11,7 @@ class MyTwitterBot(TwitterBot):
         Use this function to set options and initialize your own custom bot
         state (if any).
         """
-        self.log("Initializing bot")
+        logging.info("Initializing bot")
         ############################
         # REQUIRED: LOGIN DETAILS! #
         ############################
@@ -21,7 +21,7 @@ class MyTwitterBot(TwitterBot):
         self.config['access_key'] = os.environ.get('ACCESS_KEY')
         self.config['access_secret'] = os.environ.get('ACCESS_SECRET')
 
-        self.log("Logging in")
+        logging.info("Logging in")
 
         ######################################
         # SEMI-OPTIONAL: OTHER CONFIG STUFF! #
@@ -92,20 +92,20 @@ class MyTwitterBot(TwitterBot):
         def search_dcpl(t):
             search = re.sub(r'^@kidsbooksfordc s:(.+)$',r'\1',t)
             search = re.sub(r' ',r'+',search)
-            self.log("Valid search tweet")
+            logging.info("Valid search tweet")
             search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
-            self.log("Search URL established")
+            logging.info("Search URL established")
             r = requests.get(search_url)
             r_text = r.text
             ok = re.search(r'parseDetailAvailabilityJSON',r_text)
             if ok != None:
-                self.log("Book found")
+                logging.info("Book found")
                 return "Found: "+search_url
             elif re.search(r'This search returned no results',r_text):
-                self.log("Book not found")
+                logging.info("Book not found")
                 return "Not found"
             else:
-                self.log("Possible match")
+                logging.info("Possible match")
                 return "Possible match: "+search_url
 
         text = tweet.text
@@ -114,11 +114,11 @@ class MyTwitterBot(TwitterBot):
                 reply = search_dcpl(text)
                 self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
             except:
-                self.log("Search failed")
+                logging.info("Search failed")
                 self.post_tweet('@evonfriedland Not found', reply_to=tweet)  
             time.sleep(120)
         else:
-            self.log("Not valid search tweet")
+            logging.info("Not valid search tweet")
             pass
 
 
