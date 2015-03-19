@@ -92,18 +92,18 @@ class MyTwitterBot(TwitterBot):
         """
 
         def search_dcpl(t):
-            search = re.sub(r'^@booksfordc s:(.+)$',r'\1',t)
-            search = re.sub(r' ',r'+',search)
+            search = re.sub(r'^@booksfordc s:(.+)$', r'\1', t)
+            search = re.sub(r' ', r'+', search)
             logging.info("Valid search tweet")
             search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
             logging.info("Search URL established")
-            response = requests.get(search_url, , allow_redirects=True)
+            response = requests.get(search_url, allow_redirects=True)
             r_text = response.text
-            ok = re.search(r'parseDetailAvailabilityJSON',r_text)
+            ok = re.search(r'parseDetailAvailabilityJSON', r_text)
             if response.history:
                 logging.info("Book found")
                 return "Found: " + response.url
-            elif re.search(r'This search returned no results',r_text):
+            elif re.search(r'This search returned no results', r_text):
                 logging.info("Book not found")
                 return "Not found: " + response.url
             else:
@@ -111,7 +111,7 @@ class MyTwitterBot(TwitterBot):
                 return "Possible match: " + r.url
 
         text = tweet.text
-        if re.search(r'^@booksfordc s:.+',text)!=None:
+        if re.search(r'^@booksfordc s:.+', text)!=None:
             try:
                 reply = search_dcpl(text)
                 self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
