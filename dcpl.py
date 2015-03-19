@@ -114,7 +114,7 @@ class MyTwitterBot(TwitterBot):
         if re.search(r'^@booksfordc s:.+', text) != None:
             try:
                 reply = search_dcpl(text)
-                self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
+                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
                 time.sleep(120)
             except:
                 pass
