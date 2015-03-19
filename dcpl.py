@@ -116,6 +116,8 @@ class MyTwitterBot(TwitterBot):
                 reply = search_dcpl(text)
                 self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
                 time.sleep(120)
+            except:
+                pass
         else:
             logging.info("Not valid search tweet")
             pass
