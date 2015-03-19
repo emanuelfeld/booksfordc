@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*- #
 
 from twitterbot import TwitterBot
-import re, os
-from __future__ import unicode_literals
+import re, os, requests, logging
 
 class MyTwitterBot(TwitterBot):
     def bot_init(self):
@@ -12,21 +11,36 @@ class MyTwitterBot(TwitterBot):
         Use this function to set options and initialize your own custom bot
         state (if any).
         """
-
+        logging.warning("0")
         ############################
         # REQUIRED: LOGIN DETAILS! #
         ############################
+
         self.config['api_key'] = os.environ.get('API_KEY')
         self.config['api_secret'] = os.environ.get('API_SECRET')
         self.config['access_key'] = os.environ.get('ACCESS_KEY')
         self.config['access_secret'] = os.environ.get('ACCESS_SECRET')
+
+        logging.warning("logged in")
+
+        logging.warning(self.config['api_key'])
+        logging.warning(type(self.config['api_key']))
+
+        logging.warning(self.config['api_secret'])
+        logging.warning(type(self.config['api_secret']))
+
+        logging.warning(self.config['access_key'])
+        logging.warning(type(self.config['access_key']))
+
+        logging.warning(self.config['access_secret'])
+        logging.warning(type(self.config['access_secret']))
 
         ######################################
         # SEMI-OPTIONAL: OTHER CONFIG STUFF! #
         ######################################
 
         # how often to tweet, in seconds
-        self.config['tweet_interval'] = 1 * 60     # default: 30 minutes
+        self.config['tweet_interval'] = None    # default: 30 minutes
 
         # use this to define a (min, max) random range of how often to tweet
         # e.g., self.config['tweet_interval_range'] = (5*60, 10*60) # tweets every 5-10 minutes
@@ -77,8 +91,8 @@ class MyTwitterBot(TwitterBot):
         """
         # text = function_that_returns_a_string_goes_here()
         # self.post_tweet(text)
-
-        raise NotImplementedError("You need to implement this to tweet to timeline (or pass if you don't want to)!")
+        logging.warning("1")
+        pass
         
 
     def on_mention(self, tweet, prefix):
@@ -94,9 +108,43 @@ class MyTwitterBot(TwitterBot):
         When calling post_tweet, you MUST include reply_to=tweet, or
         Twitter won't count it as a reply.
         """
-        text = "hello"
-        prefixed_text = prefix + ' ' + text
-        self.post_tweet(prefix + ' ' + text, reply_to=tweet)
+ 
+        def search_dcpl(t):
+            logging.warning("a")
+            search = re.sub(r'^@kidsbooksfordc s:(.+)$',r'\1',t)
+            search = re.sub(r' ',r'+',search)
+            logging.warning("b")
+            search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
+            logging.warning("c")
+            r = requests.get(search_url)
+            logging.warning("d")
+            r_text = r.text
+            logging.warning("e")
+            ok = re.search(r'parseDetailAvailabilityJSON',r_text)
+            logging.warning(ok)
+            logging.warning("f")
+            if ok != None:
+                return "Found: "+search_url
+            elif re.search(r'This search returned no results',r_text):
+                return "Not found"
+            else:
+                return "Possible match: "+search_url
+
+        logging.warning("2")
+        text = tweet.text
+        logging.warning(re.search(r's:.+',text))
+        if re.search(r's:.+',text)!=None:
+            logging.warning("yay")
+            try:
+                reply = search_dcpl(text)
+                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
+            except:
+                self.post_tweet(prefix + ' Not found', reply_to=tweet)                
+        else:
+            logging.warning("boo")
+            pass
+
+
 
     def on_timeline(self, tweet, prefix):
         """
@@ -118,9 +166,13 @@ class MyTwitterBot(TwitterBot):
         # call this to fav the tweet!
         # if something:
         #     self.favorite_tweet(tweet)
+        logging.warning("3")
+        pass
 
-        raise NotImplementedError("You need to implement this to reply to/fav timeline tweets (or pass if you don't want to)!")
 
 if __name__ == '__main__':
+    logging.warning("4")
     bot = MyTwitterBot()
+    logging.warning("5")
     bot.run()
+    logging.warning("6")
