@@ -108,7 +108,7 @@ class MyTwitterBot(TwitterBot):
                 return "Not found: " + response.url
             else:
                 logging.info("Possible match")
-                return "Possible match: " + r.url
+                return "Possible match: " + response.url
 
         text = tweet.text
         if re.search(r'^@booksfordc s:.+', text) != None:
