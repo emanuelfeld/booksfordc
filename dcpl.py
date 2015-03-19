@@ -137,9 +137,9 @@ class MyTwitterBot(TwitterBot):
             logging.warning("yay")
             try:
                 reply = search_dcpl(text)
-                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
+                self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
             except:
-                self.post_tweet(prefix + ' Not found', reply_to=tweet)                
+                self.post_tweet('@evonfriedland Not found', reply_to=tweet)                
         else:
             logging.warning("boo")
             pass
