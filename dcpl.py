@@ -97,15 +97,15 @@ class MyTwitterBot(TwitterBot):
             logging.info("Valid search tweet")
             search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
             logging.info("Search URL established")
-            r = requests.get(search_url)
-            r_text = r.text
+            response = requests.get(search_url, , allow_redirects=True)
+            r_text = response.text
             ok = re.search(r'parseDetailAvailabilityJSON',r_text)
-            if ok != None:
+            if response.history:
                 logging.info("Book found")
-                return "Found: " + r.url
+                return "Found: " + response.url
             elif re.search(r'This search returned no results',r_text):
                 logging.info("Book not found")
-                return "Not found: " + r.url
+                return "Not found: " + response.url
             else:
                 logging.info("Possible match")
                 return "Possible match: " + r.url
