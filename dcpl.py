@@ -105,7 +105,7 @@ class MyTwitterBot(TwitterBot):
                 return "Found: "+search_url
             elif re.search(r'This search returned no results',r_text):
                 logging.info("Book not found")
-                return "Not found"
+                return "Not found: "+search_url
             else:
                 logging.info("Possible match")
                 return "Possible match: "+search_url
@@ -115,15 +115,10 @@ class MyTwitterBot(TwitterBot):
             try:
                 reply = search_dcpl(text)
                 self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
-            except:
-                logging.info("Search failed")
-                self.post_tweet('@evonfriedland Not found', reply_to=tweet)  
-            time.sleep(120)
+                time.sleep(120)
         else:
             logging.info("Not valid search tweet")
             pass
-
-
 
     def on_timeline(self, tweet, prefix):
         """
