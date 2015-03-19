@@ -56,3 +56,6 @@ target/
 # Chrome Extension
 *.pem
 *.zip
+
+# DCPL bot
+.env

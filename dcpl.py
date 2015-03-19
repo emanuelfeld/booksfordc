@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 
 from twitterbot import TwitterBot
-import requests, re, os
+import re, os
 
 class MyTwitterBot(TwitterBot):
     def bot_init(self):
@@ -19,7 +19,6 @@ class MyTwitterBot(TwitterBot):
         self.config['api_secret'] = os.environ.get('API_SECRET')
         self.config['access_key'] = os.environ.get('ACCESS_KEY')
         self.config['access_secret'] = os.environ.get('ACCESS_SECRET')
-
 
         ######################################
         # SEMI-OPTIONAL: OTHER CONFIG STUFF! #
@@ -94,7 +93,7 @@ class MyTwitterBot(TwitterBot):
         When calling post_tweet, you MUST include reply_to=tweet, or
         Twitter won't count it as a reply.
         """
-        text = search_dcpl(tweet)
+        text = "hello"
         prefixed_text = prefix + ' ' + text
         self.post_tweet(prefix + ' ' + text, reply_to=tweet)
 
@@ -127,21 +126,6 @@ class MyTwitterBot(TwitterBot):
         #     self.favorite_tweet(tweet)
 
         raise NotImplementedError("You need to implement this to reply to/fav timeline tweets (or pass if you don't want to)!")
-
-
-        def search_dcpl(tweet):
-            search = re.sub(r'@booksfordc s:(.*?)\/(.*?)',r'\1 \2',tweet)
-            search_url = "https://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
-            r = requests.get(search_url)
-            r_text = r.text
-            ok = re.search(r'parseDetailAvailabilityJSON',r_text)
-
-            if ok != None:
-                return "Book located"
-            elif re.search(r'This search returned no results',r_text):
-                return "Book not located"
-            else:
-                return "Possible match"
 
 if __name__ == '__main__':
     bot = MyTwitterBot()
