@@ -11,7 +11,7 @@ class MyTwitterBot(TwitterBot):
         Use this function to set options and initialize your own custom bot
         state (if any).
         """
-        logging.warning("0")
+        self.log("Initializing bot")
         ############################
         # REQUIRED: LOGIN DETAILS! #
         ############################
@@ -21,30 +21,11 @@ class MyTwitterBot(TwitterBot):
         self.config['access_key'] = os.environ.get('ACCESS_KEY')
         self.config['access_secret'] = os.environ.get('ACCESS_SECRET')
 
-        logging.warning("logged in")
-
-        logging.warning(self.config['api_key'])
-        logging.warning(type(self.config['api_key']))
-
-        logging.warning(self.config['api_secret'])
-        logging.warning(type(self.config['api_secret']))
-
-        logging.warning(self.config['access_key'])
-        logging.warning(type(self.config['access_key']))
-
-        logging.warning(self.config['access_secret'])
-        logging.warning(type(self.config['access_secret']))
+        self.log("Logging in")
 
         ######################################
         # SEMI-OPTIONAL: OTHER CONFIG STUFF! #
         ######################################
-
-        # how often to tweet, in seconds
-        #self.config['tweet_interval'] = 5*60    # default: 30 minutes
-
-        # use this to define a (min, max) random range of how often to tweet
-        # e.g., self.config['tweet_interval_range'] = (5*60, 10*60) # tweets every 5-10 minutes
-        #self.config['tweet_interval_range'] = None
 
         self.config['reply_interval'] = 5*60
 
@@ -72,7 +53,7 @@ class MyTwitterBot(TwitterBot):
         # self.state dictionary. These will only be initialized if the bot is
         # not loading a previous saved state.
 
-        # self.state['butt_counter'] = 0
+        # self.state['counter'] = 0
 
         # You can also add custom functions that run at regular intervals
         # using self.register_custom_handler(function, interval).
@@ -91,9 +72,6 @@ class MyTwitterBot(TwitterBot):
         It's up to you to ensure that it's less than 140 characters.
         Set tweet frequency in seconds with TWEET_INTERVAL in config.py.
         """
-        # text = function_that_returns_a_string_goes_here()
-        # self.post_tweet(text)
-        logging.warning("1")
         pass
         
 
@@ -112,39 +90,35 @@ class MyTwitterBot(TwitterBot):
         """
  
         def search_dcpl(t):
-            logging.warning("a")
             search = re.sub(r'^@kidsbooksfordc s:(.+)$',r'\1',t)
             search = re.sub(r' ',r'+',search)
-            logging.warning("b")
+            self.log("Valid search tweet")
             search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
-            logging.warning("c")
+            self.log("Search URL established")
             r = requests.get(search_url)
-            logging.warning("d")
             r_text = r.text
-            logging.warning("e")
             ok = re.search(r'parseDetailAvailabilityJSON',r_text)
-            logging.warning(ok)
-            logging.warning("f")
             if ok != None:
+                self.log("Book found")
                 return "Found: "+search_url
             elif re.search(r'This search returned no results',r_text):
+                self.log("Book not found")
                 return "Not found"
             else:
+                self.log("Possible match")
                 return "Possible match: "+search_url
 
-        logging.warning("2")
         text = tweet.text
-        logging.warning(re.search(r's:.+',text))
         if re.search(r's:.+',text)!=None:
-            logging.warning("yay")
             try:
                 reply = search_dcpl(text)
                 self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
             except:
+                self.log("Search failed")
                 self.post_tweet('@evonfriedland Not found', reply_to=tweet)  
             time.sleep(120)
         else:
-            logging.warning("boo")
+            self.log("Not valid search tweet")
             pass
 
 
@@ -162,20 +136,9 @@ class MyTwitterBot(TwitterBot):
         When calling post_tweet, you MUST include reply_to=tweet, or
         Twitter won't count it as a reply.
         """
-        # text = function_that_returns_a_string_goes_here()
-        # prefixed_text = prefix + ' ' + text
-        # self.post_tweet(prefix + ' ' + text, reply_to=tweet)
-
-        # call this to fav the tweet!
-        # if something:
-        #     self.favorite_tweet(tweet)
-        logging.warning("3")
         pass
 
 
 if __name__ == '__main__':
-    logging.warning("4")
     bot = MyTwitterBot()
-    logging.warning("5")
     bot.run()
-    logging.warning("6")
