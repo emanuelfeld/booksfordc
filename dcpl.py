@@ -3,6 +3,7 @@
 
 from twitterbot import TwitterBot
 import re, os
+from __future__ import unicode_literals
 
 class MyTwitterBot(TwitterBot):
     def bot_init(self):
