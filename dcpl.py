@@ -3,7 +3,9 @@
 
 from twitterbot import TwitterBot
 import re, os, requests, logging, time
- 
+
+logging.basicConfig(level=logging.INFO)
+
 class MyTwitterBot(TwitterBot):
     def bot_init(self):
         """
@@ -90,7 +92,7 @@ class MyTwitterBot(TwitterBot):
         """
  
         def search_dcpl(t):
-            search = re.sub(r'^@kidsbooksfordc s:(.+)$',r'\1',t)
+            search = re.sub(r'^@booksfordc s:(.+)$',r'\1',t)
             search = re.sub(r' ',r'+',search)
             logging.info("Valid search tweet")
             search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
