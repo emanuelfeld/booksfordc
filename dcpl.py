@@ -90,7 +90,7 @@ class MyTwitterBot(TwitterBot):
         When calling post_tweet, you MUST include reply_to=tweet, or
         Twitter won't count it as a reply.
         """
- 
+
         def search_dcpl(t):
             search = re.sub(r'^@booksfordc s:(.+)$',r'\1',t)
             search = re.sub(r' ',r'+',search)
@@ -102,16 +102,16 @@ class MyTwitterBot(TwitterBot):
             ok = re.search(r'parseDetailAvailabilityJSON',r_text)
             if ok != None:
                 logging.info("Book found")
-                return "Found: "+search_url
+                return "Found: " + r.url
             elif re.search(r'This search returned no results',r_text):
                 logging.info("Book not found")
-                return "Not found: "+search_url
+                return "Not found: " + r.url
             else:
                 logging.info("Possible match")
-                return "Possible match: "+search_url
+                return "Possible match: " + r.url
 
         text = tweet.text
-        if re.search(r's:.+',text)!=None:
+        if re.search(r'^@booksfordc s:.+',text)!=None:
             try:
                 reply = search_dcpl(text)
                 self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
