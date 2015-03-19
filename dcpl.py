@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 
 from twitterbot import TwitterBot
-import re, os, requests, logging
+import re, os, requests, logging, time
  
 class MyTwitterBot(TwitterBot):
     def bot_init(self):
@@ -141,7 +141,8 @@ class MyTwitterBot(TwitterBot):
                 reply = search_dcpl(text)
                 self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
             except:
-                self.post_tweet('@evonfriedland Not found', reply_to=tweet)                
+                self.post_tweet('@evonfriedland Not found', reply_to=tweet)  
+            time.sleep(120)
         else:
             logging.warning("boo")
             pass
