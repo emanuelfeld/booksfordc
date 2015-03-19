@@ -35,7 +35,7 @@ class MyTwitterBot(TwitterBot):
         self.config['reply_direct_mention_only'] = True
 
         # only include bot followers (and original tweeter) in @-replies
-        self.config['reply_followers_only'] = True
+        self.config['reply_followers_only'] = False
 
         # fav any tweets that mention this bot?
         self.config['autofav_mentions'] = False
