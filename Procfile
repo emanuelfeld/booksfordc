@@ -1,1 +1,1 @@
-worker: python dcpl.py 
+web: python dcpl.py
