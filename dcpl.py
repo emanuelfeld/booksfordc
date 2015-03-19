@@ -25,7 +25,7 @@ class MyTwitterBot(TwitterBot):
         ######################################
 
         # how often to tweet, in seconds
-        self.config['tweet_interval'] = 30 * 60     # default: 30 minutes
+        self.config['tweet_interval'] = 1 * 60     # default: 30 minutes
 
         # use this to define a (min, max) random range of how often to tweet
         # e.g., self.config['tweet_interval_range'] = (5*60, 10*60) # tweets every 5-10 minutes
@@ -96,13 +96,6 @@ class MyTwitterBot(TwitterBot):
         text = "hello"
         prefixed_text = prefix + ' ' + text
         self.post_tweet(prefix + ' ' + text, reply_to=tweet)
-
-        # call this to fav the tweet!
-        # if something:
-        #     self.favorite_tweet(tweet)
-
-        raise NotImplementedError("You need to implement this to reply to/fav mentions (or pass if you don't want to)!")
-
 
     def on_timeline(self, tweet, prefix):
         """
