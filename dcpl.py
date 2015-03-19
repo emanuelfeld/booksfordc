@@ -100,7 +100,7 @@ class MyTwitterBot(TwitterBot):
             response = requests.get(search_url, allow_redirects=True)
             r_text = response.text
             ok = re.search(r'parseDetailAvailabilityJSON', r_text)
-            if response.history:
+            if ok != None:
                 logging.info("Book found")
                 return "Found: " + response.url
             elif re.search(r'This search returned no results', r_text):
@@ -111,7 +111,7 @@ class MyTwitterBot(TwitterBot):
                 return "Possible match: " + r.url
 
         text = tweet.text
-        if re.search(r'^@booksfordc s:.+', text)!=None:
+        if re.search(r'^@booksfordc s:.+', text) != None:
             try:
                 reply = search_dcpl(text)
                 self.post_tweet('@evonfriedland ' + reply, reply_to=tweet)
