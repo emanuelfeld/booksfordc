@@ -111,14 +111,15 @@ class MyTwitterBot(TwitterBot):
                 return "Possible match: " + response.url
 
         text = tweet.text
+        logging.warning(text)
         if re.search(r'^(\.?)@booksfordc (search:|s:|find:|search |s |find ).+', text) != None:
-            try:
-                logging.info(str(prefix))
-                reply = search_dcpl(text)
-                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
-                time.sleep(70)
-            except:
-                pass
+            # try:
+            logging.info(str(prefix))
+            reply = search_dcpl(text)
+            self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
+            time.sleep(70)
+            # except:
+            #     pass
         else:
             logging.info("Not valid search tweet")
             pass
