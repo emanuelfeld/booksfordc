@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*- #
 
 from twitterbot import TwitterBot
-import re, os, requests, logging, time
+import re, os, requests, logging, time, lxml.html
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.warning)
 
 class MyTwitterBot(TwitterBot):
     def bot_init(self):
@@ -13,7 +13,7 @@ class MyTwitterBot(TwitterBot):
         Use this function to set options and initialize your own custom bot
         state (if any).
         """
-        logging.info("Initializing bot")
+        logging.warning("Initializing bot")
         ############################
         # REQUIRED: LOGIN DETAILS! #
         ############################
@@ -23,7 +23,7 @@ class MyTwitterBot(TwitterBot):
         self.config['access_key'] = os.environ.get('ACCESS_KEY')
         self.config['access_secret'] = os.environ.get('ACCESS_SECRET')
 
-        logging.info("Logging in")
+        logging.warning("Logging in")
 
         ######################################
         # SEMI-OPTIONAL: OTHER CONFIG STUFF! #
@@ -78,50 +78,65 @@ class MyTwitterBot(TwitterBot):
         
 
     def on_mention(self, tweet, prefix):
-        """
-        Defines actions to take when a mention is received.
-        tweet - a tweepy.Status object. You can access the text with
-        tweet.text
-        prefix - the @-mentions for this reply. No need to include this in the
-        reply string; it's provided so you can use it to make sure the value
-        you return is within the 140 character limit with this.
-        It's up to you to ensure that the prefix and tweet are less than 140
-        characters.
-        When calling post_tweet, you MUST include reply_to=tweet, or
-        Twitter won't count it as a reply.
-        """
 
-        def search_dcpl(t):
-            search = re.sub(r'^(\.?)@booksfordc (search:|s:|find:|search |s |find )(.+)$', r'\3', t)
-            search = re.sub(r' ', r'+', search)
-            logging.info("Valid search tweet")
-            search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
-            logging.info("Search URL established")
+        def search_sirsi(s):
+            logging.warning("Valid: True")
+            search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+s+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
+            logging.warning("Query URL: "+search_url)
             response = requests.get(search_url, allow_redirects=True)
+            logging.warning("Response URL: "+response.url)
             r_text = response.text
             ok = re.search(r'parseDetailAvailabilityJSON', r_text)
             if ok != None:
-                logging.info("Book found")
+                logging.warning("Outcome: Book found")
                 return "Found: " + response.url
             elif re.search(r'This search returned no results', r_text):
-                logging.info("Book not found")
+                logging.warning("Outcome: Book not found")
                 return "Not found: " + response.url
             else:
-                logging.info("Possible match")
+                logging.warning("Outcome: Possible match")
                 return "Possible match: " + response.url
-
+            
+        def search_overdrive(s):
+            logging.warning("Valid: True")
+            search_url = "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria="+s+"&x=0&y=0&Format=420%2C50%2C410%2C450%2C610%2C810%2C303"
+            logging.warning("Query URL: "+search_url)
+            response = requests.get(search_url, allow_redirects=True)
+            logging.warning("Response URL: "+response.url)
+            root = lxml.html.fromstring(response.content)
+            matches = len(root.cssselect(".tc-title"))
+            if matches == 1:
+                logging.warning("Outcome: eBook found")
+                return "Found: " + response.url
+            elif matches ==0:
+                logging.warning("Outcome: eBook not found")
+                return "Not found: " + response.url
+            else:
+                logging.warning("Outcome: Possible match")
+                return "Possible match: " + response.url
+        
+        def search_dcpl(t):
+            search = re.sub(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\4', t)
+            cat = re.sub(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\2', t)
+            search = re.sub(r' ', r'+', search)
+            if cat in ['e ','ebk ','ebook ','e-bk ','e-book ']:
+                return search_overdrive(search)
+            else:
+                return search_sirsi(search)
+        
         text = tweet.text
         logging.warning(text)
-        if re.search(r'^(\.?)@booksfordc (search:|s:|find:|search |s |find ).+', text) != None:
-            # try:
-            logging.info(str(prefix))
-            reply = search_dcpl(text)
-            self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
-            time.sleep(70)
-            # except:
-            #     pass
+        
+        if re.search(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find ).+', text) != None:
+            try:
+                logging.warning("User: " + str(prefix))
+                reply = search_dcpl(text)
+                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
+                time.sleep(70)
+            except:
+                pass
         else:
-            logging.info("Not valid search tweet")
+            logging.warning("Valid: False")
             pass
 
     def on_timeline(self, tweet, prefix):
