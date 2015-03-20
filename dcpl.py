@@ -92,7 +92,7 @@ class MyTwitterBot(TwitterBot):
         """
 
         def search_dcpl(t):
-            search = re.sub(r'^@booksfordc (s:|search:|find:|s|search|find)(.+)$', r'\2', t)
+            search = re.sub(r'^(\.?)@booksfordc (s:|search:|find:|s|search|find)(.+)$', r'\3', t)
             search = re.sub(r' ', r'+', search)
             logging.info("Valid search tweet")
             search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+search+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
@@ -111,7 +111,7 @@ class MyTwitterBot(TwitterBot):
                 return "Possible match: " + response.url
 
         text = tweet.text
-        if re.search(r'^@booksfordc (s:|search:|find:|s|search|find).+', text) != None:
+        if re.search(r'^(\.?)@booksfordc (s:|search:|find:|s|search|find).+', text) != None:
             try:
                 logging.info(str(prefix))
                 reply = search_dcpl(text)
