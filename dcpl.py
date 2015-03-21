@@ -128,13 +128,13 @@ class MyTwitterBot(TwitterBot):
         logging.warning(text)
         
         if re.search(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find ).+', text) != None:
-            try:
-                logging.warning("User: " + str(prefix))
-                reply = search_dcpl(text)
-                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
-                time.sleep(70)
-            except:
-                pass
+            # try:
+            logging.warning("User: " + str(prefix))
+            reply = search_dcpl(text)
+            self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
+            time.sleep(70)
+            # except:
+            #     pass
         else:
             logging.warning("Valid: False")
             pass
