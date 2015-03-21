@@ -6,4 +6,4 @@ requests-oauthlib==0.4.1
 six==1.7.3
 tweepy==3.1.0
 wsgiref==0.1.2
-lxml.html==3.1.2
+lxml==3.1.2
