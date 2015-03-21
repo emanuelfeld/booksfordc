@@ -2,37 +2,16 @@
 
 Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line [@evonfriedland](https://twitter.com/evonfriedland) if you're interested.
 
-##@booksfordc##
-Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog. Follow at [@booksfordc](https://twitter.com/booksfordc).
+##@booksfordc catalog feed and Twitter bot##
+Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog ([@booksfordc](https://twitter.com/booksfordc)).
 
-###To do###
-* ~~Caching~~
-* ~~Check cache~~
-* ~~RSS feed~~
-* ~~Use Twitter API directly, with staggered posts (<1/min) instead of IFTTT~~
-* ~~Host cron job elsewhere to trigger more frequent automatic scrapes (Tweepy and Heroku?)~~ Using ScraperWiki for now
-* ~~Decide where to host the cache if use host without persistent memory (GitHub?)~~ Not currently an issue
-* Add ebooks, if the DCPL makes the Overdrive API accessible. Possibly just use Sirsi catalog, though harder to scrape, because resources not divided across libraries (and hence 1000 item XML limit passed)
-* Put up flyers at libraries to reach more patrons
+Twitter users can also use the account to quickly query the library catalog. To look up a book, send a tweet in the form ```@booksfordc search: book_title book_author``` or ```@booksfordc s: book_title book_author```. For ebook lookup, do ```@booksfordc ebook search: book_title book_author``` or ```@booksfordc ebk s: book_title book_author```.
 
-###Notes###
-* Benning Neighborhood Library RSS fails
-* Shepherd Park Neighbordhood Library RSS fails
-* Watha T. Daniel/Shaw Library RSS fails
-* Bellevue Neighborhood Library RSS fails
-* On occasion, books are not being allocated to an audience (adults, teens, children) and so will fail to show up in search
+In actuality, the bot will accept any mention structured ```@booksfordc resource_type search_init book_title book_author```, where ```resource_type``` is b, bk, or book for physical books or e, ebk, e-bk, ebook, or e-book for electronic books and where ```search_init``` is one of s, s:, search, search:, find, find:. 
 
-##Browser Plug-in##
-A Chrome extension that displays library holdings and availability when browsing books on Amazon.com, Goodreads.com, or BarnesAndNoble.com. Download for free from the [Chrome store](https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg).
+The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search URL.
 
-###To do###
-* ~~Improve search functionality to cover multiple editions—is it better to search by title, author, and resource type, then take the first hit (if it exists?). Doesn't appear that it will automatically redirect with this sort of search, even if only one result.~~
-* ~~Search Overdrive, if the DCPL makes the API accessible (and don't require a private key). Possibly just use Sirsi catalog, get Overdrive ID from result URL and go from there.~~
-* ~~Allow for functionality on Goodreads and, perhaps, Barnes and Noble~~
-* Auto-fill parts of the purchase request form with title, author, etc. info from Amazon page
-* Port to Firefox (Safari?)
-
-###Notes###
-* ~~Not all ebooks in Overdrive are listed in Sirsi catalog for unknown reason~~ Now searching Overdrive directly
+##Browser plug-in##
+A Chrome extension that displays library holdings and availability when browsing books on Amazon, Goodreads, or Barnes & Noble. Download for free from the [Chrome store](https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg).
 
 ![image](https://cloud.githubusercontent.com/assets/4269640/6477965/8fe3d6ac-c1f7-11e4-82a1-401a4ae68a88.png)
