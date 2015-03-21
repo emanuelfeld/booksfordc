@@ -16,7 +16,7 @@ In actuality, the bot will accept any mention structured:
 
 Where ```resource_type``` is ```b```, ```bk```, or ```book``` for physical books and ```e```, ```ebk```, ```e-bk```, ```ebook```, or ```e-book``` for electronic books and where ```search_init``` is one of ```s```, ```s:```, ```search```, ```search:```, ```find```, ```find:```. 
 
-The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search URL.
+The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search/resource URL.
 
 
 
