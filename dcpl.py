@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 
 from twitterbot import TwitterBot
-import cssselect, os, logging, lxml.html, re, requests, time
+import cssselect, logging, lxml.html, os, re, requests, time
 
 logging.basicConfig(level=logging.INFO)
 
