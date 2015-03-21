@@ -4,7 +4,7 @@
 from twitterbot import TwitterBot
 import re, os, requests, logging, time, lxml.html
 
-logging.basicConfig(level=logging.warning)
+logging.basicConfig(level=logging.INFO)
 
 class MyTwitterBot(TwitterBot):
     def bot_init(self):
