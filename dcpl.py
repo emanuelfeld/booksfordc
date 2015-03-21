@@ -102,18 +102,17 @@ class MyTwitterBot(TwitterBot):
             search_url = "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria="+s+"&x=0&y=0&Format=420%2C50%2C410%2C450%2C610%2C810%2C303"
             logging.warning("Query URL: "+search_url)
             response = requests.get(search_url, allow_redirects=True)
-            logging.warning("Response URL: "+response.url)
             root = lxml.html.fromstring(response.content)
             matches = len(root.cssselect(".tc-title"))
             if matches == 1:
                 logging.warning("Outcome: eBook found")
-                return "Found: " + response.url
+                return "Found: " + search_url
             elif matches ==0:
                 logging.warning("Outcome: eBook not found")
-                return "Not found: " + response.url
+                return "Not found: " + search_url
             else:
                 logging.warning("Outcome: Possible match")
-                return "Possible match: " + response.url
+                return "Possible match: " + search_url
         
         def search_dcpl(t):
             search = re.sub(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\4', t)
