@@ -119,7 +119,7 @@ class MyTwitterBot(TwitterBot):
             search = re.sub(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\4', t)
             cat = re.sub(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\2', t)
             search = re.sub(r' ', r'+', search)
-            if cat in ['e ','ebk ','ebook ','e-bk ','e-book ']:
+            if cat in [' e ',' ebk ',' ebook ',' e-bk ',' e-book ']:
                 return search_overdrive(search)
             else:
                 return search_sirsi(search)
