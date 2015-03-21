@@ -2,17 +2,13 @@
 # -*- coding: utf-8 -*- #
 
 from twitterbot import TwitterBot
-import re, os, requests, logging, time, lxml.html, cssselect
+import cssselect, os, logging, lxml.html, re, requests, time
 
 logging.basicConfig(level=logging.INFO)
 
 class MyTwitterBot(TwitterBot):
+
     def bot_init(self):
-        """
-        Initialize and configure your bot!
-        Use this function to set options and initialize your own custom bot
-        state (if any).
-        """
         logging.warning("Initializing bot")
         ############################
         # REQUIRED: LOGIN DETAILS! #
@@ -46,37 +42,10 @@ class MyTwitterBot(TwitterBot):
         # follow back all followers?
         self.config['autofollow'] = False
 
-
-        ###########################################
-        # CUSTOM: your bot's own state variables! #
-        ###########################################
-        
-        # If you'd like to save variables with the bot's state, use the
-        # self.state dictionary. These will only be initialized if the bot is
-        # not loading a previous saved state.
-
-        # self.state['counter'] = 0
-
-        # You can also add custom functions that run at regular intervals
-        # using self.register_custom_handler(function, interval).
-        #
-        # For instance, if your normal timeline tweet interval is every 30
-        # minutes, but you'd also like to post something different every 24
-        # hours, you would implement self.my_function and add the following
-        # line here:
-        
-        # self.register_custom_handler(self.my_function, 60 * 60 * 24)
-
-
     def on_scheduled_tweet(self):
-        """
-        Make a public tweet to the bot's own timeline.
-        It's up to you to ensure that it's less than 140 characters.
-        Set tweet frequency in seconds with TWEET_INTERVAL in config.py.
-        """
         pass
         
-
+        
     def on_mention(self, tweet, prefix):
 
         def search_sirsi(s):
@@ -127,30 +96,19 @@ class MyTwitterBot(TwitterBot):
         logging.warning(text)
         
         if re.search(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find ).+', text) != None:
-            # try:
-            logging.warning("User: " + str(prefix))
-            reply = search_dcpl(text)
-            self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
-            time.sleep(70)
-            # except:
-            #     pass
+            try:
+                logging.warning("User: " + str(prefix))
+                reply = search_dcpl(text)
+                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
+                time.sleep(70)
+            except:
+                logging.warning("Outcome: Failed search")
+                pass
         else:
             logging.warning("Valid: False")
             pass
 
     def on_timeline(self, tweet, prefix):
-        """
-        Defines actions to take on a timeline tweet.
-        tweet - a tweepy.Status object. You can access the text with
-        tweet.text
-        prefix - the @-mentions for this reply. No need to include this in the
-        reply string; it's provided so you can use it to make sure the value
-        you return is within the 140 character limit with this.
-        It's up to you to ensure that the prefix and tweet are less than 140
-        characters.
-        When calling post_tweet, you MUST include reply_to=tweet, or
-        Twitter won't count it as a reply.
-        """
         pass
 
 
