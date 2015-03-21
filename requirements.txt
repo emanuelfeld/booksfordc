@@ -1,10 +1,10 @@
 -e git://github.com/thricedotted/twitterbot.git#egg=twitterbot
 
+cssselect==0.9.1
+lxml==3.4.2
 oauthlib==0.7.2
 requests==2.4.3
 requests-oauthlib==0.4.1
 six==1.7.3
 tweepy==3.1.0
 wsgiref==0.1.2
-lxml==3.4.2
-cssselect==0.9.1
