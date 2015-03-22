@@ -22,3 +22,9 @@ The bot will then respond directly to the account that sent the query saying whe
 A Chrome extension that displays library holdings and availability when browsing books on Amazon, Goodreads, or Barnes & Noble. Download for free from the [Chrome store](https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg). Firefox version pending approval to AMO.
 
 ![image](https://cloud.githubusercontent.com/assets/4269640/6477965/8fe3d6ac-c1f7-11e4-82a1-401a4ae68a88.png)
+
+####License and Contributing####
+
+This project's code is offered under a GPLv2 license. As stated in [CONTRIBUTING](https://github.com/emanuelfeld/booksfordc/blob/master/CONTRIBUTING.txt):
+
+> By contributing to this repo, you agree to license your work under the same license.
