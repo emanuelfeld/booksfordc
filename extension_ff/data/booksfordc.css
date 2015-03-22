@@ -1,0 +1,78 @@
+#dcpl {
+  background-color:rgb(246, 246, 246); 
+  padding:14px 18px 14px 18px; 
+  border:0px; 
+  border-bottom:1px solid rgb(221, 221, 221); 
+  border-radius:0px;
+}
+
+#dcpl_title {
+  color:#AE0D1D; 
+  font-size:17px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+#dcpl_digital {
+	padding:8px 12px 8px 12px; 
+	border-radius:6px; 
+	border:1px solid #94c039; 
+	background:#e5eec3; 
+	margin-bottom:12px;
+}
+
+#dcpl_goodreads {
+	padding:8px 12px 8px 12px; 
+	border-radius:6px; 
+	border:1px solid #94c039; 
+	margin-bottom:12px;
+}
+
+#dcpl_bn {
+	padding:16px 0px 16px 0px; 
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #e7e7e7;
+	margin-bottom:12px;
+}
+
+#dcpl_play {
+	padding:0px 0px 16px 0px; 
+	margin-bottom:12px;
+}
+
+#book {
+	font-size:13px;
+	line-height: 19px;
+	color: #111;
+	font-family: Arial, sans-serif;
+}
+
+#digital {
+	font-size:13px;
+	line-height: 19px;
+	color: #111;
+	font-family: Arial, sans-serif;
+}
+
+#category {
+	font-weight: bold;
+	font-size:13px;
+	line-height: 19px;
+	color: #111;
+	font-family: Arial, sans-serif;
+
+}
+
+#results {
+	font-size:13px;
+	line-height: 19px;
+	font-family: Arial, sans-serif;
+}
+
+#loading {
+	line-height: 19px;
+}
+
+#dcpl_play a {
+	color: #1aa1e1;
+}

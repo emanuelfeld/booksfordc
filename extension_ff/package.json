@@ -1,0 +1,22 @@
+{
+  "name": "booksfordc",
+  "title": "booksfordc",
+  "id": "jid1-gW3feAWUapOxYQ",
+  "description": "Determine the availability of (e)books at the DC Public Library when browsing Amazon, Goodreads, or Barnes and Noble.",
+  "author": "Emanuel Feld",
+  "license": "MPL 2.0",
+  "version": "0.1",
+  "permissions": {
+    "cross-domain-content": ["http://amazon.com/",
+            				 "https://amazon.com/",
+            				 "http://barnesandnoble.com/",
+            				 "https://barnesandnoble.com/",
+            				 "https://catalog.dclibrary.org/",
+            				 "http://catalog.dclibrary.org/",
+            				 "https://overdrive.dclibrary.org/",
+            				 "http://overdrive.dclibrary.org/",
+            				 "https://goodreads.com/"
+            				 ]
+}
+
+}
