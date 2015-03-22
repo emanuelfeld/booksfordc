@@ -28,7 +28,9 @@ function makeBox() {
 		console.log("Initialize: Creating Amazon e-book page box");
 		container = $('div.kicsBoxContents:first');
 		container.before(
-			"<div id='dcpl_digital'><div id='dcpl_title'>DCPL Search</div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
+			"<div id='dcpl_digital'><div id='dcpl_title'> <img src='" +
+      		chrome.extension.getURL('assets/icon16.png') +
+      		"'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') +
 			"'> </div>  <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
@@ -37,7 +39,9 @@ function makeBox() {
 		console.log("Initialize: Creating Amazon book page box");
 		container = $('div.a-box.rbbSection.selected.dp-accordion-active');
 		container.prepend(
-			"<div id='dcpl' class='a-box'><div id='dcpl_title'>DCPL Search</div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
+			"<div id='dcpl' class='a-box'><div id='dcpl_title'> <img src='" +
+			chrome.extension.getURL('assets/icon16.png') +
+			"'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') +
 			"'> </div> <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
@@ -46,7 +50,9 @@ function makeBox() {
 		console.log("Initialize: Creating Amazon used book page box");
 		container = $('div#unqualifiedBuyBox');
 		container.prepend(
-			"<div id='dcpl' class='a-box'><div id='dcpl_title'>DCPL Search</div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
+			"<div id='dcpl' class='a-box'><div id='dcpl_title'><img src='" +
+			chrome.extension.getURL('assets/icon16.png') +
+			"'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') +
 			"'> </div> <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");

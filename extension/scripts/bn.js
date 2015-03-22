@@ -28,7 +28,9 @@ function bnMakeBox() {
 		console.log("Initialize: Creating Barnes and Noble page box");
 		container = $('#top-content-book-1:eq(0)');
 		container.prepend(
-			"<div id='dcpl_bn'><div id='dcpl_title'>DCPL Search</div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
+			"<div id='dcpl_bn'><div id='dcpl_title'><img src='" +
+			chrome.extension.getURL('assets/icon16.png') +
+			"'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') +
 			"'> </div>  <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
 			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");

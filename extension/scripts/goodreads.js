@@ -9,12 +9,12 @@ if (/goodreads\.com$/.test(document.domain)) {
 
     if (page_info['isbn']===null){
       console.log("Book: Searching catalog by title and author")
-      searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book");
+      searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book", page_info);
     } else {
       console.log("Book: Searching catalog by ISBN")
-      searchSirsi(search_urls['isbnURL'],"isbn",$("div#book"), "Book");
+      searchSirsi(search_urls['isbnURL'],"isbn",$("div#book"), "Book", page_info);
     }
-    searchOverdrive(search_urls['overdriveSearchURL'], search_urls['overdriveURL'], "text", $("div#digital"), "E-book");   
+    searchOverdrive(search_urls['overdriveSearchURL'], search_urls['overdriveURL'], "text", $("div#digital"), "E-book", page_info);   
   }
 }
 
@@ -25,7 +25,9 @@ function goodreadsMakeBox() {
     console.log("Initialize: Creating Goodreads page box");
     container = $('div.rightContainer:first');
     container.prepend(
-      "<div id='dcpl_goodreads'><div id='dcpl_title'>DCPL Search</div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
+      "<div id='dcpl_goodreads'><div id='dcpl_title'>  <img src='" +
+      chrome.extension.getURL('assets/icon16.png') +
+      "'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
       chrome.extension.getURL('assets/ajax-loader.gif') +
       "'> </div>  <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
       chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
