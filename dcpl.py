@@ -82,20 +82,39 @@ class MyTwitterBot(TwitterBot):
             else:
                 logging.warning("Outcome: Possible match")
                 return "Possible match: " + search_url
+
+        def search_audio(s):
+            logging.warning("Valid: True")
+            search_url = "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria="+s+"&x=0&y=0&Format=425"
+            logging.warning("Query URL: "+search_url)
+            response = requests.get(search_url, allow_redirects=True)
+            root = lxml.html.fromstring(response.content)
+            matches = len(root.cssselect(".tc-title"))
+            if matches == 1:
+                logging.warning("Outcome: Audiobook found")
+                return "Found: " + search_url
+            elif matches ==0:
+                logging.warning("Outcome: Audiobook not found")
+                return "Not found: " + search_url
+            else:
+                logging.warning("Outcome: Possible match")
+                return "Possible match: " + search_url
         
         def search_dcpl(t):
-            search = re.sub(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\4', t)
-            cat = re.sub(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\2', t)
+            search = re.sub(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\4', t)
+            cat = re.sub(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\2', t)
             search = re.sub(r' ', r'+', search)
             if cat in [' e ',' ebk ',' ebook ',' e-bk ',' e-book ']:
                 return search_overdrive(search)
+            elif cat in [' a ',' abk ',' audio ',' audiobook ',' a-bk ',' audio-book ']:
+                return search_audio(search)
             else:
                 return search_sirsi(search)
         
         text = tweet.text
         logging.warning(text)
         
-        if re.search(r'^(\.?)@booksfordc( e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find ).+', text) != None:
+        if re.search(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find ).+', text) != None:
             try:
                 logging.warning("User: " + str(prefix))
                 reply = search_dcpl(text)
