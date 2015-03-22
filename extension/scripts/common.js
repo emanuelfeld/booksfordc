@@ -81,8 +81,8 @@ function sirsiAvailability(oneline, url, search_by, modify, type, info) {
         total = availabilityJSON['copies'][0].match(/(\d+)$/)[1],
         wait = availabilityJSON['holdCounts'][0].match(/(\d+)$/)[1];
 
-      console.log("Book: Located in catalog");
       successMessage(total, available, wait, type, modify, url);
+      console.log("Book: Located in catalog");
 
   } catch (e) {
 
@@ -116,8 +116,8 @@ function overdriveAvailability(result, url, modify, type, info) {
         var view = result.find('.li-details a:eq(0)'),
             link = "http://overdrive.dclibrary.org/10/50/en/"+view.attr("href");
 
-      console.log("E-book: Located in Overdrive");
       successMessage(total, available, wait, type, modify, link);
+      console.log("E-book: Located in Overdrive");
 
   } catch (e) {
     
