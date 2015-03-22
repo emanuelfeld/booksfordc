@@ -1,38 +1,43 @@
 #dcpl {
   background-color:rgb(246, 246, 246); 
-  padding:14px 18px 14px 18px; 
   border:0px; 
   border-bottom:1px solid rgb(221, 221, 221); 
-  border-radius:0px;
+  border-radius:4px 4px 0 0;
+  overflow: auto;
+  display: -webkit-flex;
+  display: flex;
 }
 
 #dcpl_title {
-  color:#AE0D1D; 
+  color:#be2026; 
   font-size:17px;
   font-family: Arial, sans-serif;
   font-weight: bold;
 }
 
 #dcpl_digital {
-	padding:8px 12px 8px 12px; 
-	border-radius:6px; 
-	border:1px solid #94c039; 
-	background:#e5eec3; 
+	background:rgb(246, 246, 246); 
 	margin-bottom:12px;
+	display: -webkit-flex;
+	display: flex;
 }
 
 #dcpl_goodreads {
-	padding:8px 12px 8px 12px; 
 	border-radius:6px; 
-	border:1px solid #94c039; 
+	border:1px solid rgb(221, 221, 221); 
 	margin-bottom:12px;
+	overflow: auto;
+	display: -webkit-flex;
+	display: flex;
 }
 
 #dcpl_bn {
-	padding:16px 0px 16px 0px; 
 	border-bottom: 1px solid #e7e7e7;
 	border-top: 1px solid #e7e7e7;
 	margin-bottom:12px;
+	overflow: auto;
+	display: -webkit-flex;
+	display: flex;
 }
 
 #dcpl_play {
@@ -71,8 +76,29 @@
 
 #loading {
 	line-height: 19px;
-}
+}	
 
 #dcpl_play a {
 	color: #1aa1e1;
+}
+
+#booksfordc_icon {
+	padding-top:8px; 
+	width:32px;
+    display:inline-block;
+    float:left;
+	background:#be2026; 
+
+}
+
+#booksfordc_icon_img {
+    display:block;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+#booksfordc_availability {
+	padding:8px 8px 8px 8px; 
+    display:inline-block;
+    float:left;
 }

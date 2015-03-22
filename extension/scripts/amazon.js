@@ -28,34 +28,46 @@ function makeBox() {
 		console.log("Initialize: Creating Amazon e-book page box");
 		container = $('div.kicsBoxContents:first');
 		container.before(
-			"<div id='dcpl_digital'><div id='dcpl_title'> <img src='" +
-      		chrome.extension.getURL('assets/icon16.png') +
-      		"'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
-			chrome.extension.getURL('assets/ajax-loader.gif') +
-			"'> </div>  <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
-			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
+		      " <div id = 'dcpl_digital'>\
+		        <div id = 'booksfordc_icon' class = 'amazon_digital'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
+		        <div id = 'booksfordc_availability'> \
+		          <div id = 'dcpl_title'> DCPL Search </div> \
+		          <div id = 'category'> Library Catalog </div> \
+		          <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
+		          <div id = 'category'> Digital Catalog </div> \
+		          <div id = 'digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
+		        </div> \
+		      </div> ");
 			return true;
 	} else if ($('div.a-box.rbbSection.selected.dp-accordion-active').length) {
 		console.log("Initialize: Creating Amazon book page box");
 		container = $('div.a-box.rbbSection.selected.dp-accordion-active');
 		container.prepend(
-			"<div id='dcpl' class='a-box'><div id='dcpl_title'> <img src='" +
-			chrome.extension.getURL('assets/icon16.png') +
-			"'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
-			chrome.extension.getURL('assets/ajax-loader.gif') +
-			"'> </div> <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
-			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
+		      " <div id='dcpl' class='a-box'>\
+		        <div id = 'booksfordc_icon' class = 'amazon'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
+		        <div id = 'booksfordc_availability'> \
+		          <div id = 'dcpl_title'> DCPL Search </div> \
+		          <div id = 'category'> Library Catalog </div> \
+		          <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
+		          <div id = 'category'> Digital Catalog </div> \
+		          <div id = 'digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
+		        </div> \
+		      </div> ");
 			return true;
 	} else if ($('div#unqualifiedBuyBox').length) {
 		console.log("Initialize: Creating Amazon used book page box");
 		container = $('div#unqualifiedBuyBox');
 		container.prepend(
-			"<div id='dcpl' class='a-box'><div id='dcpl_title'><img src='" +
-			chrome.extension.getURL('assets/icon16.png') +
-			"'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
-			chrome.extension.getURL('assets/ajax-loader.gif') +
-			"'> </div> <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
-			chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
+		      " <div id='dcpl' class='a-box'>\
+		        <div id = 'booksfordc_icon' class = 'amazon'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
+		        <div id = 'booksfordc_availability'> \
+		          <div id = 'dcpl_title'> DCPL Search </div> \
+		          <div id = 'category'> Library Catalog </div> \
+		          <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
+		          <div id = 'category'> Digital Catalog </div> \
+		          <div id = 'digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
+		        </div> \
+		      </div> ");
 			return true;
 	} else {
 		console.log("Initialize: Could not create Amazon page box");
@@ -90,13 +102,19 @@ function pageInfo() {
 		} else {
 			author = $('div.buying span a').text();
 		}
-	} else if ($("#productDetailsTable .content li:contains('ISBN-13:')").length) {
+	} else if ($("#productDetailsTable .content li:contains('ISBN')").length) {
 		console.log("Initialize: On Amazon book page");
 		success = true;
 		page_type = "book_page";
 		title = $('#productTitle').text();
+		isbn10 = $("#productDetailsTable .content li:contains('ISBN-10:')").text();
 		isbn13 = $("#productDetailsTable .content li:contains('ISBN-13:')").text();
-		isbn = isbn13.split(':')[1].replace(/\D/g, '');
+		if (isbn13.length){
+			isbn = isbn13.split(':')[1].replace(/\D/g, '');
+		} else {
+			isbn10 = isbn10.split(':')[1].replace(/\D/g, '');
+			isbn = convertISBN(isbn10);
+		}
 		if ($('.a-link-normal.contributorNameID:first').length) {
 			author = $('.a-link-normal.contributorNameID:first').text();
 		} else {

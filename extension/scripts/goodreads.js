@@ -2,12 +2,12 @@ if (/goodreads\.com$/.test(document.domain)) {
 
   var on_page = goodreadsMakeBox();
 
-  if (on_page===true){
+  if (on_page === true){
 
     var page_info = goodreadsPageInfo(),
       search_urls = searchURLs(page_info['author'], page_info['title'],page_info['isbn']);
 
-    if (page_info['isbn']===null){
+    if (page_info['isbn'] === null){
       console.log("Book: Searching catalog by title and author")
       searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book", page_info);
     } else {
@@ -25,12 +25,16 @@ function goodreadsMakeBox() {
     console.log("Initialize: Creating Goodreads page box");
     container = $('div.rightContainer:first');
     container.prepend(
-      "<div id='dcpl_goodreads'><div id='dcpl_title'>  <img src='" +
-      chrome.extension.getURL('assets/icon16.png') +
-      "'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book'>Searching catalog <img src='" +
-      chrome.extension.getURL('assets/ajax-loader.gif') +
-      "'> </div>  <div id='category'>Digital Catalog</div> <div id='digital'>Searching catalog <img src='" +
-      chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> </div>");
+      " <div id = 'dcpl_goodreads'>\
+          <div id = 'booksfordc_icon'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
+          <div id = 'booksfordc_availability'> \
+            <div id = 'dcpl_title'> DCPL Search </div> \
+            <div id = 'category'> Library Catalog </div> \
+            <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
+            <div id = 'category'> Digital Catalog </div> \
+            <div id = 'digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
+          </div> \
+      </div> ");
       return true;
   } else {
     console.log("Initialize: Could not create Goodreads page box");
