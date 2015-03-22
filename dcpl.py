@@ -101,8 +101,8 @@ class MyTwitterBot(TwitterBot):
                 return "Possible match: " + search_url
         
         def search_dcpl(t):
-            search = re.sub(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\4', t)
-            cat = re.sub(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find )(.+)$', r'\2', t)
+            search = re.sub(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|f:|search |s |find |f )(.+)$', r'\4', t)
+            cat = re.sub(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|f:|search |s |find |f )(.+)$', r'\2', t)
             search = re.sub(r' ', r'+', search)
             if cat in [' e ',' ebk ',' ebook ',' e-bk ',' e-book ']:
                 return search_overdrive(search)
@@ -114,7 +114,7 @@ class MyTwitterBot(TwitterBot):
         text = tweet.text
         logging.warning(text)
         
-        if re.search(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|search |s |find ).+', text) != None:
+        if re.search(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|f:|search |s |find |f ).+', text) != None:
             try:
                 logging.warning("User: " + str(prefix))
                 reply = search_dcpl(text)
