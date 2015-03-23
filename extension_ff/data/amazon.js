@@ -25,46 +25,79 @@ function makeBox() {
 	if ($('div.kicsBoxContents').length) {
 		console.log("Initialize: Creating Amazon e-book page box");
 		container = $('div.kicsBoxContents:first');
-		container.before("<div id='dcpl_digital'> <div id='dcpl_title'> DCPL </div> <div id='category'> Library Catalog </div> <div id='book' class='booksfordc_search'> Searching catalog </div> <div id='category'> Digital Catalog </div> <div id='digital' class='booksfordc_search'> Searching catalog </div> </div>");
+		container.before(
+		      " <div id='dcpl_digital'>\
+		        <div id = 'booksfordc_icon' class = 'amazon'> </div>\
+		        <div id = 'booksfordc_availability'> \
+		          <div id = 'dcpl_title'> DCPL Search </div> \
+		          <div id = 'category'> Library Catalog </div> \
+		          <div id = 'book' class = 'booksfordc_search'> Searching catalog </div> \
+		          <div id = 'category'> Digital Catalog </div> \
+		          <div id = 'digital' class = 'booksfordc_search'> Searching catalog </div> \
+		        </div> \
+		      </div> ");	    
 	    image1_container = $('.booksfordc_search');
-	    image2_container = $('#dcpl_title');
+	    image2_container = $('#booksfordc_icon');
 	    self.port.on("imageurl", function(gifurl){
 	      var img1 = document.createElement("img");
 	      img1.src = gifurl[0];
 	      var img2 = document.createElement("img");
-	      img2.src = gifurl[1];      
+	      img2.src = gifurl[1];
+	      img2.id = 'booksfordc_icon_img'      
 	      image1_container.append(img1);
-	      image2_container.prepend(img2);
+	      image2_container.append(img2);
 	    });
 		return true;
 	} else if ($('div.a-box.rbbSection.selected.dp-accordion-active').length) {
 		console.log("Initialize: Creating Amazon book page box");
 		container = $('div.a-box.rbbSection.selected.dp-accordion-active');
-		container.prepend("<div id='dcpl' class='a-box'> <div id='dcpl_title'> DCPL </div> <div id='category'> Library Catalog </div> <div id='book' class='booksfordc_search'> Searching catalog </div> <div id='category'> Digital Catalog </div> <div id='digital' class='booksfordc_search'> Searching catalog </div> </div>");
+		container.prepend(
+		      " <div id='dcpl' class='a-box'>\
+		        <div id = 'booksfordc_icon' class = 'amazon'> </div>\
+		        <div id = 'booksfordc_availability'> \
+		          <div id = 'dcpl_title'> DCPL Search </div> \
+		          <div id = 'category'> Library Catalog </div> \
+		          <div id = 'book' class = 'booksfordc_search'> Searching catalog </div> \
+		          <div id = 'category'> Digital Catalog </div> \
+		          <div id = 'digital' class = 'booksfordc_search'> Searching catalog </div> \
+		        </div> \
+		      </div> ");	    
 	    image1_container = $('.booksfordc_search');
-	    image2_container = $('#dcpl_title');
+	    image2_container = $('#booksfordc_icon');
 	    self.port.on("imageurl", function(gifurl){
 	      var img1 = document.createElement("img");
 	      img1.src = gifurl[0];
 	      var img2 = document.createElement("img");
 	      img2.src = gifurl[1];      
+	      img2.id = 'booksfordc_icon_img'      
 	      image1_container.append(img1);
-	      image2_container.prepend(img2);
+	      image2_container.append(img2);
 	    });
 		return true;
 	} else if ($('div#unqualifiedBuyBox').length) {
 		console.log("Initialize: Creating Amazon used book page box");
 		container = $('div#unqualifiedBuyBox');
-		container.prepend("<div id='dcpl' class='a-box'> <div id='dcpl_title'> DCPL </div> <div id='category'> Library Catalog </div> <div id='book' class='booksfordc_search'> Searching catalog </div> <div id='category'> Digital Catalog </div> <div id='digital' class='booksfordc_search'> Searching catalog </div> </div>");
+		container.prepend(
+		      " <div id='dcpl' class='a-box'>\
+		        <div id = 'booksfordc_icon' class = 'amazon'> </div>\
+		        <div id = 'booksfordc_availability'> \
+		          <div id = 'dcpl_title'> DCPL Search </div> \
+		          <div id = 'category'> Library Catalog </div> \
+		          <div id = 'book' class = 'booksfordc_search'> Searching catalog </div> \
+		          <div id = 'category'> Digital Catalog </div> \
+		          <div id = 'digital' class = 'booksfordc_search'> Searching catalog </div> \
+		        </div> \
+		      </div> ");	    
 	    image1_container = $('.booksfordc_search');
-	    image2_container = $('#dcpl_title');
+	    image2_container = $('#booksfordc_icon');
 	    self.port.on("imageurl", function(gifurl){
 	      var img1 = document.createElement("img");
 	      img1.src = gifurl[0];
 	      var img2 = document.createElement("img");
 	      img2.src = gifurl[1];      
+	      img2.id = 'booksfordc_icon_img'      
 	      image1_container.append(img1);
-	      image2_container.prepend(img2);
+	      image2_container.append(img2);
 	    });
 		return true;
 	} else {
@@ -83,6 +116,7 @@ function pageInfo() {
 		success = true;
 		page_type = "ebook_page";
 		title = $('#btAsinTitle').text();
+		console.log(title);
 		if ($('#pageCountAvailable').length) {
 			try {
 				isbn10 = $('#hardcover_meta_binding_winner').find('.bucketBorderTop').attr("id").split('_')[1].replace(/\D/g, '');
@@ -97,16 +131,24 @@ function pageInfo() {
 			author = $('.contributorNameTrigger a:eq(0)').text();
 		} else if ($('.contributorNameTrigger a').length) {
 			author = $('.contributorNameTrigger a').text();
+		} else if ($('div.buying span a:eq(0)').length){
+			author = $('div.buying span a:eq(0)').text();
 		} else {
-			author = $('div.buying span a').text();
+			author = $('div.buying span a').text();			
 		}
-	} else if ($("#productDetailsTable .content li:contains('ISBN-13:')").length) {
+	} else if ($("#productDetailsTable .content li:contains('ISBN')").length) {
 		console.log("Initialize: On Amazon book page");
 		success = true;
 		page_type = "book_page";
 		title = $('#productTitle').text();
+		isbn10 = $("#productDetailsTable .content li:contains('ISBN-10:')").text();
 		isbn13 = $("#productDetailsTable .content li:contains('ISBN-13:')").text();
-		isbn = isbn13.split(':')[1].replace(/\D/g, '');
+		if (isbn13.length){
+			isbn = isbn13.split(':')[1].replace(/\D/g, '');
+		} else {
+			isbn10 = isbn10.split(':')[1].replace(/\D/g, '');
+			isbn = convertISBN(isbn10);
+		}
 		if ($('.a-link-normal.contributorNameID:first').length) {
 			author = $('.a-link-normal.contributorNameID:first').text();
 		} else {

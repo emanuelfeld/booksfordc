@@ -27,16 +27,26 @@ function goodreadsMakeBox() {
     console.log("Initialize: Creating Goodreads page box");
     container = $('div.rightContainer:first');
     container.prepend(
-      "<div id='dcpl_goodreads'><div id='dcpl_title'> DCPL </div> <div id='category'>Library Catalog</div> <div id='book' class='booksfordc_search'>Searching catalog </div>  <div id='category'> Digital Catalog </div> <div id='digital' class='booksfordc_search'>Searching catalog </div> </div>");
-    image1_container = $('.booksfordc_search');
-    image2_container = $('#dcpl_title');
-    self.port.on("imageurl", function(gifurl){
-      var img1 = document.createElement("img");
-      img1.src = gifurl[0];
-      var img2 = document.createElement("img");
-      img2.src = gifurl[1];      
-      image1_container.append(img1);
-      image2_container.prepend(img2);
+          " <div id='dcpl_goodreads'>\
+            <div id = 'booksfordc_icon'> </div>\
+            <div id = 'booksfordc_availability'> \
+              <div id = 'dcpl_title'> DCPL Search </div> \
+              <div id = 'category'> Library Catalog </div> \
+              <div id = 'book' class = 'booksfordc_search'> Searching catalog </div> \
+              <div id = 'category'> Digital Catalog </div> \
+              <div id = 'digital' class = 'booksfordc_search'> Searching catalog </div> \
+            </div> \
+          </div> ");      
+      image1_container = $('.booksfordc_search');
+      image2_container = $('#booksfordc_icon');
+      self.port.on("imageurl", function(gifurl){
+        var img1 = document.createElement("img");
+        img1.src = gifurl[0];
+        var img2 = document.createElement("img");
+        img2.src = gifurl[1];
+        img2.id = 'booksfordc_icon_img'      
+        image1_container.append(img1);
+        image2_container.append(img2);
     });
 
       return true;

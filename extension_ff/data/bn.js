@@ -27,16 +27,26 @@ function bnMakeBox() {
 		console.log("Initialize: Creating Barnes and Noble page box");
 		container = $('#top-content-book-1:eq(0)');
 		container.prepend(
-			"<div id='dcpl_bn'> <div id='dcpl_title'> DCPL </div> <div id='category'> Library Catalog </div> <div id='book' class='booksfordc_search'> Searching catalog </div> <div id='category'> Digital Catalog </div> <div id='digital' class='booksfordc_search'> Searching catalog </div> </div>");
-    image1_container = $('.booksfordc_search');
-    image2_container = $('#dcpl_title');
-    self.port.on("imageurl", function(gifurl){
-      var img1 = document.createElement("img");
-      img1.src = gifurl[0];
-      var img2 = document.createElement("img");
-      img2.src = gifurl[1];      
-      image1_container.append(img1);
-      image2_container.prepend(img2);
+          " <div id='dcpl_bn'>\
+            <div id = 'booksfordc_icon'> </div>\
+            <div id = 'booksfordc_availability'> \
+              <div id = 'dcpl_title'> DCPL Search </div> \
+              <div id = 'category'> Library Catalog </div> \
+              <div id = 'book' class = 'booksfordc_search'> Searching catalog </div> \
+              <div id = 'category'> Digital Catalog </div> \
+              <div id = 'digital' class = 'booksfordc_search'> Searching catalog </div> \
+            </div> \
+          </div> ");      
+      image1_container = $('.booksfordc_search');
+      image2_container = $('#booksfordc_icon');
+      self.port.on("imageurl", function(gifurl){
+        var img1 = document.createElement("img");
+        img1.src = gifurl[0];
+        var img2 = document.createElement("img");
+        img2.src = gifurl[1];
+        img2.id = 'booksfordc_icon_img'      
+        image1_container.append(img1);
+        image2_container.append(img2);
     });
 return true;
 	} else {
@@ -48,24 +58,27 @@ return true;
 //Determine whether on book page
 function bnPageInfo() {
 
-	var success, page_type, title, isbn, isbn13, author;
+  var success, page_type, title, isbn, isbn13, author;
 
-	if ($('#product-title-1').length) {
-		console.log("Initialize: On Barnes and Noble book or e-book page")
-		success = true;
-		title = $('#product-title-1 h1').text();
-		isbn13 = $(".product-details ul li:first").text();
-		isbn = isbn13.split(':')[1].replace(/\D/g, '');
-		author = $(".contributors a").text();
-
-	} else {
-		console.log("Initialize: Not on Barnes and Noble book or ebook page");
-		success = false;
-		page_type = "";	
-		author = "";
-		title = "";
-		isbn = "";
-	}
+  if ($('#product-title-1').length) {
+    console.log("Initialize: On Barnes and Noble book or e-book page")
+    success = true;
+    title = $('#product-title-1 h1').text();
+    isbn13 = $(".product-details ul li:first").text();
+    isbn = isbn13.split(':')[1].replace(/\D/g, '');
+    if ($('.contributors a:eq(0)').length) {
+      author = $(".contributors a:eq(0)").text();
+    } else {
+      author = $(".contributors a").text();     
+    }
+  } else {
+    console.log("Initialize: Not on Barnes and Noble book or ebook page");
+    success = false;
+    page_type = ""; 
+    author = "";
+    title = "";
+    isbn = "";
+  }
 
     var result =  { "success": success, "page_type": page_type, "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
     console.log(result);
