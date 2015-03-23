@@ -6,6 +6,7 @@
   overflow: auto;
   display: -webkit-flex;
   display: flex;
+  text-align:left;
 }
 
 #dcpl_title {
@@ -20,6 +21,7 @@
 	margin-bottom:12px;
 	display: -webkit-flex;
 	display: flex;
+	text-align:left;
 }
 
 #dcpl_goodreads {

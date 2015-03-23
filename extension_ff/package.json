@@ -4,8 +4,8 @@
   "id": "jid1-v7ed49nPsxBrKA",
   "description": "Determine the availability of (e)books at the DC Public Library when browsing Amazon, Goodreads, or Barnes and Noble.",
   "author": "Emanuel Feld",
-  "license": "MPL 2.0",
-  "version": "1.0.0",
+  "license": "GPL 2.0",
+  "version": "1.0.1",
   "permissions": {
     "cross-domain-content": ["http://amazon.com/",
                      "http://amazon.com/",
