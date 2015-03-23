@@ -19,7 +19,7 @@ Where ```resource_type``` is ```b```, ```bk```, or ```book``` for physical books
 The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search/resource URL.
 
 ###Browser plug-in###
-A Chrome extension that displays library holdings and availability when browsing books on Amazon, Goodreads, or Barnes & Noble. Download for free for [Chrome](https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/booksfordc/).
+A Chrome extension that displays library holdings and availability when browsing books on Amazon, Goodreads, or Barnes & Noble. Download for free for [Chrome](https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/booksfordc/). Safari version in the works.
 
 ![image](https://cloud.githubusercontent.com/assets/4269640/6477965/8fe3d6ac-c1f7-11e4-82a1-401a4ae68a88.png)
 
