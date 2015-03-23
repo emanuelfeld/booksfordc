@@ -56,8 +56,11 @@ function bnPageInfo() {
 		title = $('#product-title-1 h1').text();
 		isbn13 = $(".product-details ul li:first").text();
 		isbn = isbn13.split(':')[1].replace(/\D/g, '');
-		author = $(".contributors a").text();
-
+		if ($('.contributors a:eq(0)').length) {
+			author = $(".contributors a:eq(0)").text();
+		} else {
+			author = $(".contributors a").text();			
+		}
 	} else {
 		console.log("Initialize: Not on Barnes and Noble book or ebook page");
 		success = false;
