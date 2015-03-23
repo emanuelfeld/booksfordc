@@ -3,7 +3,7 @@
 
   "name": "booksfordc",
   "description": "Determine the availability of (e)books at the DC Public Library when browsing Amazon, Goodreads, or Barnes and Noble.",
-  "version": "1.0.11",
+  "version": "1.0.12",
   
   "author": "Emanuel Feld",
 
