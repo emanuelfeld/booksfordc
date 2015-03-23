@@ -85,6 +85,7 @@ function pageInfo() {
 		success = true;
 		page_type = "ebook_page";
 		title = $('#btAsinTitle').text();
+		console.log(title);
 		if ($('#pageCountAvailable').length) {
 			try {
 				isbn10 = $('#hardcover_meta_binding_winner').find('.bucketBorderTop').attr("id").split('_')[1].replace(/\D/g, '');
@@ -99,8 +100,10 @@ function pageInfo() {
 			author = $('.contributorNameTrigger a:eq(0)').text();
 		} else if ($('.contributorNameTrigger a').length) {
 			author = $('.contributorNameTrigger a').text();
+		} else if ($('div.buying span a:eq(0)').length){
+			author = $('div.buying span a:eq(0)').text();
 		} else {
-			author = $('div.buying span a').text();
+			author = $('div.buying span a').text();			
 		}
 	} else if ($("#productDetailsTable .content li:contains('ISBN')").length) {
 		console.log("Initialize: On Amazon book page");
