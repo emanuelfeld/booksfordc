@@ -115,7 +115,7 @@ class MyTwitterBot(TwitterBot):
         logging.warning(text)
         
         if re.search(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|f:|search |s |find |f ).+', text) != None:
-            if (datetime.now() - tweet.created_at).seconds > 3600:
+            if (datetime.now() - tweet.created_at).seconds < 3600:
                 try:
                     logging.warning("User: " + str(prefix))
                     reply = search_dcpl(text)
