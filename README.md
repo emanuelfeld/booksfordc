@@ -12,9 +12,9 @@ Twitter users can also use the [@booksfordc](https://twitter.com/booksfordc) acc
 
 In actuality, the bot will accept any mention structured:
 
-    @booksfordc resource_type search_init book_title book_author
+    @booksfordc resource_type search_init search_terms
 
-Where ```resource_type``` is ```b```, ```bk```, or ```book``` for physical books, ```e```, ```ebk```, ```e-bk```, ```ebook```, or ```e-book``` for electronic books, or ```a```, ```abk```, ```a-bk```, ```audio```, ```audiobook```, or ```audio-book``` for audiobooks, and where ```search_init``` is one of ```f```,```f:```,```s```, ```s:```, ```search```, ```search:```, ```find```, or ```find:```. 
+Where ```resource_type``` is ```b```, ```bk```, or ```book``` for physical books, ```e```, ```ebk```, ```e-bk```, ```ebook```, or ```e-book``` for electronic books, or ```a```, ```abk```, ```a-bk```, ```audio```, ```audiobook```, or ```audio-book``` for audiobooks, where ```search_init``` is one of ```f```,```f:```,```s```, ```s:```, ```search```, ```search:```, ```find```, or ```find:```, and where ```search_terms`` includes the book title and/or author or the book's ISBN. An author and title combination will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work. 
 
 The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search/resource URL.
 
