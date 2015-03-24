@@ -124,12 +124,15 @@ class MyTwitterBot(TwitterBot):
                     time.sleep(70)
                 except:
                     logging.warning("Outcome: Failed search")
+                    time.sleep(70)
                     pass
             else:
                 logging.warning("Valid: Old mention")
+                time.sleep(70)
                 pass
         else:
             logging.warning("Valid: False")
+            time.sleep(70)
             pass
 
     def on_timeline(self, tweet, prefix):
