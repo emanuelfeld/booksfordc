@@ -115,13 +115,17 @@ class MyTwitterBot(TwitterBot):
         logging.warning(text)
         
         if re.search(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|f:|search |s |find |f ).+', text) != None:
-            try:
-                logging.warning("User: " + str(prefix))
-                reply = search_dcpl(text)
-                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
-                time.sleep(70)
-            except:
-                logging.warning("Outcome: Failed search")
+            if (datetime.now() - tweet.created_at).seconds > 3600:
+                try:
+                    logging.warning("User: " + str(prefix))
+                    reply = search_dcpl(text)
+                    self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
+                    time.sleep(70)
+                except:
+                    logging.warning("Outcome: Failed search")
+                    pass
+            else:
+                logging.warning("Valid: Old mention")
                 pass
         else:
             logging.warning("Valid: False")
