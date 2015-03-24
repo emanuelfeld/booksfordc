@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*- #
 
 from twitterbot import TwitterBot
+from datetime import datetime
 import cssselect, logging, lxml.html, os, re, requests, time
 
 logging.basicConfig(level=logging.INFO)
