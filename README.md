@@ -5,7 +5,7 @@ Assorted projects aimed at making the DC Public Library's resources more accessi
 ##@booksfordc##
 
 ###Catalog feed###
-Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog. Follow [@booksfordc](https://twitter.com/booksfordc).
+Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog. Follow [@booksfordc](https://twitter.com/booksfordc). You can also subscribe to a daily or weekly email digest of new resources using [these IFTTT recipes](https://ifttt.com/p/evonfriedland/shared).
 
 ###Twitter bot###
 Twitter users can also use the [@booksfordc](https://twitter.com/booksfordc) account to quickly query the library catalog. To look up a book, send a tweet in the form ```@booksfordc search: book_title book_author``` or ```@booksfordc s: book_title book_author```. For ebook lookup, do ```@booksfordc ebook search: book_title book_author``` or ```@booksfordc ebk s: book_title book_author```. And for an audiobook search, do ```@booksfordc audio search: book_title book_author``` or ```@booksfordc abk s: book_title book_author```.
