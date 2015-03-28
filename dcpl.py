@@ -116,10 +116,14 @@ class MyTwitterBot(TwitterBot):
         logging.warning(text)
         
         if re.search(r'^(\.?)@booksfordc( audiobook | audio-book | audio | a-bk | abk | a | e\-book | e\-bk | ebook | ebk | e | book | bk | b |[ ]?)(search:|s:|find:|f:|search |s |find |f ).+', text) != None:
-            logging.warning("Current time: " + str(datetime.now()) + "; Created time: " + str(tweet.created_at) + "; Difference (s): " + str((datetime.now() - tweet.created_at).seconds))
-            if (datetime.now() - tweet.created_at).seconds < 3600:
+            now = datetime.now()
+            created = tweet.created_at
+            day_delta = (datetime.now() - tweet.created_at).days
+            second_delta = (datetime.now() - tweet.created_at).seconds
+            if day_delta == 0 and second_delta < 3600:
                 try:
                     logging.warning("User: " + str(prefix))
+                    logging.warning("Current time: " + str(now) + "; Created time: " + str(created) + "; Difference (d): " + str(day_delta) + "; Difference (s): " + str(second_delta))
                     reply = search_dcpl(text)
                     self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
                     time.sleep(70)
