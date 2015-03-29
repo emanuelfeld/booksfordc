@@ -1,10 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 
 body {
-  padding:50px;
   font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#222;
   font-weight:300;
+}
+
+.title {
+  font-size:40px;
+  margin:0 0 10px;
+}
+
+.subtitle {
+  font-size:14px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -46,7 +54,7 @@ a small {
 }
 
 .wrapper {
-  width:860px;
+  width:100%;
   margin:0 auto;
 }
 
@@ -96,9 +104,7 @@ img {
 }
 
 header {
-  width:270px;
-  float:left;
-  position:fixed;
+  width:100%;
 }
 
 header ul {
@@ -161,8 +167,8 @@ header ul a strong {
 
 section {
   width:500px;
-  float:right;
-  padding-bottom:50px;
+  padding:50px auto 50px auto;
+  margin:0 auto;
 }
 
 small {
@@ -178,47 +184,12 @@ hr {
 
 footer {
   width:270px;
-  float:left;
-  position:fixed;
   bottom:50px;
 }
 
-@media print, screen and (max-width: 960px) {
-  
-  div.wrapper {
-    width:auto;
-    margin:0;
-  }
-  
-  header, section, footer {
-    float:none;
-    position:static;
-    width:auto;
-  }
-  
-  header {
-    padding-right:320px;
-  }
-  
-  section {
-    border:1px solid #e5e5e5;
-    border-width:1px 0;
-    padding:20px 0;
-    margin:0 0 20px;
-  }
-  
-  header a small {
-    display:inline;
-  }
-  
-  header ul {
-    position:absolute;
-    right:50px;
-    top:52px;
-  }
-}
 
 @media print, screen and (max-width: 720px) {
+
   body {
     word-wrap:break-word;
   }
@@ -236,10 +207,16 @@ footer {
   }
 }
 
-@media print, screen and (max-width: 480px) {
+@media print, screen and (max-width: 530px) {
+
   body {
     padding:15px;
   }
+
+  header {
+    padding:0px;
+  }
+ 
   
   header ul {
     display:none;
