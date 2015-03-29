@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>booksfordc by emanuelfeld</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>booksfordc</h1>
+          <h2></h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/emanuelfeld/booksfordc/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/emanuelfeld/booksfordc/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/emanuelfeld/booksfordc" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p><img src="https://github.com/emanuelfeld/booksfordc/blob/master/banners/PromoLarge.png" alt="banner"></p>
+
+<p>Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line <a href="https://twitter.com/evonfriedland">@evonfriedland</a> if you're interested.</p>
+
+<h2>
+<a id="booksfordc" class="anchor" href="#booksfordc" aria-hidden="true"><span class="octicon octicon-link"></span></a>@booksfordc</h2>
+
+<h3>
+<a id="catalog-feed" class="anchor" href="#catalog-feed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Catalog feed</h3>
+
+<p>Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog. Follow <a href="https://twitter.com/booksfordc">@booksfordc</a>. You can also subscribe to a daily or weekly email digest of new resources using <a href="https://ifttt.com/p/evonfriedland/shared">these IFTTT recipes</a>.</p>
+
+<h3>
+<a id="twitter-bot" class="anchor" href="#twitter-bot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Twitter bot</h3>
+
+<p>Twitter users can also use the <a href="https://twitter.com/booksfordc">@booksfordc</a> account to quickly query the library catalog. To look up a book, send a tweet in the form <code>@booksfordc search: book_title book_author</code> or <code>@booksfordc s: book_title book_author</code>. For ebook lookup, do <code>@booksfordc ebook search: book_title book_author</code> or <code>@booksfordc ebk s: book_title book_author</code>. And for an audiobook search, do <code>@booksfordc audio search: book_title book_author</code> or <code>@booksfordc abk s: book_title book_author</code>.</p>
+
+<p>In actuality, the bot will accept any mention structured:</p>
+
+<pre><code>@booksfordc resource_type search_init search_terms
+</code></pre>
+
+<p>Where <code>resource_type</code> is <code>b</code>, <code>bk</code>, or <code>book</code> for physical books, <code>e</code>, <code>ebk</code>, <code>e-bk</code>, <code>ebook</code>, or <code>e-book</code> for electronic books, or <code>a</code>, <code>abk</code>, <code>a-bk</code>, <code>audio</code>, <code>audiobook</code>, or <code>audio-book</code> for audiobooks, where <code>search_init</code> is one of <code>f</code>,<code>f:</code>,<code>s</code>, <code>s:</code>, <code>search</code>, <code>search:</code>, <code>find</code>, or <code>find:</code>, and where <code>search_terms</code> includes the book title and/or author or the book's ISBN. An author and title combination will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work. </p>
+
+<p>The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search/resource URL.</p>
+
+<h3>
+<a id="browser-plug-in" class="anchor" href="#browser-plug-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser plug-in</h3>
+
+<p>A Chrome extension that displays library holdings and availability when browsing books on Amazon, Goodreads, or Barnes &amp; Noble. Download for free for <a href="https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg">Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/">Firefox</a>. Safari version in the works.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/4269640/6477965/8fe3d6ac-c1f7-11e4-82a1-401a4ae68a88.png" alt="image"></p>
+
+<h4>
+<a id="license-and-contributing" class="anchor" href="#license-and-contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>License and Contributing</h4>
+
+<p>This project's code is offered under a GPLv2 license. As stated in <a href="https://github.com/emanuelfeld/booksfordc/blob/master/CONTRIBUTING.txt">CONTRIBUTING</a>:</p>
+
+<blockquote>
+<p>By contributing to this repo, you agree to license your work under the same license.</p>
+</blockquote>
+        </section>
+
+        <footer>
+          booksfordc is maintained by <a href="https://github.com/emanuelfeld">emanuelfeld</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+                  <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-61298225-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+      </div>
+    </div>
+  </body>
+</html>
