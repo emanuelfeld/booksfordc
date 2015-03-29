@@ -28,38 +28,58 @@
         </ul>
       </header>
       <section>
-        <p><img src="https://github.com/emanuelfeld/booksfordc/blob/master/banners/PromoLarge.png" alt="banner"></p>
+        <p><img src="https://raw.githubusercontent.com/emanuelfeld/booksfordc/gh-pages/banners/PromoLarge.png" alt="booksfordc_banner"></p>
 
-<p>Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line <a href="https://twitter.com/evonfriedland">@evonfriedland</a> if you're interested.</p>
+<p>Books for DC (aka booksfordc) is an ongoing initiative aimed at making the DC Public Library's resources more accessible to DC residents by bringing them to the platforms they already use.</p>
 
 <h2>
-<a id="booksfordc" class="anchor" href="#booksfordc" aria-hidden="true"><span class="octicon octicon-link"></span></a>@booksfordc</h2>
+<a id="browser-plug-in" class="anchor" href="#browser-plug-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser plug-in</h2>
 
-<h3>
-<a id="catalog-feed" class="anchor" href="#catalog-feed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Catalog feed</h3>
+<p>With the booksfordc browser extension, you can now easily determine the availability of books and ebooks at the DCPL as you browse Amazon, Goodreads, and Barnes &amp; Noble. Download for free for Chrome or Firefox:</p>
 
-<p>Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog. Follow <a href="https://twitter.com/booksfordc">@booksfordc</a>. You can also subscribe to a daily or weekly email digest of new resources using <a href="https://ifttt.com/p/evonfriedland/shared">these IFTTT recipes</a>.</p>
+<p><a href="https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg"><img src="https://raw.githubusercontent.com/emanuelfeld/emanuelfeld.github.io/master/assets/chrome32.png" alt="chrome_logo"></a> <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/"><img src="https://raw.githubusercontent.com/emanuelfeld/emanuelfeld.github.io/master/assets/firefox32.png" alt="firefox_logo"></a></p>
 
-<h3>
-<a id="twitter-bot" class="anchor" href="#twitter-bot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Twitter bot</h3>
+<h2>
+<a id="catalog-feed" class="anchor" href="#catalog-feed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Catalog feed</h2>
 
-<p>Twitter users can also use the <a href="https://twitter.com/booksfordc">@booksfordc</a> account to quickly query the library catalog. To look up a book, send a tweet in the form <code>@booksfordc search: book_title book_author</code> or <code>@booksfordc s: book_title book_author</code>. For ebook lookup, do <code>@booksfordc ebook search: book_title book_author</code> or <code>@booksfordc ebk s: book_title book_author</code>. And for an audiobook search, do <code>@booksfordc audio search: book_title book_author</code> or <code>@booksfordc abk s: book_title book_author</code>.</p>
+<p>Wish you could keep up with the latest additions to the DCPL book catalog? Now you can. Just follow the <a href="https://twitter.com/booksfordc">@booksfordc</a> Twitter account, which tweets out new books at the DCPL as they come in. In addition to this feed, you can subscribe to a daily or weekly email digest of new holdings using <a href="https://ifttt.com/p/evonfriedland/shared">these IFTTT recipes</a>.</p>
+
+<div>
+<a href="https://twitter.com/booksfordc">Tweets by @booksfordc</a>
+</div>
+
+<h2>
+<a id="twitter-bot" class="anchor" href="#twitter-bot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Twitter bot</h2>
+
+<p>Twitter users can also use the <a href="https://twitter.com/booksfordc">@booksfordc</a> account to quickly query the library catalog.</p>
+
+<p>To look up a book, send a tweet in the form <code>@booksfordc search: book_title book_author</code> or <code>@booksfordc s: book_title book_author</code>. For ebook lookup, do <code>@booksfordc ebook search: book_title book_author</code> or <code>@booksfordc ebk s: book_title book_author</code>. And for an audiobook search, do <code>@booksfordc audio search: book_title book_author</code> or <code>@booksfordc abk s: book_title book_author</code>. </p>
+
+<p>The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search/resource URL.</p>
+
+<p>Here's an example:</p>
+
+<div>
+<blockquote lang="en">
+<p><a href="https://twitter.com/evonfriedland">@evonfriedland</a> Found: <a href="https://t.co/6DVjQPnIWE">https://t.co/6DVjQPnIWE</a></p>— booksfordc (@booksfordc) <a href="https://twitter.com/booksfordc/status/581946138376441856">March 28, 2015</a>
+</blockquote>
+</div>
 
 <p>In actuality, the bot will accept any mention structured:</p>
 
 <pre><code>@booksfordc resource_type search_init search_terms
 </code></pre>
 
-<p>Where <code>resource_type</code> is <code>b</code>, <code>bk</code>, or <code>book</code> for physical books, <code>e</code>, <code>ebk</code>, <code>e-bk</code>, <code>ebook</code>, or <code>e-book</code> for electronic books, or <code>a</code>, <code>abk</code>, <code>a-bk</code>, <code>audio</code>, <code>audiobook</code>, or <code>audio-book</code> for audiobooks, where <code>search_init</code> is one of <code>f</code>,<code>f:</code>,<code>s</code>, <code>s:</code>, <code>search</code>, <code>search:</code>, <code>find</code>, or <code>find:</code>, and where <code>search_terms</code> includes the book title and/or author or the book's ISBN. An author and title combination will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work. </p>
+<p>Where <code>resource_type</code> is <code>b</code>, <code>bk</code>, or <code>book</code> for physical books, <code>e</code>, <code>ebk</code>, <code>e-bk</code>, <code>ebook</code>, or <code>e-book</code> for electronic books, or <code>a</code>, <code>abk</code>, <code>a-bk</code>, <code>audio</code>, <code>audiobook</code>, or <code>audio-book</code> for audiobooks, where <code>search_init</code> is one of <code>f</code>,<code>f:</code>,<code>s</code>, <code>s:</code>, <code>search</code>, <code>search:</code>, <code>find</code>, or <code>find:</code>, and where <code>search_terms</code> includes the book title and/or author or the book's ISBN. </p>
 
-<p>The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search/resource URL.</p>
+<p>An author and title combination search will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work. </p>
 
-<h3>
-<a id="browser-plug-in" class="anchor" href="#browser-plug-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser plug-in</h3>
+<h2>
+<a id="in-the-news" class="anchor" href="#in-the-news" aria-hidden="true"><span class="octicon octicon-link"></span></a>In the news</h2>
 
-<p>A Chrome extension that displays library holdings and availability when browsing books on Amazon, Goodreads, or Barnes &amp; Noble. Download for free for <a href="https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg">Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/">Firefox</a>. Safari version in the works.</p>
+<p>WAMU 88.5: <a href="http://wamu.org/news/15/03/16/why_buy_a_book_when_you_can_go_to_dc_public_library_theres_an_app_for_that">New Browser Extension May Get You Going To The D.C. Public Library More</a></p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/4269640/6477965/8fe3d6ac-c1f7-11e4-82a1-401a4ae68a88.png" alt="image"></p>
+<p>Technical.ly DC: <a href="https://technical.ly/dc/2015/03/04/bookdsfordc-library-twitter-feed/">This Twitter feed lists books just added to the DC Public Library system</a></p>
 
 <h4>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h4>
