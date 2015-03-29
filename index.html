@@ -18,10 +18,10 @@
 
         <div style="padding:20px 0 0 0">
           <p class="title" style="text-align: center">booksfordc</h1>
-          <p class="subtitle" style="text-align: center">Bringing the Public Library to DC</p>
+          <p class="subtitle" style="text-align: center">Bringing the Library to the DC Public</p>
         </div>
 
-        <div style="background:#BF1E24; text-align:center; padding:10px 0 10px 0"><img src="https://raw.githubusercontent.com/emanuelfeld/booksfordc/gh-pages/icon_set/White32px.png" alt="booksfordc_logo"></div>
+        <div style="background:#BF1E24; text-align:center; padding:10px 0 10px 0; margin:0 0 20px 0"><img src="https://raw.githubusercontent.com/emanuelfeld/booksfordc/gh-pages/icon_set/White32px.png" alt="booksfordc_logo"></div>
 
       </header>
       <section>
@@ -32,9 +32,8 @@
 <h2>
 <a id="browser-plug-in" class="anchor" href="#browser-plug-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser plug-in</h2>
 
-<p>With the booksfordc browser extension, you can now easily determine the availability of books and ebooks at the DCPL as you browse Amazon, Goodreads, and Barnes &amp; Noble. Download for free for Chrome or Firefox:</p>
-
-<p><a href="https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg"><img src="https://raw.githubusercontent.com/emanuelfeld/emanuelfeld.github.io/master/assets/chrome32.png" alt="chrome_logo"></a> <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/"><img src="https://raw.githubusercontent.com/emanuelfeld/emanuelfeld.github.io/master/assets/firefox32.png" alt="firefox_logo"></a></p>
+<p>With the booksfordc browser extension, you can now easily determine the availability of books and ebooks at the DCPL as you browse Amazon, Goodreads, and Barnes &amp; Noble.</p> 
+<p>Download for free for <a href="https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg"><img src="https://raw.githubusercontent.com/emanuelfeldbooksfordc/gh-pages/images/chrome16.png" alt="chrome_logo"> Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/"><img src="https://raw.githubusercontent.com/emanuelfeldbooksfordc/gh-pages/images/firefox16.png" alt="firefox_logo"> Firefox</a>.</p>
 
 <h2>
 <a id="catalog-feed" class="anchor" href="#catalog-feed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Catalog feed</h2>
@@ -49,9 +48,14 @@
 
 <p>Twitter users can also use the <a href="https://twitter.com/booksfordc">@booksfordc</a> account to quickly query the library catalog.</p>
 
-<p>To look up a book, send a tweet in the form <code>@booksfordc search: book_title book_author</code> or <code>@booksfordc s: book_title book_author</code>. For ebook lookup, do <code>@booksfordc ebook search: book_title book_author</code> or <code>@booksfordc ebk s: book_title book_author</code>. And for an audiobook search, do <code>@booksfordc audio search: book_title book_author</code> or <code>@booksfordc abk s: book_title book_author</code>. </p>
+<p>To look up a book, send a tweet in the form:</p>
+<pre><code>@booksfordc search: book_title book_author</code></pre>
+<p>For ebooks, do:</p>
+<pre><code>@booksfordc ebook search: book_title book_author</code></pre>
+<p>And for an audiobook search, do:</p>
+<pre><code>@booksfordc audio search: book_title book_author</code></pre>
 
-<p>The bot will then respond directly to the account that sent the query saying whether it found a match (or multiple possible matches) and with the search/resource URL.</p>
+<p>The bot will then respond directly to your account saying whether it found a match (or multiple possible matches) and with the search/resource URL. Usually this will only take a minute or two.</p>
 
 <p>Here's an example:</p>
 
@@ -60,29 +64,42 @@
 
 
 
-<p>In actuality, the bot will accept any mention structured:</p>
+<p>Actually, the bot will accept any mention structured:</p>
 
-<pre><code>@booksfordc resource_type search_init search_terms
-</code></pre>
+<pre><code>@booksfordc resource_type search_init search_terms</code></pre>
 
-<p>Where <code>resource_type</code> is <code>b</code>, <code>bk</code>, or <code>book</code> for physical books, <code>e</code>, <code>ebk</code>, <code>e-bk</code>, <code>ebook</code>, or <code>e-book</code> for electronic books, or <code>a</code>, <code>abk</code>, <code>a-bk</code>, <code>audio</code>, <code>audiobook</code>, or <code>audio-book</code> for audiobooks, where <code>search_init</code> is one of <code>f</code>,<code>f:</code>,<code>s</code>, <code>s:</code>, <code>search</code>, <code>search:</code>, <code>find</code>, or <code>find:</code>, and where <code>search_terms</code> includes the book title and/or author or the book's ISBN. </p>
+<p>Where <code>resource_type</code> is:</p>
+
+<ul>
+<li><code>b</code>, <code>bk</code>, or <code>book</code> for physical books</li>
+<li><code>e</code>, <code>ebk</code>, <code>e-bk</code>, <code>ebook</code>, or <code>e-book</code> for electronic books</li>
+<li><code>a</code>, <code>abk</code>, <code>a-bk</code>, <code>audio</code>, <code>audiobook</code>, or <code>audio-book</code> for audiobooks</li>
+</ul>
+
+<p>Where <code>search_init</code> is one of:</p>
+<ul>
+<li><code>f</code>, <code>f:</code>, <code>s</code>, <code>s:</code>, <code>search</code>, <code>search:</code>, <code>find</code>, or <code>find:</code></li>
+</ul> 
+
+<p>And where <code>search_terms</code> includes either the book title and/or author or the book's ISBN. </p>
 
 <p>An author and title combination search will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work. </p>
 
 <h2>
-<a id="in-the-news" class="anchor" href="#in-the-news" aria-hidden="true"><span class="octicon octicon-link"></span></a>In the news</h2>
+<a id="in-the-news" class="anchor" href="#in-the-news" aria-hidden="true"><span class="octicon octicon-link"></span></a>In the news</h1>
 
 <p>WAMU 88.5: <a href="http://wamu.org/news/15/03/16/why_buy_a_book_when_you_can_go_to_dc_public_library_theres_an_app_for_that">New Browser Extension May Get You Going To The D.C. Public Library More</a></p>
 
 <p>Technical.ly DC: <a href="https://technical.ly/dc/2015/03/04/bookdsfordc-library-twitter-feed/">This Twitter feed lists books just added to the DC Public Library system</a></p>
 
-<h4>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h4>
+<h2>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h4>
+<p>Books for DC is a project of <a href="https://emanuelfeld.github.io">Emanuel Feld</a>.</p> 
+<p>Send him questions, issues, ideas, rants, or raves on <a href="https://twitter.com/evonfriedland">Twitter</a> or by email at booksfordc at gmail dot com.</p>
 
-<p>This project's code is offered under a <a href="https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/LICENSE.txt">GPLv2 license</a>.</p>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/emanuelfeld">emanuelfeld</a></p>
+          This project's code is offered under a <a href="https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/LICENSE.txt">GPLv2 license</a>.
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
