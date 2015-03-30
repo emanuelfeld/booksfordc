@@ -6,6 +6,10 @@ body {
   font-weight:300;
 }
 
+#title_text {
+  padding:20px 0 0 0;
+}
+
 .title {
   font-size:40px;
   margin:0 0 10px;
@@ -15,6 +19,12 @@ body {
   font-size:14px;
 }
 
+#logo {
+  background:#BF1E24; 
+  text-align:center; 
+  padding:10px 0 10px 0; 
+  margin:0 0 20px 0;
+}
 h1, h2, h3, h4, h5, h6 {
   color:#222;
   margin:0 0 20px;
@@ -213,13 +223,20 @@ footer {
 @media print, screen and (max-width: 530px) {
 
   body {
-    padding:15px;
+    word-wrap:break-word;
+    padding:0px;
   }
 
   header {
     padding:0px;
   }
  
+ section {
+  width:320px;
+  padding:50px auto 50px auto;
+  margin:0 auto;
+}
+
   
   header ul {
     display:none;
