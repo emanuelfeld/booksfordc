@@ -24,10 +24,6 @@
 
   "content_scripts": [
       {
-          "exclude_globs": [],
-          "include_globs": [
-              "*"
-          ],
           "css": ["css/booksfordc.css"],
           "js": [
               "scripts/jquery.min.js",
