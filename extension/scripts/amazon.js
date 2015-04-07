@@ -1,27 +1,32 @@
 if (/amazon\.com$/.test(document.domain)) {
 
-	var on_page = makeBox();
+  console.log = function() {}
 
-	if (on_page===true){
+  function getPrefsAmazon() {
+    chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function(items){
+    	checkAmazon(items['audioMedia'], items['ebookMedia'], items['bookMedia']);
+    });
+  }
 
-		var page_info = pageInfo(),
-			search_urls = searchURLs(page_info['author'], page_info['title'],page_info['isbn']);
+  var prefsAmazon = getPrefsAmazon();
 
-		if (page_info['isbn']===null){
-			console.log("Book: Searching catalog by title and author")
-			searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book", page_info);
-		} else {
-			console.log("Book: Searching catalog by ISBN")
-			searchSirsi(search_urls['isbnURL'],"isbn",$("div#book"), "Book", page_info);
-		}
-    searchOverdrive(search_urls['overdriveSearchURL'], search_urls['overdriveURL'], "text", $("div#digital"), "E-book", page_info);   
-	}
+  function checkAmazon(showAudio, showEbook, showBook){
 
+    var on_page = makeBox(showAudio, showEbook, showBook);
+
+    if (on_page === true){
+
+      var page_info = pageInfo(),
+        search_urls = searchURLs(page_info['author'], page_info['title'], page_info['isbn']);
+
+      initiateSearch(page_info, search_urls, showAudio, showEbook, showBook);
+
+    }
+  }
 }
 
-
 //Create the div on the Amazon resource page to modify and initialize message
-function makeBox() {
+function makeBox(showAudio, showEbook, showBook) {
 	var container;
 
 	if ($('div.kicsBoxContents').length) {
@@ -32,13 +37,8 @@ function makeBox() {
 		        <div id = 'booksfordc_icon' class = 'amazon_digital'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
 		        <div id = 'booksfordc_availability'> \
 		          <div id = 'dcpl_title'> DCPL Search </div> \
-		          <div id = 'category'> Library Catalog </div> \
-		          <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
-		          <div id = 'category'> Digital Catalog </div> \
-		          <div id = 'digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
 		        </div> \
 		      </div> ");
-			return true;
 	} else if ($('div.a-box.rbbSection.selected.dp-accordion-active').length) {
 		console.log("Initialize: Creating Amazon book page box");
 		container = $('div.a-box.rbbSection.selected.dp-accordion-active');
@@ -47,13 +47,8 @@ function makeBox() {
 		        <div id = 'booksfordc_icon' class = 'amazon'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
 		        <div id = 'booksfordc_availability'> \
 		          <div id = 'dcpl_title'> DCPL Search </div> \
-		          <div id = 'category'> Library Catalog </div> \
-		          <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
-		          <div id = 'category'> Digital Catalog </div> \
-		          <div id = 'digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
 		        </div> \
 		      </div> ");
-			return true;
 	} else if ($('div#unqualifiedBuyBox').length) {
 		console.log("Initialize: Creating Amazon used book page box");
 		container = $('div#unqualifiedBuyBox');
@@ -62,17 +57,17 @@ function makeBox() {
 		        <div id = 'booksfordc_icon' class = 'amazon'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
 		        <div id = 'booksfordc_availability'> \
 		          <div id = 'dcpl_title'> DCPL Search </div> \
-		          <div id = 'category'> Library Catalog </div> \
-		          <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
-		          <div id = 'category'> Digital Catalog </div> \
-		          <div id = 'digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> \
 		        </div> \
 		      </div> ");
-			return true;
 	} else {
 		console.log("Initialize: Could not create Amazon page box");
 		return false;
 	}
+
+  finishBox(showAudio, showEbook, showBook);
+  
+  return true;
+
 }
 
 //Determine whether on book page
