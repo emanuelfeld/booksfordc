@@ -86,7 +86,7 @@ function goodreadsMakeBox() {
 
 //Determine whether on book page
 function goodreadsPageInfo() {
-
+  // where do we get page_type from?
   var success, page_type, title, isbn, isbn13, author;
 
     isbn13 = $("div .infoBoxRowItem:contains('ISBN13')").text();
@@ -96,7 +96,6 @@ function goodreadsPageInfo() {
     success = true;
     
     var result =  { "success": success, "page_type": page_type, "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
-    console.log(result);
     return result;
 }
 
