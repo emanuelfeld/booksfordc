@@ -2,6 +2,14 @@
 
 Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line [@evonfriedland](https://twitter.com/evonfriedland) if you're interested.
 
+##Next up##
+
+* Set up focus group a MLK Jr Dream Lab and/or write and distribute a printed questionnaire to library patrons
+* Create and distribute fliers for branch libraries
+* Do more outreach with local education and literacy non-profits and DCPS librarians, teachers, students, and parents
+
+##So far##
+
 ###Catalog feed###
 
 Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog. Follow with [@booksfordc](https://twitter.com/booksfordc). You can also subscribe to a daily or weekly email digest of new resources using [these IFTTT recipes](https://ifttt.com/p/evonfriedland/shared).
