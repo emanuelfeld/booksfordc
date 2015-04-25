@@ -1,6 +1,8 @@
 var pageMod = require("sdk/page-mod");
 var data = require("sdk/self").data;
 var gifurl = [data.url("ajax-loader.gif"), data.url("icon16white.png")];
+var preferences = require("sdk/simple-prefs").prefs;
+var details = { "imageurl": gifurl, "prefs": preferences }
 
 pageMod.PageMod({
   include: "*.amazon.com",
@@ -8,10 +10,9 @@ pageMod.PageMod({
   contentStyleFile: "./booksfordc.css",
   contentScriptWhen: "ready",
   onAttach: function(worker) {
-  	worker.port.emit("imageurl", gifurl);
+  	worker.port.emit("details", details);
   }
 });
-
 
 pageMod.PageMod({
   include: /.*goodreads\.com\/book\/show\/.*/,
@@ -19,11 +20,9 @@ pageMod.PageMod({
   contentStyleFile: "./booksfordc.css",
   contentScriptWhen: "ready",
   onAttach: function(worker) {
-  	worker.port.emit("imageurl", gifurl);
+    worker.port.emit("details", details);
   }
-
 });
-
 
 pageMod.PageMod({
   include: /.*barnesandnoble\.com\/w\/.*/,
@@ -31,6 +30,6 @@ pageMod.PageMod({
   contentStyleFile: "./booksfordc.css",
   contentScriptWhen: "ready",
   onAttach: function(worker) {
-  	worker.port.emit("imageurl", gifurl);
+    worker.port.emit("details", details);
   }
 });

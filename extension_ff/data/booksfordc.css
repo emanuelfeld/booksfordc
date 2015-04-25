@@ -54,6 +54,20 @@
 	font-family: Arial, sans-serif;
 }
 
+#ebook {
+	font-size:13px;
+	line-height: 19px;
+	color: #111;
+	font-family: Arial, sans-serif;
+}
+
+#audio {
+	font-size:13px;
+	line-height: 19px;
+	color: #111;
+	font-family: Arial, sans-serif;
+}
+
 #digital {
 	font-size:13px;
 	line-height: 19px;
@@ -67,7 +81,6 @@
 	line-height: 19px;
 	color: #111;
 	font-family: Arial, sans-serif;
-
 }
 
 #results {
@@ -90,7 +103,6 @@
     display:inline-block;
     float:left;
 	background:#be2026; 
-
 }
 
 #booksfordc_icon_img {
