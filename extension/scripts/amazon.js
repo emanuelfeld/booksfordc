@@ -77,7 +77,6 @@ function pageInfo() {
 
 	if ($('#btAsinTitle').length) {
 		console.log("Initialize: On Amazon e-book page")
-		success = true;
 		page_type = "ebook_page";
 		title = $('#btAsinTitle').text();
 		console.log(title);
@@ -102,7 +101,6 @@ function pageInfo() {
 		}
 	} else if ($("#productDetailsTable .content li:contains('ISBN')").length) {
 		console.log("Initialize: On Amazon book page");
-		success = true;
 		page_type = "book_page";
 		title = $('#productTitle').text();
 		isbn10 = $("#productDetailsTable .content li:contains('ISBN-10:')").text();
@@ -120,14 +118,13 @@ function pageInfo() {
 		}
 	} else {
 		console.log("Initialize: Not on Amazon book or e-book page");
-		success = false;
 		page_type = "";	
 		author = "";
 		title = "";
 		isbn = "";
 	}
 
-    var result =  { "success": success, "page_type": page_type, "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
+    var result =  { "page_type": page_type, "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
     console.log(result);
     return result;
 }

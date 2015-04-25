@@ -20,7 +20,7 @@ function overdriveAuthor(author) {
 
 function convertISBN(isbn10) {
   console.log("Initialize: Converting ISBN-10 to ISBN-13");
-  var isbn = "978" + isbn10.substring(0, isbn10.length - 1);;
+  var isbn = "978" + isbn10.substring(0, isbn10.length - 1);
   isbn = isbn + checkDigit(isbn);
   return isbn;
 }
@@ -42,25 +42,21 @@ function finishBox(showAudio, showEbook, showBook) {
 
   if (showAudio) {
     $('#dcpl_title:eq(0)').after(
-      " <div id = 'category'> Audiobooks </div> \
-        <div id = 'audio' class='digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div>");
+      " <div id = 'category'> Audiobooks </div> <div id = 'audio' class='digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div>");
   }
 
   if (showEbook) {
     $('#dcpl_title:eq(0)').after(
-      " <div id = 'category'> E-books </div> \
-          <div id = 'ebook' class='digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div>");
+      " <div id = 'category'> E-books </div> <div id = 'ebook' class='digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div>");
   }
 
   if (showBook) {
     $('#dcpl_title:eq(0)').after(
-      " <div id = 'category'> Books </div> \
-          <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> ");
+      " <div id = 'category'> Books </div> <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> ");
   }
 
   if ((showAudio === false && showEbook === false && showBook === false) || (showAudio === undefined && showEbook === undefined && showBook === undefined)) {
-    $('#dcpl_title:eq(0)').after(
-      " <div id = 'book'> <a href = 'chrome-extension://plbkclaloadjhljkijjnlingopbahndg/options.html' target='_blank'> Click here to set your search preferences </a> ");
+    $('#dcpl_title:eq(0)').after(" <div id = 'book'> <a href = 'chrome-extension://plbkclaloadjhljkijjnlingopbahndg/options.html' target='_blank'> Click here to set your search preferences </a> ");
   }
 }
 
@@ -115,7 +111,6 @@ function searchOverdrive(search_url, fail_url, search_by, modify, type, info, se
       url: search_url
     },
     function(response) {
-
       var result = $(response);
       overdriveAvailability(result, fail_url, modify, type, info, search_urls);
     });
@@ -125,7 +120,6 @@ function searchOverdrive(search_url, fail_url, search_by, modify, type, info, se
 function sirsiAvailability(oneline, url, search_by, modify, type, info, search_urls) {
 
   try {
-
     var availabilityJSON = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/, "$1"));
     available = availabilityJSON['totalAvailable'].toString(),
       total = availabilityJSON['copies'][0].match(/(\d+)$/)[1],
@@ -133,9 +127,7 @@ function sirsiAvailability(oneline, url, search_by, modify, type, info, search_u
 
     successMessage(total, available, wait, type, modify, url, search_urls);
     console.log("Book: Located in catalog");
-
   } catch (e) {
-
     if (search_by === "isbn") {
       console.log("Book: Search by ISBN failed\nBook: Searching catalog by title and author");
       console.log(info);
@@ -143,22 +135,18 @@ function sirsiAvailability(oneline, url, search_by, modify, type, info, search_u
     } else if (search_by === "text_full" && info['title'].match(/:/) !== null) {
       console.log("Book: Searching catalog without subtitle");
       searchSirsi(search_urls['altBookURL'], "text_short", modify, type, info, search_urls);
-    } else if (oneline.match("This search returned no results.") != null) {
+    } else if (oneline.match("This search returned no results.") !== null) {
       console.log("Book: Not located in catalog");
       failureMessage(type, "not_located", url, modify, search_urls);
     } else {
       console.log("Book: Uncertain match in catalog");
       failureMessage(type, "uncertain", url, modify, search_urls);
     }
-
   }
-
 }
 
 function overdriveAvailability(result, url, modify, type, info, search_urls) {
-
   try {
-
     var availabilityInfo = result.find('.img-and-info-contain:eq(0)'),
       available = availabilityInfo.attr("data-copiesavail"),
       total = availabilityInfo.attr("data-copiestotal"),
@@ -169,28 +157,25 @@ function overdriveAvailability(result, url, modify, type, info, search_urls) {
 
     successMessage(total, available, wait, type, modify, link, search_urls);
     console.log(type + ": Located in Overdrive");
-
   } catch (e) {
-
     console.log(type + ": Not located in Overdrive");
     failureMessage(type, "not_located", url, modify, search_urls);
-
   }
-
 }
 
 function successMessage(total, available, wait, type, modify, result_url, search_urls) {
-
+  var total_statement, wait_statement;
+  
   if (total.match(/^1$/) !== null) {
-    var total_statement = total + " copy";
+    total_statement = total + " copy";
   } else if (total.match(/^[0-9]+$/) !== null) {
-    var total_statement = total + " copies";
+    total_statement = total + " copies";
   }
 
   if (wait.match(/^1$/) !== null) {
-    var wait_statement = wait + " patron waiting"
+    wait_statement = wait + " patron waiting";
   } else if (wait.match(/^[0-9]+$/) !== null) {
-    var wait_statement = wait + " patrons waiting"
+    wait_statement = wait + " patrons waiting";
   }
 
   if (wait.match(/^[0-9]+$/) !== null && wait.match(/^0$/) === null && available.match(/^0$/) !== null && total.match(/^[0-9]+$/) !== null) {
@@ -198,17 +183,17 @@ function successMessage(total, available, wait, type, modify, result_url, search
   } else {
     modify.html("<a id='results' href = '" + result_url + "'>" + type + " located </a> <br>" + total_statement + " (" + available + " available)");
   }
-
 }
 
 function failureMessage(type, failure, failure_url, modify, search_urls) {
+  var purchase_message, ebook_message;
 
   if (type === "Book") {
-    var purchase_message = "<br> <a id='results' href = '" + search_urls['purchaseURL'] + "'>Request purchase</a>",
-      ebook_message = "";
+    purchase_message = "<br> <a id='results' href = '" + search_urls['purchaseURL'] + "'>Request purchase</a>";
+    ebook_message = "";
   } else {
-    var purchase_message = "",
-      ebook_message = "<br> <a id='results' href = '" + failure_url + "'>Search manually</a>";
+    purchase_message = "";
+    ebook_message = "<br> <a id='results' href = '" + failure_url + "'>Search manually</a>";
   }
 
   if (failure === "not_located") {

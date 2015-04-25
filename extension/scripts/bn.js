@@ -16,7 +16,6 @@ if (/barnesandnoble\.com$/.test(document.domain)) {
 
 		if (on_page === true){
 
-
 			var page_info = bnPageInfo(),
 				search_urls = searchURLs(page_info['author'], page_info['title'], page_info['isbn']);
 
@@ -54,7 +53,7 @@ function bnMakeBox(showAudio, showEbook, showBook) {
 //Determine whether on book page
 function bnPageInfo() {
 
-	var success, page_type, title, isbn, isbn13, author;
+	var title, isbn, isbn13, author;
 
 	if ($('#product-title-1').length) {
 		console.log("Initialize: On Barnes and Noble book or e-book page")
@@ -67,16 +66,9 @@ function bnPageInfo() {
 		} else {
 			author = $(".contributors a").text();			
 		}
-	} else {
-		console.log("Initialize: Not on Barnes and Noble book or ebook page");
-		success = false;
-		page_type = "";	
-		author = "";
-		title = "";
-		isbn = "";
-	}
+	} 
 
-    var result =  { "success": success, "page_type": page_type, "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
+    var result =  { "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
     console.log(result);
     return result;
 }
