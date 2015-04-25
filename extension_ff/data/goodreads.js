@@ -48,6 +48,11 @@ function goodreadsMakeBox(preferences, resources) {
     dcpl_title.textContent = "DCPL Search";
     booksfordc_availability.appendChild(dcpl_title);
 
+    var no_search = document.createElement('div');
+    no_search.id = "book";
+    no_search.class = "booksfordc_search";
+    no_search.textContent = "Go to your Firefox Add-ons Manager to set your search preferences";
+
     var library_category = document.createElement('div');
     library_category.id = "category";
     library_category.textContent = "Books";
@@ -93,6 +98,11 @@ function goodreadsMakeBox(preferences, resources) {
       audio_results.appendChild(img2);
     }
 
+    if ((preferences.includeAudio === false && preferences.includeEbook === false && preferences.includeBook === false) || (preferences.includeAudio === undefined && preferences.includeEbook === undefined && preferences.includeBook === undefined)) {
+      booksfordc_availability.appendChild(no_search);
+      no_search.appendChild(no_search_link);
+    }
+
     return [library_results, ebook_results, audio_results];
   } 
 
@@ -101,12 +111,19 @@ function goodreadsMakeBox(preferences, resources) {
 
 //Determine whether on book page
 function goodreadsPageInfo() {
-  var success, title, isbn, isbn13, author;
 
+  var title, isbn, isbn13, isbn10, author;
+
+  isbn10 = $("#bookDataBox div:contains('ISBN')").text();
   isbn13 = $("div .infoBoxRowItem:contains('ISBN13')").text();
+
   if (isbn13.length) {
     isbn = isbn13.split(':')[1].replace(/\D/g, '');  
-  } 
+  } else if (isbn10.length) {
+    isbn10 = isbn10.replace(/\D/g, '').substr(0,10);
+    isbn = convertISBN(isbn10);
+  }
+
   title = $("#bookTitle").text().replace(/^\n */, '');
   author = $(".authorName:eq(0)").text();
 

@@ -24,7 +24,7 @@
         "name": "includeBook",
         "title": "Search books",
         "type": "bool",
-        "value": true
+        "value": true 
     },
     {
         "name": "includeEbook",

@@ -58,7 +58,7 @@ function initiateSearch(page_info, on_page, search_urls, preferences) {
 
 function searchURLs(author, title, isbn) {
   var base = "https://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=";
-  console.log(1);
+
   return {
     "isbnURL": base + isbn + "&te=&lm=BOOKS",
     "bookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&qu=-%22sound+recording%22&te=&lm=BOOKS",
@@ -68,7 +68,6 @@ function searchURLs(author, title, isbn) {
     "purchaseURL": "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X",
     "overdriveURL": "http://overdrive.dclibrary.org"
   };
-  console.log(2);
 }
 
 function searchSirsi(search_url, search_by, modify, type, info, search_urls) {

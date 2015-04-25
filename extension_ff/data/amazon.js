@@ -57,6 +57,11 @@ function makeBox(preferences, resources) {
 		booksfordc_box.appendChild(booksfordc_icon);
 		booksfordc_icon.appendChild(img3);
 
+	    var no_search = document.createElement('div');
+	    no_search.id = "book";
+	    no_search.class = "booksfordc_search";
+	    no_search.textContent = "Go to your Firefox Add-ons Manager to set your search preferences";
+
 		var booksfordc_availability = document.createElement('div');
 		booksfordc_availability.id = "booksfordc_availability";
 		booksfordc_box.appendChild(booksfordc_availability);
@@ -111,8 +116,12 @@ function makeBox(preferences, resources) {
 			audio_results.appendChild(img2);
 		}
 
-		return [library_results, ebook_results, audio_results];
+	    if ((preferences.includeAudio === false && preferences.includeEbook === false && preferences.includeBook === false) || (preferences.includeAudio === undefined && preferences.includeEbook === undefined && preferences.includeBook === undefined)) {
+	      booksfordc_availability.appendChild(no_search);
+	      no_search.appendChild(no_search_link);
+	    }
 
+		return [library_results, ebook_results, audio_results];
 	} 
 
 		return valid;
