@@ -2,11 +2,12 @@ self.port.on("details", function(details) {
 	var preferences = details.prefs,
 		resources = details.imageurl;
 
-	var on_page = makeBox(preferences, resources);
+	var page_info = pageInfo(),
+		search_urls = searchURLs(page_info['author'], page_info['title'], page_info['isbn']);
 
-	if (on_page !== false) {
-		var page_info = pageInfo(),
-			search_urls = searchURLs(page_info['author'], page_info['title'], page_info['isbn']);
+	if (page_info['page_type'].length) {
+
+		var on_page = makeBox(preferences, resources);
 
 		initiateSearch(page_info, on_page, search_urls, preferences);
 	}

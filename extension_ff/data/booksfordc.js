@@ -86,7 +86,7 @@ function searchSirsi(search_url, search_by, modify, type, info, search_urls) {
 function searchOverdrive(search_url, fail_url, search_by, modify, type, info, search_urls) {
   function overdriveListener() {
     var result = $(this.response);
-    overdriveAvailability(result, fail_url, modify, type, info);
+    overdriveAvailability(result, fail_url, modify, type, info, search_urls);
   }
   var oReq = new XMLHttpRequest();
   oReq.onload = overdriveListener;
@@ -103,17 +103,17 @@ function sirsiAvailability(oneline, url, search_by, modify, type, info, search_u
       wait = availabilityJSON['holdCounts'][0].match(/(\d+)$/)[1];
     successMessage(total, available, wait, type, modify, url);
   } else if (search_by === "isbn") {
-    searchSirsi(search_urls['bookURL'], "text_full", modify, type, info);
+    searchSirsi(search_urls['bookURL'], "text_full", modify, type, info, search_urls);
   } else if (search_by === "text_full" && info['title'].match(/:/) !== null) {
-    searchSirsi(search_urls['altBookURL'], "text_short", modify, type, info);
+    searchSirsi(search_urls['altBookURL'], "text_short", modify, type, info, search_urls);
   } else if (oneline.match("This search returned no results.") !== null) {
-    failureMessage(type, "not_located", url, modify);
+    failureMessage(type, "not_located", url, modify, search_urls);
   } else {
-    failureMessage(type, "uncertain", url, modify);
+    failureMessage(type, "uncertain", url, modify, search_urls);
   }
 }
 
-function overdriveAvailability(result, url, modify, type, info) {
+function overdriveAvailability(result, url, modify, type, info, search_urls) {
   try {
     var availabilityInfo = result.find('.img-and-info-contain:eq(0)');
     var available = availabilityInfo.attr("data-copiesavail");
@@ -123,7 +123,7 @@ function overdriveAvailability(result, url, modify, type, info) {
     var link = "http://overdrive.dclibrary.org/10/50/en/" + view.attr("href");
     successMessage(total, available, wait, type, modify, link);
   } catch (e) {
-    failureMessage(type, "not_located", url, modify);
+    failureMessage(type, "not_located", url, modify, search_urls);
   }
 }
 
@@ -156,7 +156,7 @@ function successMessage(total, available, wait, type, modify, result_url) {
   modify.appendChild(available_message);
 }
 
-function failureMessage(type, failure, failure_url, modify) {
+function failureMessage(type, failure, failure_url, modify, search_urls) {
   modify.textContent = "";
   var failure_div = document.createElement('div'),
     alt_div = document.createElement('div'),
