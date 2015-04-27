@@ -12,14 +12,16 @@ if (/amazon\.com$/.test(document.domain)) {
 
   function checkAmazon(showAudio, showEbook, showBook){
 
-    var on_page = makeBox(showAudio, showEbook, showBook);
-
-    if (on_page === true){
 
       var page_info = pageInfo(),
         search_urls = searchURLs(page_info['author'], page_info['title'], page_info['isbn']);
 
-      initiateSearch(page_info, search_urls, showAudio, showEbook, showBook);
+
+    if (page_info['page_type'].length){
+
+	    var on_page = makeBox(showAudio, showEbook, showBook);
+
+    	initiateSearch(page_info, search_urls, showAudio, showEbook, showBook);
 
     }
   }
