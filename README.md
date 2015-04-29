@@ -56,6 +56,10 @@ A Chrome extension that displays library holdings and availability when browsing
 
 ![screenshot](https://cloud.githubusercontent.com/assets/4269640/7082805/c70207ba-df27-11e4-940e-87dbb4d41505.png)
 
+##I'd like my Code for America Brigade to use this in my Metro -- how?#
+* "Books for" depends on Overdrive for eBooks/AudioBooks and SirsiDynix for the general catalog. Overdrive is fairly standard, but Sirsi varies by instance so some customization might be required on those calls.
+* It uses a combination of RegEx and XPATH queries to determine availability. If you'd like to fork it for your area and customize these, reach out in the issues for assistance. 
+
 ####License and Contributing####
 
 This project's code is offered under a GPLv2 license. As stated in [CONTRIBUTING](https://github.com/emanuelfeld/booksfordc/blob/master/CONTRIBUTING.txt):
