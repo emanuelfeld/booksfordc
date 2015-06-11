@@ -1,6 +1,6 @@
 if (/amazon\.com$/.test(document.domain)) {
 
-  console.log = function() {}
+  // console.log = function() {}
 
   function getPrefsAmazon() {
     chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function(items){

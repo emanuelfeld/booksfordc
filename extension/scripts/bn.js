@@ -1,6 +1,6 @@
 if (/barnesandnoble\.com$/.test(document.domain)) {
 
-	console.log = function() {}
+	// console.log = function() {}
 
 	function getPrefsBN() {
 		chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function(items){

@@ -1,4 +1,4 @@
-console.log = function() {}
+// console.log = function() {}
 
 function cleanTitle(title) {
   console.log("Initialize: Title cleaned");
@@ -63,7 +63,7 @@ function finishBox(showAudio, showEbook, showBook) {
 function initiateSearch(page_info, search_urls, showAudio, showEbook, showBook) {
 
   if (showBook) {
-    if (page_info['isbn'] === null) {
+    if (page_info['isbn'] === null | page_info['isbn'] === "") {
       console.log("Book: Searching catalog by title and author")
       searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book", page_info, search_urls);
     } else {

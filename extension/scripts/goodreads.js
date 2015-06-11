@@ -1,6 +1,6 @@
 if (/goodreads\.com$/.test(document.domain)) {
 
-  console.log = function() {}
+  // console.log = function() {}
 
   function getPrefsGoodreads() {
     chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function(items){
