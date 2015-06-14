@@ -1,6 +1,6 @@
 if (/goodreads\.com$/.test(document.domain)) {
 
-  // console.log = function() {}
+  console.log = function() {}
 
   function getPrefsGoodreads() {
     chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function(items){
@@ -32,7 +32,7 @@ function goodreadsMakeBox(showAudio, showEbook, showBook) {
     container = $('div.rightContainer:first');
     container.prepend(
       " <div id = 'dcpl_goodreads'>\
-          <div id = 'booksfordc_icon'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
+          <div id = 'booksfordc_icon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
           <div id = 'booksfordc_availability'> \
             <div id = 'dcpl_title'> DCPL Search </div> \
           </div> \

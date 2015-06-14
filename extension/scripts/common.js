@@ -1,4 +1,4 @@
-// console.log = function() {}
+console.log = function() {}
 
 function cleanTitle(title) {
   console.log("Initialize: Title cleaned");

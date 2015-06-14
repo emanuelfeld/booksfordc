@@ -1,6 +1,6 @@
 if (/amazon\.com$/.test(document.domain)) {
 
-  // console.log = function() {}
+  console.log = function() {}
 
   function getPrefsAmazon() {
     chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function(items){
@@ -36,17 +36,17 @@ function makeBox(showAudio, showEbook, showBook) {
 		container = $('div.kicsBoxContents:first');
 		container.before(
 		      " <div id = 'dcpl_digital'>\
-		        <div id = 'booksfordc_icon' class = 'amazon_digital'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
+		        <div id = 'booksfordc_icon' class = 'amazon_digital'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
 		        <div id = 'booksfordc_availability'> \
 		          <div id = 'dcpl_title'> DCPL Search </div> \
 		        </div> \
 		      </div> ");
-	} else if ($('div.a-box.rbbSection.selected.dp-accordion-active').length) {
+	} else if ($('div#buybox').length) {
 		console.log("Initialize: Creating Amazon book page box");
-		container = $('div.a-box.rbbSection.selected.dp-accordion-active');
+		container = $('div#buybox');
 		container.prepend(
 		      " <div id='dcpl' class='a-box'>\
-		        <div id = 'booksfordc_icon' class = 'amazon'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
+		        <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
 		        <div id = 'booksfordc_availability'> \
 		          <div id = 'dcpl_title'> DCPL Search </div> \
 		        </div> \
@@ -56,7 +56,17 @@ function makeBox(showAudio, showEbook, showBook) {
 		container = $('div#unqualifiedBuyBox');
 		container.prepend(
 		      " <div id='dcpl' class='a-box'>\
-		        <div id = 'booksfordc_icon' class = 'amazon'> <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </div>\
+		        <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
+		        <div id = 'booksfordc_availability'> \
+		          <div id = 'dcpl_title'> DCPL Search </div> \
+		        </div> \
+		      </div> ");
+	} else if ($('div.a-box').length) {
+		console.log("Initialize: Creating Amazon audiobook page box");
+		container = $('div.a-box:first');
+		container.prepend(
+		      " <div id='dcpl' class='a-box'>\
+		        <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
 		        <div id = 'booksfordc_availability'> \
 		          <div id = 'dcpl_title'> DCPL Search </div> \
 		        </div> \
@@ -100,6 +110,29 @@ function pageInfo() {
 			author = $('div.buying span a:eq(0)').text();
 		} else {
 			author = $('div.buying span a').text();			
+		}
+	} else if ($("#productDetailsTable .content li:contains('ASIN:')").length) {
+		console.log("Initialize: On Amazon e-book page");
+		page_type = "ebook_page";
+		title = $('#productTitle').text();
+		if ($("#aboutEbooksSection").length) {
+			try {
+				isbn = $("#aboutEbooksSection").find(".a-declarative:first").attr("data-a-popover").split("ISBN ")[1].replace(/\D/g, '');
+				if (isbn.length === 10) {
+					isbn = convertISBN(isbn);				
+				} else if (isbn.length !== 13) {
+					isbn = "";
+				}
+			} catch (e) {
+				isbn = "";
+			}
+		} else {
+				isbn = "";
+		}
+		if ($('.a-link-normal.contributorNameID:first').length) {
+			author = $('.a-link-normal.contributorNameID:first').text();
+		} else {
+			author = $('.author .a-link-normal:eq(0)').text();
 		}
 	} else if ($("#productDetailsTable .content li:contains('ISBN')").length) {
 		console.log("Initialize: On Amazon book page");
