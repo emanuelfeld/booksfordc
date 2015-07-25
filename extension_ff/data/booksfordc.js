@@ -81,7 +81,6 @@ function searchSirsi(search_url, search_by, modify, type, info, search_urls) {
   sReq.onload = sirsiListener;
   sReq.open("get", search_url, true);
   sReq.send();
-  console.log("Searching Sirsi")
 }
 
 function searchOverdrive(search_url, fail_url, search_by, modify, type, info, search_urls) {
@@ -93,7 +92,6 @@ function searchOverdrive(search_url, fail_url, search_by, modify, type, info, se
   oReq.onload = overdriveListener;
   oReq.open("get", search_url, true);
   oReq.send();
-  console.log("Searching overdrive")
 }
 
 function sirsiAvailability(oneline, url, search_by, modify, type, info, search_urls) {
@@ -165,6 +163,10 @@ function failureMessage(type, failure, failure_url, modify, search_urls) {
     alt_message = document.createElement('a'),
     purchase_div = document.createElement('div'),
     purchase_message = document.createElement('a');
+  failure_div.id = "results";
+  alt_div.id = "results";
+  alt_message.id = "results";
+  purchase_message.id = "results";
   if (failure === "not_located") {
     failure_div.textContent = type + " not located";
     alt_message.textContent = "Search manually";

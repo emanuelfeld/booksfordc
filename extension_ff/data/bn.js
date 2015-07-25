@@ -15,8 +15,8 @@ self.port.on("details", function(details) {
 
 function bnMakeBox(preferences, resources) {
 
-  if ($('#top-content-book-1').length) {
-    var booksfordc = document.getElementById("top-content-book-1");
+  if ($('#availableFormats').length) {
+    var booksfordc = document.getElementById("availableFormats");
 
     var img0 = document.createElement("img");
     img0.src = resources[0];
@@ -111,24 +111,21 @@ function bnMakeBox(preferences, resources) {
 }
 
 function bnPageInfo() {
-  var success, title, isbn, isbn13, author;
 
-  if ($('#product-title-1').length) {
-    title = $('#product-title-1 h1').text();
-    isbn13 = $(".product-details ul li:first").text();
-    isbn = isbn13.split(':')[1].replace(/\D/g, '');
+  var title, isbn, isbn13, author;
+
+  if ($('#prodSummary').length) {
+    success = true;
+    title = $('#prodSummary h1').text();
+    isbn13 = $("#ProductDetailsTab dd:first").text();
+    isbn = isbn13.replace(/\D/g, '');
     if ($('.contributors a:eq(0)').length) {
       author = $(".contributors a:eq(0)").text();
     } else {
-      author = $(".contributors a").text();
+      author = $(".contributors a").text();     
     }
   } 
 
-  var result = {
-    "author": cleanAuthor(author),
-    "title": cleanTitle(title),
-    "isbn": isbn
-  };
-  
-  return result;
+    var result =  { "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
+    return result;
 }

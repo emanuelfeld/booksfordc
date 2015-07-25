@@ -29,10 +29,10 @@ if (/barnesandnoble\.com$/.test(document.domain)) {
 function bnMakeBox(showAudio, showEbook, showBook) {
 	var container;
 
-	if ($('#top-content-book-1').length) {
+	if ($('#availableFormats').length) {
 		console.log("Initialize: Creating Barnes and Noble page box");
-		container = $('#top-content-book-1:eq(0)');
-		container.prepend(
+		container = $('#availableFormats');
+		container.after(
 	      " <div id = 'dcpl_bn'>\
 		    <div id = 'booksfordc_icon'>  <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
 	        <div id = 'booksfordc_availability'> \
@@ -55,12 +55,12 @@ function bnPageInfo() {
 
 	var title, isbn, isbn13, author;
 
-	if ($('#product-title-1').length) {
+	if ($('#prodSummary').length) {
 		console.log("Initialize: On Barnes and Noble book or e-book page")
 		success = true;
-		title = $('#product-title-1 h1').text();
-		isbn13 = $(".product-details ul li:first").text();
-		isbn = isbn13.split(':')[1].replace(/\D/g, '');
+		title = $('#prodSummary h1').text();
+		isbn13 = $("#ProductDetailsTab dd:first").text();
+		isbn = isbn13.replace(/\D/g, '');
 		if ($('.contributors a:eq(0)').length) {
 			author = $(".contributors a:eq(0)").text();
 		} else {
