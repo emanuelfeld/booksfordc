@@ -8,3 +8,4 @@ requests-oauthlib==0.4.1
 six==1.7.3
 tweepy==3.1.0
 wsgiref==0.1.2
+scraperwiki==0.5.1
