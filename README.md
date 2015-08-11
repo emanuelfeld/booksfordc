@@ -1,12 +1,12 @@
-![banner](https://github.com/emanuelfeld/booksfordc/blob/master/banners/PromoLarge.png)
+![banner](https://github.com/emanuelfeld/booksfordc/blob/master/promo/PromoLarge.png)
 
-Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line [@evonfriedland](https://twitter.com/evonfriedland) if you're interested.
+Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line [@evonfriedland](https://twitter.com/evonfriedland) if you're interested. Promotional materials (banners, flyer) in the [promo folder](https://github.com/emanuelfeld/booksfordc/tree/master/promo) to spread the word!
 
 ##Next up##
 
 * Set up focus group a MLK Jr Dream Lab and/or write and distribute a printed questionnaire to library patrons
-* Create and distribute fliers for branch libraries
 * Do more outreach with local education and literacy non-profits and DCPS librarians, teachers, students, and parents
+* Streamline code to make it easier to maintain
 
 ##So far##
 
