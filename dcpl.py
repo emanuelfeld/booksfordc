@@ -3,7 +3,7 @@
 
 from twitterbot import TwitterBot
 from datetime import datetime
-import cssselect, logging, lxml.html, os, re, requests, time
+import cssselect, logging, lxml.html, os, re, requests, time, pyopenssl, ndg-httpsclient, pyasn1
 
 logging.basicConfig(level=logging.INFO)
 
