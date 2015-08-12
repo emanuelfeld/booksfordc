@@ -31,46 +31,15 @@ if (/amazon\.com$/.test(document.domain)) {
 function makeBox(showAudio, showEbook, showBook) {
 	var container;
 
-	if ($('div.kicsBoxContents').length) {
-		console.log("Initialize: Creating Amazon e-book page box");
-		container = $('div.kicsBoxContents:first');
-		container.before(
-		      " <div id = 'dcpl_digital'>\
-		        <div id = 'booksfordc_icon' class = 'amazon_digital'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
-		        <div id = 'booksfordc_availability'> \
-		          <div id = 'dcpl_title'> DCPL Search </div> \
-		        </div> \
-		      </div> ");
-	} else if ($('div#buybox').length) {
-		console.log("Initialize: Creating Amazon book page box");
-		container = $('div#buybox');
-		container.prepend(
-		      " <div id='dcpl' class='a-box'>\
-		        <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
-		        <div id = 'booksfordc_availability'> \
-		          <div id = 'dcpl_title'> DCPL Search </div> \
-		        </div> \
-		      </div> ");
-	} else if ($('div#unqualifiedBuyBox').length) {
-		console.log("Initialize: Creating Amazon used book page box");
-		container = $('div#unqualifiedBuyBox');
-		container.prepend(
-		      " <div id='dcpl' class='a-box'>\
-		        <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
-		        <div id = 'booksfordc_availability'> \
-		          <div id = 'dcpl_title'> DCPL Search </div> \
-		        </div> \
-		      </div> ");
-	} else if ($('div.a-box').length) {
-		console.log("Initialize: Creating Amazon audiobook page box");
-		container = $('div.a-box:first');
-		container.prepend(
-		      " <div id='dcpl' class='a-box'>\
-		        <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
-		        <div id = 'booksfordc_availability'> \
-		          <div id = 'dcpl_title'> DCPL Search </div> \
-		        </div> \
-		      </div> ");
+	if ($('div.a-box-inner').length) {
+		console.log("Initialize: Creating Amazon page box");
+		container = $('div.a-box-inner:first');
+		container.before("<div id='dcpl' class='a-box'>\
+		        		  <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') +"'> </a> </div>\
+		       			  <div id = 'booksfordc_availability'> \
+		          			<div id = 'dcpl_title'> DCPL Search </div> \
+		        		  </div> \
+		      			</div> ");
 	} else {
 		console.log("Initialize: Could not create Amazon page box");
 		return false;
