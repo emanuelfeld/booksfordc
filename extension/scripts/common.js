@@ -72,152 +72,157 @@ console.log = function() {}
   }
 
 //////////////////////
+/* GLOBAL VARIABLES */
+//////////////////////
+
+  var guide;
+
+//////////////////////
 /* SEARCH FUNCTIONS */
 //////////////////////
 
   // Establish search URLs, based on item being looked at
-  function searchURLs(author, title, isbn) {
+  function searchGuide(author, title, isbn) {
     console.log("Initialize: Establishing URLs");
+
     var base = "https://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=";
-    return {
-      "isbnURL": base + isbn + "&te=&lm=BOOKS",
-      "bookURL": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&qu=-%22sound+recording%22&te=&lm=BOOKS",
-      "altBookURL": base + encodeURIComponent(overdriveTitle(title) + " " + author).replace(/'/g, "%27") + "&qu=-%22sound+recording%22&te=&lm=BOOKS",
-      "ebookSearchURL": "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria=" + encodeURIComponent(overdriveTitle(title) + " " + overdriveAuthor(author)) + "&x=0&y=0&Format=420%2C50%2C410%2C450%2C610%2C810%2C303",
-      "audioSearchURL": "http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria=" + encodeURIComponent(overdriveTitle(title) + " " + overdriveAuthor(author)) + "&x=0&y=0&Format=425",
-      "purchaseURL": "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X",
-      "overdriveURL": "http://overdrive.dclibrary.org"
+
+    guide = {
+      "book": {
+        "search": {
+          "isbn": base + isbn + "&te=&lm=BOOKS", 
+          "text1": base + encodeURIComponent(title + " " + author).replace(/'/g, "%27") + "&qu=-%22sound+recording%22&te=&lm=BOOKS",
+          "text2": base + encodeURIComponent(overdriveTitle(title) + " " + author).replace(/'/g, "%27") + "&qu=-%22sound+recording%22&te=&lm=BOOKS"
+        },
+        "fail": "http://citycat.dclibrary.org/uhtbin/cgisirsi/x/ML-KING/x/63/1100/X",
+        "modify": "div#book",
+        "name": "Book"
+      },
+      "ebook": {
+        "search": ["http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria=" + encodeURIComponent(overdriveTitle(title) + " " + overdriveAuthor(author)) + "&x=0&y=0&Format=420%2C50%2C410%2C450%2C610%2C810%2C303"],
+        "fail": "http://overdrive.dclibrary.org",
+        "modify": "div#ebook",
+        "name": "E-book"
+      },
+      "audiobook": {
+        "search": ["http://overdrive.dclibrary.org/BANGSearch.dll?Type=FullText&PerPage=24&URL=SearchResults.htm&Sort=SortBy%3DRelevancy&FullTextField=All&FullTextCriteria=" + encodeURIComponent(overdriveTitle(title) + " " + overdriveAuthor(author)) + "&x=0&y=0&Format=425"],
+        "fail": "http://overdrive.dclibrary.org",
+        "modify": "div#audio",
+        "name": "Audiobook"
+      }
     }
   }
 
   // Depending on user settings, search for book, e-book, and/or audiobook in catalogs
-  function initiateSearch(page_info, search_urls, showAudio, showEbook, showBook) {
+  function initiateSearch(page_info, showAudio, showEbook, showBook) {
     if (showBook) {
       if (page_info['isbn'] === null | page_info['isbn'] === "") {
         console.log("Book: Searching catalog by title and author")
-        searchSirsi(search_urls['bookURL'], "text", $("div#book"), "Book", page_info, search_urls);
+        searchSirsi("text1", page_info);
       } else {
         console.log("Book: Searching catalog by ISBN")
-        searchSirsi(search_urls['isbnURL'], "isbn", $("div#book"), "Book", page_info, search_urls);
+        searchSirsi("isbn", page_info);
       }
     }
 
-    if (showEbook) {
-      searchOverdrive(search_urls['ebookSearchURL'], search_urls['overdriveURL'], "text", $("div#ebook"), "E-book", page_info, search_urls);
-    }
+    if (showEbook) searchOverdrive("ebook");
     
-    if (showAudio) {
-      searchOverdrive(search_urls['audioSearchURL'], search_urls['overdriveURL'], "text", $("div#audio"), "Audiobook", page_info, search_urls);
-    }
+    if (showAudio) searchOverdrive("audiobook");
   }
 
-  function searchSirsi(search_url, search_by, modify, type, info, search_urls) {
-    $.get(search_url, function(data) {
-      oneline = $(data).text().replace(/\n/g, "");
-      if (type === "Book") {
-        sirsiAvailability(oneline, search_url, search_by, modify, type, info, search_urls);
-      }
+  function searchSirsi(search_by, info) {
+    $.get(guide.book.search[search_by], function(data) {
+      result = $(data).text().replace(/\n/g, "");
+      sirsiAvailability(result, search_by, info);
     });
   }
 
-  function searchOverdrive(search_url, fail_url, search_by, modify, type, info, search_urls) {
+  function searchOverdrive(type) {
     console.log(type + ": Searching Overdrive");
     chrome.runtime.sendMessage({
         method: 'GET',
         action: 'xhttp',
-        url: search_url
+        url: guide[type].search[0]
       },
       function(response) {
         var result = $(response);
-        overdriveAvailability(result, fail_url, modify, type, info, search_urls);
+        overdriveAvailability(result, type);
     });
   }
 
-  function sirsiAvailability(oneline, url, search_by, modify, type, info, search_urls) {
+  function sirsiAvailability(result, search_by, info) {
     try {
-      var availabilityJSON = JSON.parse(oneline.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/, "$1")),
-        available = availabilityJSON['totalAvailable'].toString(),
-        total = availabilityJSON['copies'][0].match(/(\d+)$/)[1],
-        wait = availabilityJSON['holdCounts'][0].match(/(\d+)$/)[1];
+      var availability = JSON.parse(result.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/, "$1"));
 
-      successMessage(total, available, wait, type, modify, url, search_urls);
+      var availabilityData = {
+        "available": parseInt(availability['totalAvailable'].toString()),
+        "total": parseInt(availability['copies'][0].match(/(\d+)$/)[1]),
+        "wait": parseInt(availability['holdCounts'][0].match(/(\d+)$/)[1])   
+      };
+
+      successMessage(availabilityData, "book", guide.book.search[search_by]);
+
       console.log("Book: Located in catalog");
     } catch (e) {
       if (search_by === "isbn") {
         console.log("Book: Search by ISBN failed\nBook: Searching catalog by title and author");
-        console.log(info);
-        searchSirsi(search_urls['bookURL'], "text_full", modify, type, info, search_urls);
-      } else if (search_by === "text_full" && info['title'].match(/:/) !== null) {
+        searchSirsi("text1", info);
+      } else if (search_by === "text1" && info['title'].match(/:/) !== null) {
         console.log("Book: Searching catalog without subtitle");
-        searchSirsi(search_urls['altBookURL'], "text_short", modify, type, info, search_urls);
-      } else if (oneline.match("This search returned no results.") !== null) {
+        searchSirsi("text2", info);
+      } else if (result.match("This search returned no results.") !== null) {
         console.log("Book: Not located in catalog");
-        failureMessage(type, "not_located", url, modify, search_urls);
+        failureMessage("book", "not_located", guide.book.search[search_by]);
       } else {
         console.log("Book: Uncertain match in catalog");
-        failureMessage(type, "uncertain", url, modify, search_urls);
+        failureMessage("book", "uncertain", guide.book.search[search_by]);
       }
     }
   }
 
-  function overdriveAvailability(result, url, modify, type, info, search_urls) {
+  function overdriveAvailability(result, type) {
     try {
-      var availabilityInfo = result.find('.img-and-info-contain:eq(0)'),
-        available = availabilityInfo.attr("data-copiesavail"),
-        total = availabilityInfo.attr("data-copiestotal"),
-        wait = availabilityInfo.attr("data-numwaiting");
+      var availability = result.find('.img-and-info-contain:eq(0)');
 
-      var view = result.find('.li-details a:eq(0)'),
-        link = "http://overdrive.dclibrary.org/10/50/en/" + view.attr("href");
+      var availabilityData = {
+        "available": parseInt(availability.attr("data-copiesavail")),
+        "total": parseInt(availability.attr("data-copiestotal")),
+        "wait": parseInt(availability.attr("data-numwaiting"))  
+      };
 
-      successMessage(total, available, wait, type, modify, link, search_urls);
+      var view = result.find('.li-details a:eq(0)');
+      var itemURL = "http://overdrive.dclibrary.org/10/50/en/" + view.attr("href");
+
+      successMessage(availabilityData, type, itemURL);
       console.log(type + ": Located in Overdrive");
     } catch (e) {
       console.log(type + ": Not located in Overdrive");
-      failureMessage(type, "not_located", url, modify, search_urls);
+      failureMessage(type, "not_located", guide[type].fail);
     }
   }
 
-///////////////////////////////
-/* OUTCOME DISPLAY FUNCTIONS */
-///////////////////////////////
+/////////////////////
+/* OUTCOME DISPLAY */
+/////////////////////
 
-  function successMessage(total, available, wait, type, modify, result_url, search_urls) {
-    var total_statement, wait_statement;
-    
-    if (total.match(/^1$/) !== null) {
-      total_statement = total + " copy";
-    } else if (total.match(/^[0-9]+$/) !== null) {
-      total_statement = total + " copies";
-    }
+  function successMessage(availabilityData, type, itemURL) {
+    var total_statement = (availabilityData.total === 1) ? availabilityData.total + " copy" : availabilityData.total + " copies";
+    var wait_statement = (availabilityData.wait === 1) ? availabilityData.wait + " patron waiting" : availabilityData.wait + " patrons waiting";
+    var available_statement = availabilityData.available + " available";
+    var parenthetical_statement = (availabilityData.wait > 0 && availabilityData.available === 0) ? wait_statement : available_statement;
 
-    if (wait.match(/^1$/) !== null) {
-      wait_statement = wait + " patron waiting";
-    } else if (wait.match(/^[0-9]+$/) !== null) {
-      wait_statement = wait + " patrons waiting";
-    }
+    $(guide[type].modify).html("<a id='results' href = '" + itemURL + "'>" + guide[type].name + " located </a> <br>" + total_statement + " (" + parenthetical_statement + ")");
 
-    if (wait.match(/^[0-9]+$/) !== null && wait.match(/^0$/) === null && available.match(/^0$/) !== null && total.match(/^[0-9]+$/) !== null) {
-      modify.html("<a id='results' href = '" + result_url + "'>" + type + " located </a> <br>" + total_statement + " (" + wait_statement + ")");
-    } else {
-      modify.html("<a id='results' href = '" + result_url + "'>" + type + " located </a> <br>" + total_statement + " (" + available + " available)");
-    }
   }
 
-  function failureMessage(type, failure, failure_url, modify, search_urls) {
-    var purchase_message, ebook_message;
-
-    if (type === "Book") {
-      purchase_message = "<br> <a id='results' href = '" + search_urls['purchaseURL'] + "'>Request purchase</a>";
-      ebook_message = "";
+  function failureMessage(type, failure_type, failure_url) {
+    if (type === "book") {
+      if (failure_type === "not_located") {
+        $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a> <br> <a id='results' href = '" + guide.book.fail + "'>Request purchase</a>");
+      } else {
+        $(guide[type].modify).html("Possible match located <br> <a id='results' href = '" + failure_url + "'>Search manually</a> <br> <a id='results' href = '" + guide.book.fail + "'>Request purchase</a>");        
+      }
     } else {
-      purchase_message = "";
-      ebook_message = "<br> <a id='results' href = '" + failure_url + "'>Search manually</a>";
-    }
-
-    if (failure === "not_located") {
-      modify.html(type + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>" + purchase_message);
-    } else {
-      modify.html("Possible match located <br> <a id='results' href = '" + failure_url + "'>View results</a>" + ebook_message + purchase_message);
+      $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>");      
     }
   }

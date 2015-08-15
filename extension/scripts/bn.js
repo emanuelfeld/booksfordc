@@ -16,10 +16,10 @@ if (/barnesandnoble\.com$/.test(document.domain)) {
 
 		if (on_page === true){
 
-			var page_info = bnPageInfo(),
-				search_urls = searchURLs(page_info['author'], page_info['title'], page_info['isbn']);
+			var page_info = bnPageInfo();
+		    searchGuide(page_info['author'], page_info['title'], page_info['isbn']);
 
-		      initiateSearch(page_info, search_urls, showAudio, showEbook, showBook);
+		      initiateSearch(page_info, showAudio, showEbook, showBook);
 		}
 	}
 }

@@ -16,10 +16,11 @@ if (/goodreads\.com$/.test(document.domain)) {
 
     if (on_page === true) {
 
-      var page_info = goodreadsPageInfo(),
-        search_urls = searchURLs(page_info['author'], page_info['title'], page_info['isbn']);
 
-      initiateSearch(page_info, search_urls, showAudio, showEbook, showBook);
+      var page_info = goodreadsPageInfo();
+      searchGuide(page_info['author'], page_info['title'], page_info['isbn']);
+
+      initiateSearch(page_info, showAudio, showEbook, showBook);
     }
   }
 }

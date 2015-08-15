@@ -1,6 +1,6 @@
 if (/amazon\.com$/.test(document.domain)) {
 
-  console.log = function() {}
+  // console.log = function() {}
 
   function getPrefsAmazon() {
     chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function(items){
@@ -10,18 +10,18 @@ if (/amazon\.com$/.test(document.domain)) {
 
   var prefsAmazon = getPrefsAmazon();
 
+
   function checkAmazon(showAudio, showEbook, showBook){
 
+    var page_info = pageInfo();
 
-      var page_info = pageInfo(),
-        search_urls = searchURLs(page_info['author'], page_info['title'], page_info['isbn']);
+    searchGuide(page_info['author'], page_info['title'], page_info['isbn']);
 
 
     if (page_info['page_type'].length){
 
 	    var on_page = makeBox(showAudio, showEbook, showBook);
-
-    	initiateSearch(page_info, search_urls, showAudio, showEbook, showBook);
+    	initiateSearch(page_info, showAudio, showEbook, showBook);
 
     }
   }
