@@ -24,7 +24,7 @@ console.log = function() {}
     return author.replace(/([A-Z]\.)+/g, "");
   }
 
-  // Sirsi doesn't recognize ISBN-10, so convert them to ISBN-13
+  // Sirsi doesn't recognize ISBN-10, so convert them to ISBN-13 using the following two functions.
   function convertISBN(isbn10) {
     console.log("Initialize: Converting ISBN-10 to ISBN-13");
     var isbn = "978" + isbn10.substring(0, isbn10.length - 1);
@@ -49,26 +49,19 @@ console.log = function() {}
 /* RESULTS DISPLAY */
 /////////////////////
 
+  // generic result display html
   function finishBox(showAudio, showEbook, showBook) {
+    if (showAudio)
+      $('#dcpl_title:eq(0)').after(" <div id = 'category'> Audiobooks </div> <div id = 'audio' class='digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div>");
 
-    if (showAudio) {
-      $('#dcpl_title:eq(0)').after(
-        " <div id = 'category'> Audiobooks </div> <div id = 'audio' class='digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div>");
-    }
+    if (showEbook)
+      $('#dcpl_title:eq(0)').after(" <div id = 'category'> E-books </div> <div id = 'ebook' class='digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div>");
 
-    if (showEbook) {
-      $('#dcpl_title:eq(0)').after(
-        " <div id = 'category'> E-books </div> <div id = 'ebook' class='digital'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div>");
-    }
-
-    if (showBook) {
-      $('#dcpl_title:eq(0)').after(
-        " <div id = 'category'> Books </div> <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> ");
-    }
+    if (showBook)
+      $('#dcpl_title:eq(0)').after(" <div id = 'category'> Books </div> <div id = 'book'> Searching catalog <img src = '" + chrome.extension.getURL('assets/ajax-loader.gif') + "'> </div> ");
 
     if ((showAudio === false && showEbook === false && showBook === false) || (showAudio === undefined && showEbook === undefined && showBook === undefined)) {
       $('#dcpl_title:eq(0)').after(" <div id = 'book'> <a href = 'chrome-extension://plbkclaloadjhljkijjnlingopbahndg/options.html' target='_blank'> Click here to set your search preferences </a> ");
-    }
   }
 
 //////////////////////
@@ -81,7 +74,7 @@ console.log = function() {}
 /* SEARCH FUNCTIONS */
 //////////////////////
 
-  // Establish search URLs, based on item being looked at
+  // Establish search URLs, other instructions, based on item being looked at
   function searchGuide(author, title, isbn) {
     console.log("Initialize: Establishing URLs");
 
@@ -125,11 +118,14 @@ console.log = function() {}
       }
     }
 
-    if (showEbook) searchOverdrive("ebook");
-    
-    if (showAudio) searchOverdrive("audiobook");
+    if (showEbook)
+      searchOverdrive("ebook");
+
+    if (showAudio)
+      searchOverdrive("audiobook");
   }
 
+  // search the sirsi catalog
   function searchSirsi(search_by, info) {
     $.get(guide.book.search[search_by], function(data) {
       result = $(data).text().replace(/\n/g, "");
@@ -137,6 +133,7 @@ console.log = function() {}
     });
   }
 
+  // search overdrive using a background page. for some reason get requests do not work otherwise. mystery.
   function searchOverdrive(type) {
     console.log(type + ": Searching Overdrive");
     chrome.runtime.sendMessage({
@@ -150,6 +147,7 @@ console.log = function() {}
     });
   }
 
+  // parse returned sirsi page. uses regex.
   function sirsiAvailability(result, search_by, info) {
     try {
       var availability = JSON.parse(result.replace(/.*parseDetailAvailabilityJSON\((.+?)\)\;.*/, "$1"));
@@ -180,6 +178,7 @@ console.log = function() {}
     }
   }
 
+  // parse returned overdrive page
   function overdriveAvailability(result, type) {
     try {
       var availability = result.find('.img-and-info-contain:eq(0)');
@@ -205,6 +204,7 @@ console.log = function() {}
 /* OUTCOME DISPLAY */
 /////////////////////
 
+  // display success message in results div
   function successMessage(availabilityData, type, itemURL) {
     var total_statement = (availabilityData.total === 1) ? availabilityData.total + " copy" : availabilityData.total + " copies";
     var wait_statement = (availabilityData.wait === 1) ? availabilityData.wait + " patron waiting" : availabilityData.wait + " patrons waiting";
@@ -215,14 +215,15 @@ console.log = function() {}
 
   }
 
+  // display failure message in results div
   function failureMessage(type, failure_type, failure_url) {
     if (type === "book") {
       if (failure_type === "not_located") {
         $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a> <br> <a id='results' href = '" + guide.book.fail + "'>Request purchase</a>");
       } else {
-        $(guide[type].modify).html("Possible match located <br> <a id='results' href = '" + failure_url + "'>Search manually</a> <br> <a id='results' href = '" + guide.book.fail + "'>Request purchase</a>");        
+        $(guide[type].modify).html("Possible match located <br> <a id='results' href = '" + failure_url + "'>Search manually</a> <br> <a id='results' href = '" + guide.book.fail + "'>Request purchase</a>");
       }
     } else {
-      $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>");      
+      $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>");
     }
   }

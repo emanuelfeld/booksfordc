@@ -1,6 +1,6 @@
 if (/amazon\.com$/.test(document.domain)) {
 
-  // console.log = function() {}
+  console.log = function() {}
 
   function getPrefsAmazon() {
     chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function(items){
@@ -9,14 +9,11 @@ if (/amazon\.com$/.test(document.domain)) {
   }
 
   var prefsAmazon = getPrefsAmazon();
-
-
   function checkAmazon(showAudio, showEbook, showBook){
 
     var page_info = pageInfo();
 
     searchGuide(page_info['author'], page_info['title'], page_info['isbn']);
-
 
     if (page_info['page_type'].length){
 
@@ -46,7 +43,7 @@ function makeBox(showAudio, showEbook, showBook) {
 	}
 
   finishBox(showAudio, showEbook, showBook);
-  
+
   return true;
 
 }
@@ -64,7 +61,7 @@ function pageInfo() {
 		if ($('#pageCountAvailable').length) {
 			try {
 				isbn10 = $('#hardcover_meta_binding_winner').find('.bucketBorderTop').attr("id").split('_')[1].replace(/\D/g, '');
-				isbn = convertISBN(isbn10);				
+				isbn = convertISBN(isbn10);
 			} catch (e) {
 				isbn = "";
 			}
@@ -78,7 +75,7 @@ function pageInfo() {
 		} else if ($('div.buying span a:eq(0)').length){
 			author = $('div.buying span a:eq(0)').text();
 		} else {
-			author = $('div.buying span a').text();			
+			author = $('div.buying span a').text();
 		}
 	} else if ($("#productDetailsTable .content li:contains('ASIN:')").length) {
 		console.log("Initialize: On Amazon e-book page");
@@ -88,7 +85,7 @@ function pageInfo() {
 			try {
 				isbn = $("#aboutEbooksSection").find(".a-declarative:first").attr("data-a-popover").split("ISBN ")[1].replace(/\D/g, '');
 				if (isbn.length === 10) {
-					isbn = convertISBN(isbn);				
+					isbn = convertISBN(isbn);
 				} else if (isbn.length !== 13) {
 					isbn = "";
 				}
@@ -132,6 +129,3 @@ function pageInfo() {
     console.log(result);
     return result;
 }
-
-
-

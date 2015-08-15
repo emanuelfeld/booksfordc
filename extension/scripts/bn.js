@@ -41,7 +41,7 @@ function bnMakeBox(showAudio, showEbook, showBook) {
 	      </div> ");
 
 	  finishBox(showAudio, showEbook, showBook);
-	  
+
 	  return true;
 
 	} else {
@@ -64,7 +64,7 @@ function bnPageInfo() {
 		if ($('.contributors a:eq(0)').length) {
 			author = $(".contributors a:eq(0)").text();
 		} else {
-			author = $(".contributors a").text();			
+			author = $(".contributors a").text();
 		}
 	} 
 

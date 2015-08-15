@@ -40,7 +40,7 @@ function goodreadsMakeBox(showAudio, showEbook, showBook) {
         </div> ");
 
   finishBox(showAudio, showEbook, showBook);
-  
+
   return true;
 
   } else {
@@ -58,7 +58,7 @@ function goodreadsPageInfo() {
   isbn13 = $("div .infoBoxRowItem:contains('ISBN13')").text();
 
   if (isbn13.length) {
-    isbn = isbn13.split(':')[1].replace(/\D/g, '');  
+    isbn = isbn13.split(':')[1].replace(/\D/g, '');
   } else if (isbn10.length) {
     isbn10 = isbn10.replace(/\D/g, '').substr(0,10);
     isbn = convertISBN(isbn10);
@@ -66,7 +66,7 @@ function goodreadsPageInfo() {
 
   title = $("#bookTitle").text().replace(/^\n */, '');
   author = $(".authorName:eq(0)").text();
-  
+
   var result =  { "author": cleanAuthor(author), "title": cleanTitle(title), "isbn": isbn };
   console.log(result);
   return result;
