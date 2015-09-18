@@ -120,13 +120,12 @@ class MyTwitterBot(TwitterBot):
             created = tweet.created_at
             day_delta = (datetime.now() - tweet.created_at).days
             second_delta = (datetime.now() - tweet.created_at).seconds
-            # if day_delta == 0 and second_delta < 3600:
-            if 1 < 2:
+            if day_delta == 0 and second_delta < 3600:
                 # try:
-                logging.warning("User: " + str('@kidsbooksfordc'))
+                logging.warning("User: " + str(prefix))
                 logging.warning("Current time: " + str(now) + "; Created time: " + str(created) + "; Difference (d): " + str(day_delta) + "; Difference (s): " + str(second_delta))
                 reply = search_dcpl(text)
-                self.post_tweet('@kidsbooksfordc' + ' ' + reply, reply_to=tweet)
+                self.post_tweet(prefix + ' ' + reply, reply_to=tweet)
                 time.sleep(70)
                 # except:
                 #     logging.warning("Outcome: Failed search")
