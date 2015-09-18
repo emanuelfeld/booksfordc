@@ -51,7 +51,7 @@ class MyTwitterBot(TwitterBot):
 
         def search_sirsi(s):
             logging.warning("Valid: True")
-            search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+"f: redshirts john scalzi"+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
+            search_url = "http://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu="+s+"&qu=-%22sound+recording%22&te=&lm=BOOKS"
             logging.warning("Query URL: "+search_url)
             response = requests.get(search_url, allow_redirects=True)
             logging.warning("Response URL: "+response.url)
