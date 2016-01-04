@@ -88,56 +88,56 @@
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </p>
 
-        <h2>
-          <a id="twitter-bot" class="anchor" href="#twitter-bot" aria-hidden="true">
-            <span class="octicon octicon-link"></span>
-          </a>
-          Library search-bot
-        </h2>
+        <!--<h2>-->
+        <!--  <a id="twitter-bot" class="anchor" href="#twitter-bot" aria-hidden="true">-->
+        <!--    <span class="octicon octicon-link"></span>-->
+        <!--  </a>-->
+        <!--  Library search-bot-->
+        <!--</h2>-->
 
-        <p>
-          Twitter users can also use the <a href="https://twitter.com/booksfordc">@booksfordc</a> account to quickly query the library catalog.
-        </p>
+        <!--<p>-->
+        <!--  Twitter users can also use the <a href="https://twitter.com/booksfordc">@booksfordc</a> account to quickly query the library catalog.-->
+        <!--</p>-->
 
-        <p>To look up a book, send a tweet in the form:</p>
-        <pre><code>@booksfordc search: book_title book_author</code></pre>
-        <p>For ebooks, do:</p>
-        <pre><code>@booksfordc ebook search: book_title book_author</code></pre>
-        <p>And for an audiobook search, do:</p>
-        <pre><code>@booksfordc audio search: book_title book_author</code></pre>
+        <!--<p>To look up a book, send a tweet in the form:</p>-->
+        <!--<pre><code>@booksfordc search: book_title book_author</code></pre>-->
+        <!--<p>For ebooks, do:</p>-->
+        <!--<pre><code>@booksfordc ebook search: book_title book_author</code></pre>-->
+        <!--<p>And for an audiobook search, do:</p>-->
+        <!--<pre><code>@booksfordc audio search: book_title book_author</code></pre>-->
 
-        <p>
-          The bot will then respond directly to your account saying whether it found a match (or multiple possible matches) and with the search/resource URL. Usually this will only take a minute or two.
-        </p>
+        <!--<p>-->
+        <!--  The bot will then respond directly to your account saying whether it found a match (or multiple possible matches) and with the search/resource URL. Usually this will only take a minute or two.-->
+        <!--</p>-->
 
-        <p>Here's an example:</p>
+        <!--<p>Here's an example:</p>-->
 
-        <blockquote class="twitter-tweet" lang="en"><p><a href="https://twitter.com/evonfriedland">@evonfriedland</a> Found: <a href="https://t.co/6DVjQPnIWE">https://t.co/6DVjQPnIWE</a></p>&mdash; booksfordc (@booksfordc) <a href="https://twitter.com/booksfordc/status/581946138376441856">March 28, 2015</a></blockquote>
-        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <!--<blockquote class="twitter-tweet" lang="en"><p><a href="https://twitter.com/evonfriedland">@evonfriedland</a> Found: <a href="https://t.co/6DVjQPnIWE">https://t.co/6DVjQPnIWE</a></p>&mdash; booksfordc (@booksfordc) <a href="https://twitter.com/booksfordc/status/581946138376441856">March 28, 2015</a></blockquote>-->
+        <!--<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>-->
 
-        <p>Actually, the bot will accept any mention structured:</p>
+        <!--<p>Actually, the bot will accept any mention structured:</p>-->
 
-        <pre><code>@booksfordc resource_type search_init search_terms</code></pre>
+        <!--<pre><code>@booksfordc resource_type search_init search_terms</code></pre>-->
 
-        <p>Where <code>resource_type</code> is:</p>
+        <!--<p>Where <code>resource_type</code> is:</p>-->
 
-        <ul>
-          <li><code>b</code>, <code>bk</code>, <code>book</code>, or left blank for physical books</li>
-          <li><code>e</code>, <code>ebk</code>, <code>e-bk</code>, <code>ebook</code>, or <code>e-book</code> for electronic books</li>
-          <li><code>a</code>, <code>abk</code>, <code>a-bk</code>, <code>audio</code>, <code>audiobook</code>, or <code>audio-book</code> for audiobooks</li>
-        </ul>
+        <!--<ul>-->
+        <!--  <li><code>b</code>, <code>bk</code>, <code>book</code>, or left blank for physical books</li>-->
+        <!--  <li><code>e</code>, <code>ebk</code>, <code>e-bk</code>, <code>ebook</code>, or <code>e-book</code> for electronic books</li>-->
+        <!--  <li><code>a</code>, <code>abk</code>, <code>a-bk</code>, <code>audio</code>, <code>audiobook</code>, or <code>audio-book</code> for audiobooks</li>-->
+        <!--</ul>-->
 
-        <p>Where <code>search_init</code> is one of:</p>
+        <!--<p>Where <code>search_init</code> is one of:</p>-->
 
-        <ul>
-          <li><code>f</code>, <code>f:</code>, <code>s</code>, <code>s:</code>, <code>search</code>, <code>search:</code>, <code>find</code>, or <code>find:</code></li>
-        </ul> 
+        <!--<ul>-->
+        <!--  <li><code>f</code>, <code>f:</code>, <code>s</code>, <code>s:</code>, <code>search</code>, <code>search:</code>, <code>find</code>, or <code>find:</code></li>-->
+        <!--</ul> -->
 
-        <p>And where <code>search_terms</code> includes either the book title and/or author or the book's ISBN.</p>
+        <!--<p>And where <code>search_terms</code> includes either the book title and/or author or the book's ISBN.</p>-->
 
-        <p>
-          An author and title combination search will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work.
-        </p>
+        <!--<p>-->
+        <!--  An author and title combination search will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work.-->
+        <!--</p>-->
 
         <h2>
           <a id="in-the-news" class="anchor" href="#in-the-news" aria-hidden="true">
