@@ -1,21 +1,32 @@
 {
-    "conformsTo": "http://codefordc.org/resources/specification.html",
-    "status": "Production",
-    "thumbnailUrl":"https://pbs.twimg.com/profile_images/573354890065412096/yGMS9MC1.jpeg",
-    "contact":
-    {
-        "name": "Emanuel Feld",
-        "email": "",
-        "twitter": "@booksfordc"
-    },
-    "bornAt": "Code for DC",
-    "geography": "Washington, DC",
-    "politicalEntity": {
-        "DC Public Library": "http://dclibrary.org/"
-    },
-    "type": "Scraper",
-    "categories": [
-    {"category":"Libraries"},
-    {"category":"Government"}
-    ]
+    "name": "Books for DC", 
+    "description": "DC Public Library catalog scraper, Twitter feed, Twitter bot, browser plug-in\u2026and beyond?", 
+    "license": "GPL-2.0", 
+    "status": "Production", 
+    "type": "Scraper", 
+    "homepage": "http://booksfordc.org", 
+    "repository": "https://github.com/emanuelfeld/booksfordc", 
+    "thumbnail": "https://pbs.twimg.com/profile_images/573354890065412096/yGMS9MC1.jpeg", 
+    "geography": [
+        "Washington, DC"
+    ], 
+    "contact": {
+        "name": "Emanuel Feld", 
+        "email": "", 
+        "url": "https://twitter.com/@booksfordc"
+    }, 
+    "partners": [
+        {
+            "url": "http://codefordc.org", 
+            "name": "Code for DC", 
+            "email": ""
+        }
+    ], 
+    "data": [], 
+    "tags": [
+        "Libraries", 
+        "Government"
+    ], 
+    "links": [], 
+    "id": "https://raw.githubusercontent.com/DCgov/civic.json/master/schemas/schema-v1.json"
 }
