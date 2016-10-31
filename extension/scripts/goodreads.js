@@ -4,16 +4,18 @@ if (/goodreads\.com$/.test(document.domain)) {
 }
 
 function getPrefsGoodreads () {
-  chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function (items) {
-    checkGoodreads(items['audioMedia'], items['ebookMedia'], items['bookMedia']);
+  chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia', 'openTabs'], function (items) {
+    checkGoodreads(items['audioMedia'], items['ebookMedia'], items['bookMedia'], items['openTabs']);
   });
 }
 
-function checkGoodreads (showAudio, showEbook, showBook) {
-  var on_page = goodreadsMakeBox(showAudio, showEbook, showBook);
+function checkGoodreads (showAudio, showEbook, showBook, openTabs) {
+  var page_info = goodreadsPageInfo();
 
-  if (on_page === true) {
-    var page_info = goodreadsPageInfo();
+  if (page_info['on_page']) {
+    resultTarget = openTabs ? '_blank' : '_self';
+    console.log(resultTarget);
+    goodreadsMakeBox(showAudio, showEbook, showBook);
     searchGuide(page_info['author'], page_info['title'], page_info['isbn']);
     initiateSearch(page_info, showAudio, showEbook, showBook);
   }
@@ -43,7 +45,7 @@ function goodreadsMakeBox (showAudio, showEbook, showBook) {
 }
 
 function goodreadsPageInfo () {
-  var title, isbn, isbn13, isbn10, author;
+  var title, isbn, isbn13, isbn10, author, on_page;
 
   isbn10 = $("#bookDataBox div:contains('ISBN')").text();
   isbn13 = $("div .infoBoxRowItem:contains('ISBN13')").text();
@@ -58,7 +60,12 @@ function goodreadsPageInfo () {
   title = $('#bookTitle').text().replace(/^\n */, '');
   author = $('.authorName:eq(0)').text();
 
+  if (title || isbn) {
+    on_page = true;
+  }
+
   var result = {
+    'on_page': on_page,
     'author': cleanAuthor(author),
     'title': cleanTitle(title),
     'isbn': isbn

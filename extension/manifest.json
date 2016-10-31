@@ -3,7 +3,7 @@
 
   "name": "booksfordc",
   "description": "See if books, ebooks, and audiobooks are available at the DC Public Library while browsing Amazon, Goodreads, or Barnes & Noble.",
-  "version": "1.1.6",
+  "version": "1.1.10",
   
   "author": "Emanuel Feld",
   "homepage_url": "http://booksfordc.org",

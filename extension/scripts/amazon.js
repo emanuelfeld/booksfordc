@@ -4,18 +4,19 @@ if (/amazon\.com$/.test(document.domain)) {
 }
 
 function getPrefsAmazon () {
-  chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function (items) {
-    checkAmazon(items['audioMedia'], items['ebookMedia'], items['bookMedia']);
+  chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia', 'openTabs'], function (items) {
+    checkAmazon(items['audioMedia'], items['ebookMedia'], items['bookMedia'], items['openTabs']);
   });
 }
 
-function checkAmazon (showAudio, showEbook, showBook) {
+function checkAmazon (showAudio, showEbook, showBook, openTabs) {
   var page_info = pageInfo();
 
-  searchGuide(page_info['author'], page_info['title'], page_info['isbn']);
-
-  if (page_info['page_type'].length){
+  if (page_info['on_page']){
+    resultTarget = openTabs ? '_blank' : '_self';
+    console.log(resultTarget);
     makeBox(showAudio, showEbook, showBook);
+    searchGuide(page_info['author'], page_info['title'], page_info['isbn']);
     initiateSearch(page_info, showAudio, showEbook, showBook);
   }
 }
@@ -24,16 +25,23 @@ function checkAmazon (showAudio, showEbook, showBook) {
 function makeBox (showAudio, showEbook, showBook) {
   var container;
 
-  if ($('div.a-box-inner').length) {
+  if ($('div#mediaTabsGroup').length) {
+    container = $('#mediaTab_content_landing > div');
+    container.before("<div id='dcpl_amzn_new'>\
+                      <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') + "'> </a> </div>\
+                      <div id = 'booksfordc_availability'> \
+                        <div id = 'dcpl_title'> DCPL Search </div> \
+                      </div> \
+                      </div> ");
+  } else if ($('div.a-box-inner').length) {
     console.log('Initialize: Creating Amazon page box');
-    container = $('div.a-box-inner:first');
-    container.before(
-      "<div id='dcpl' class='a-box'>\
-        <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') + "'> </a> </div>\
-        <div id = 'booksfordc_availability'> \
-          <div id = 'dcpl_title'> DCPL Search </div> \
-        </div> \
-      </div> ");
+    container = $('#buybox');
+    container.before("<div id='dcpl' class='a-box'>\
+                      <div id = 'booksfordc_icon' class = 'amazon'> <a href = 'http://booksfordc.org' > <img id = 'booksfordc_icon_img' src = '" + chrome.extension.getURL('assets/icon16white.png') + "'> </a> </div>\
+                      <div id = 'booksfordc_availability'> \
+                        <div id = 'dcpl_title'> DCPL Search </div> \
+                      </div> \
+                      </div> ");
   } else {
     console.log('Initialize: Could not create Amazon page box');
     return false;
@@ -46,85 +54,37 @@ function makeBox (showAudio, showEbook, showBook) {
 
 // Determine whether on book page
 function pageInfo () {
-  var page_type, title, isbn, isbn10, isbn13, author;
+  var page_type, title, isbn, isbn10, isbn13, author, on_page;
 
-  if ($('#btAsinTitle').length) {
-    console.log('Initialize: On Amazon e-book page')
-    page_type = 'ebook_page';
-    title = $('#btAsinTitle').text();
-    console.log(title);
-    if ($('#pageCountAvailable').length) {
-      try {
-        isbn10 = $('#hardcover_meta_binding_winner').find('.bucketBorderTop').attr('id').split('_')[1].replace(/\D/g, '');
-        isbn = convertISBN(isbn10);
-      } catch (e) {
-        isbn = '';
-      }
-    } else {
-      isbn = '';
-    }
 
-    if ($('.contributorNameTrigger a:eq(0)').length) {
-      author = $('.contributorNameTrigger a:eq(0)').text();
-    } else if ($('.contributorNameTrigger a').length) {
-      author = $('.contributorNameTrigger a').text();
-    } else if ($('div.buying span a:eq(0)').length){
-      author = $('div.buying span a:eq(0)').text();
-    } else {
-      author = $('div.buying span a').text();
-    }
-  } else if ($("#productDetailsTable .content li:contains('ASIN:')").length) {
-    console.log('Initialize: On Amazon e-book page');
-    page_type = 'ebook_page';
-    title = $('#productTitle').text();
-    if ($('#aboutEbooksSection').length) {
-      try {
-        isbn = $('#aboutEbooksSection').find('.a-declarative:first').attr('data-a-popover').split('ISBN ')[1].replace(/\D/g, '');
-        if (isbn.length === 10) {
-          isbn = convertISBN(isbn);
-        } else if (isbn.length !== 13) {
-          isbn = '';
-        }
-      } catch (e) {
-        isbn = '';
-      }
-    } else {
-      isbn = '';
-    }
+  title = $('[id*="roductTitle"]:first')
+    .text() || $('#btAsinTitle')
+    .text() || '';
 
-    if ($('.a-link-normal.contributorNameID:first').length) {
-      author = $('.a-link-normal.contributorNameID:first').text();
-    } else {
-      author = $('.author .a-link-normal:eq(0)').text();
-    }
-  } else if ($("#productDetailsTable .content li:contains('ISBN')").length) {
-    console.log('Initialize: On Amazon book page');
-    page_type = 'book_page';
-    title = $('#productTitle').text();
-    isbn10 = $("#productDetailsTable .content li:contains('ISBN-10:')").text();
-    isbn13 = $("#productDetailsTable .content li:contains('ISBN-13:')").text();
-    if (isbn13.length) {
-      isbn = isbn13.split(':')[1].replace(/\D/g, '');
-    } else {
-      isbn10 = isbn10.split(':')[1].replace(/\D/g, '');
-      isbn = convertISBN(isbn10);
-    }
+  isbn = $("li:contains('ISBN-13')").text() ||
+    $("li:contains('ISBN-10')").text() ||
+    $('#hardcover_meta_binding_winner').find('.bucketBorderTop').attr('id') ||
+    $('#aboutEbooksSection span').attr('data-a-popover');
 
-    if ($('.a-link-normal.contributorNameID:first').length) {
-      author = $('.a-link-normal.contributorNameID:first').text();
-    } else {
-      author = $('.author .a-link-normal:eq(0)').text();
+  try {
+    isbn = isbn.match(/[0-9X]{10,13}/)[0]
+    if (isbn.length === 10) {
+      isbn = convertISBN(isbn);
     }
-  } else {
-    console.log('Initialize: Not on Amazon book or e-book page');
-    page_type = '';
-    author = '';
-    title = '';
+  } catch(e) {
     isbn = '';
   }
 
+  author = $('[class*="contributorName"]:first')
+    .text() || $('span.author a:first')
+    .text() || '';
+
+  if ((title && author) || isbn) {
+    on_page = true;
+  }
+
   var result = {
-    'page_type': page_type,
+    'on_page': on_page,
     'author': cleanAuthor(author),
     'title': cleanTitle(title),
     'isbn': isbn

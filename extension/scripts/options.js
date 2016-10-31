@@ -4,10 +4,12 @@ function save_options() {
   var bookMedia = document.getElementById('bookCheck').checked;
   var ebookMedia = document.getElementById('ebookCheck').checked;
   var audioMedia = document.getElementById('audioCheck').checked;
+  var openTabs = document.getElementById('openTabs').value == "true";
   chrome.storage.sync.set({
     'bookMedia': bookMedia, 
     'ebookMedia': ebookMedia, 
-    'audioMedia': audioMedia
+    'audioMedia': audioMedia,
+    'openTabs': openTabs
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
@@ -26,7 +28,8 @@ function restore_options() {
   chrome.storage.sync.get({
     'bookMedia': true, 
     'ebookMedia': true, 
-    'audioMedia': true
+    'audioMedia': true,
+    'openTabs': "false"
   }, function(items) {
     document.getElementById('bookCheck').checked = items.bookMedia;
     console.log(items.bookMedia);
@@ -34,6 +37,8 @@ function restore_options() {
     console.log(items.ebookMedia);
     document.getElementById('audioCheck').checked = items.audioMedia;
     console.log(items.audioMedia);
+    document.getElementById('openTabs').value = items.openTabs;
+    console.log(items.openTabs);
   });
 }
 

@@ -73,6 +73,7 @@ function finishBox (showAudio, showEbook, showBook) {
 //////////////////////
 
 var guide;
+var resultTarget;
 
 //////////////////////
 /* SEARCH FUNCTIONS */
@@ -145,6 +146,7 @@ function searchOverdrive (type) {
     action: 'xhttp',
     url: guide[type].search[0]
   }, function(response) {
+      console.log(guide[type].search[0]);
       var result = $(response);
       overdriveAvailability(result, type);
     }
@@ -193,6 +195,10 @@ function overdriveAvailability (result, type) {
       'wait': parseInt(availability.attr('data-numwaiting'), 10)
     };
 
+    if (!availabilityData['total']) {
+      throw RangeError;
+    }
+
     var view = result.find('.li-details a:eq(0)');
     var itemURL = 'http://overdrive.dclibrary.org/10/50/en/' + view.attr('href');
 
@@ -215,18 +221,20 @@ function successMessage (availabilityData, type, itemURL) {
   var available_statement = availabilityData.available + ' available';
   var parenthetical_statement = (availabilityData.wait > 0 && availabilityData.available === 0) ? wait_statement : available_statement;
 
-  $(guide[type].modify).html("<a id='results' href = '" + itemURL + "'>" + guide[type].name + " located </a> <br>" + total_statement + " (" + parenthetical_statement + ")");
+  $(guide[type].modify).html("<a id='results' target='" + resultTarget + "' href = '" + itemURL + "'>" + guide[type].name + " located </a> <br>" + total_statement + " (" + parenthetical_statement + ")");
 }
 
 // display failure message in results div
 function failureMessage (type, failure_type, failure_url) {
   if (type === 'book') {
     if (failure_type === 'not_located') {
-      $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a> <br> <a id='results' href = '" + guide.book.fail + "'>Request purchase</a>");
+      $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' target='" + resultTarget + "' href = '" + failure_url + "'>Search manually</a>");
+       // <br> <a id='results' target='" + resultTarget + "' href = '" + guide.book.fail + "'>Request purchase</a>");
     } else {
-      $(guide[type].modify).html("Possible match located <br> <a id='results' href = '" + failure_url + "'>Search manually</a> <br> <a id='results' href = '" + guide.book.fail + "'>Request purchase</a>");
+      $(guide[type].modify).html("Possible match located <br> <a id='results' target='" + resultTarget + "' href = '" + failure_url + "'>Search manually</a>");
+       // <br> <a id='results' target='" + resultTarget + "' href = '" + guide.book.fail + "'>Request purchase</a>");
     }
   } else {
-    $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' href = '" + failure_url + "'>Search manually</a>");
+    $(guide[type].modify).html(guide[type].name + " not located <br> <a id='results' target='" + resultTarget + "' href = '" + failure_url + "'>Search manually</a>");
   }
 }

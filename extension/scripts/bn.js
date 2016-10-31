@@ -4,16 +4,18 @@ if (/barnesandnoble\.com$/.test(document.domain)) {
 }
 
 function getPrefsBN () {
-  chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia'], function (items) {
-    checkBN(items['audioMedia'], items['ebookMedia'], items['bookMedia']);
+  chrome.storage.sync.get(['bookMedia', 'ebookMedia', 'audioMedia', 'openTabs'], function (items) {
+    checkBN(items['audioMedia'], items['ebookMedia'], items['bookMedia'], items['openTabs']);
   });
 }
 
-function checkBN (showAudio, showEbook, showBook) {
-  var on_page = bnMakeBox(showAudio, showEbook, showBook);
+function checkBN (showAudio, showEbook, showBook, openTabs) {
+  var page_info = bnPageInfo();
 
-  if (on_page === true){
-    var page_info = bnPageInfo();
+  if (page_info['on_page']) {
+    resultTarget = openTabs ? '_blank' : '_self';
+    console.log(resultTarget);
+    bnMakeBox(showAudio, showEbook, showBook);
     searchGuide(page_info['author'], page_info['title'], page_info['isbn']);
     initiateSearch(page_info, showAudio, showEbook, showBook);
   }
@@ -45,21 +47,22 @@ function bnMakeBox (showAudio, showEbook, showBook) {
 
 // Determine whether on book page
 function bnPageInfo () {
-  var title, isbn, isbn13, author;
+  var title, isbn, isbn13, author, on_page;
 
   if ($('#prodSummary').length) {
     console.log('Initialize: On Barnes and Noble book or e-book page')
     title = $('#prodSummary h1').text();
     isbn13 = $('#ProductDetailsTab dd:first').text();
     isbn = isbn13.replace(/\D/g, '');
-    if ($('.contributors a:eq(0)').length) {
-      author = $('.contributors a:eq(0)').text();
-    } else {
-      author = $('.contributors a').text();
-    }
+    author = $('.contributors a:first').text();
+  }
+
+  if (title || isbn) {
+    on_page = true;
   }
 
   var result = {
+    'on_page': on_page,
     'author': cleanAuthor(author),
     'title': cleanTitle(title),
     'isbn': isbn
