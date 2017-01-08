@@ -7,15 +7,13 @@ function saveOptions(e) {
         'audiobook': document.getElementById('audiobookCheck').checked,
         'openTabs': document.getElementById('openTabs').value == "true"
     });
-    console.log("options: saved");
 
-    // setting.then((res) => {
-    //     var status = document.getElementById('status');
-    //     status.textContent = 'Options saved.';
-    //     setTimeout(function() {
-    //         status.textContent = '';
-    //     }, 750);        
-    // });
+    var status = document.getElementById('status');
+    status.textContent = 'Options saved. Happy reading!';
+    console.log("options: saved");
+    setTimeout(function() {
+        status.textContent = '';
+    }, 750);
 }
 
 
