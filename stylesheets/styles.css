@@ -1,7 +1,7 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+@import url('https://fonts.googleapis.com/css?family=Lato|Open+Sans:300,600');
 
 body {
-  font:16px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font:15px/1.5 "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#222;
   font-weight:300;
 }
@@ -11,6 +11,7 @@ body {
 }
 
 .title {
+  font-family: Lato;
   font-size:40px;
   margin:0 0 10px;
 }
@@ -25,7 +26,9 @@ body {
   padding:10px 0 10px 0; 
   margin:0 0 20px 0;
 }
+
 h1, h2, h3, h4, h5, h6 {
+  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#222;
   margin:0 0 20px;
 }
@@ -52,7 +55,7 @@ h3, h4, h5, h6 {
 
 a {
   color:#39c;
-  font-weight:400;
+  font-weight:bold;
   text-decoration:none;
 }
 
