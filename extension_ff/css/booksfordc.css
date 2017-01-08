@@ -11,19 +11,19 @@
 }
 
 #bfdc-amazon-new {
-	border-bottom: 1px #ddd solid;
-	display: -webkit-flex;
-	display: flex;
+    border-bottom: 1px #ddd solid;
+    display: -webkit-flex;
+    display: flex;
 }
 
 #bfdc-goodreads {
-	border-radius:6px; 
+    border-radius:6px; 
     border: 1px solid #be2026;
     /*border:2px solid rgb(221, 221, 221); */
-	margin-bottom:12px;
-	overflow: auto;
-	display: -webkit-flex;
-	display: flex;
+    margin-bottom:12px;
+    overflow: auto;
+    display: -webkit-flex;
+    display: flex;
 }
 
 #bfdc-bn {
@@ -31,10 +31,10 @@
     border-top: 1px solid #be2026;
     /*border-bottom: 1px solid #e7e7e7;*/
     /*border-top: 1px solid #e7e7e7;*/
-	margin-bottom:12px;
-	overflow: auto;
-	display: -webkit-flex;
-	display: flex;
+    margin-bottom:12px;
+    overflow: auto;
+    display: -webkit-flex;
+    display: flex;
 }
 
 .bfdc-title {
@@ -49,9 +49,9 @@
 }
 
 .bfdc-media {
-	font-size:13px;
-	line-height: 19px;
-	font-family: Arial, sans-serif;
+    font-size:13px;
+    line-height: 19px;
+    font-family: Arial, sans-serif;
 }
 
 .bfdc-media-status {
@@ -60,21 +60,21 @@
 }
 
 .bfdc-media-title {
-	font-weight: bold;
+    font-weight: bold;
     color: #111;
 }
 
 .bfdc-media-results {
-	font-size:13px;
-	line-height: 19px;
-	font-family: Arial, sans-serif;
+    font-size:13px;
+    line-height: 19px;
+    font-family: Arial, sans-serif;
 }
 
 .bfdc-icon {
-	padding-top:8px; 
-	width:32px;
+    padding-top:8px; 
+    width:32px;
     display:inline-block;
-	background:#be2026; 
+    background:#be2026; 
 }
 
 .bfdc-icon-img {
@@ -84,7 +84,7 @@
 }
 
 .bfdc-availability {
-	padding:8px; 
+    padding:8px; 
     display:inline-block;
     width: 100%;
 }
@@ -99,5 +99,3 @@ div.bfdc-footer {
 a.bfdc-options {
     cursor: pointer;
 }
-
-
