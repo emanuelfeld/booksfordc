@@ -1,1 +1,1 @@
-worker: python dcpl.py
+worker: python search-bot/main.py

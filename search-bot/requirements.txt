@@ -1,0 +1,3 @@
+-e git://github.com/emanuelfeld/twitterbot.git#egg=twitterbot
+
+cssselect==0.9.1

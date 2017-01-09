@@ -1,20 +1,24 @@
-![banner](https://github.com/emanuelfeld/booksfordc/blob/master/promo/PromoLarge.png)
+[![banner](https://github.com/emanuelfeld/booksfordc/blob/master/promo-materials/PromoLarge.png)](http://booksfordc.org)
 
-Assorted projects aimed at making the DC Public Library's resources more accessible and useful for DC residents. Drop me a line [@evonfriedland](https://twitter.com/evonfriedland) if you're interested. Promotional materials (banners, flyer) in the [promo folder](https://github.com/emanuelfeld/booksfordc/tree/master/promo) to spread the word!
+[Books for DC](http://booksfordc.org) (aka booksfordc) is an initiative, which aims to make the DC Public Library's resources more accessible and useful by bringing them to the platforms DC residents already use. Drop me a line [@evonfriedland](https://twitter.com/evonfriedland) if you're interested.
 
-##Next up##
+Promotional materials (banners, flyer) in the [promo folder](https://github.com/emanuelfeld/booksfordc/tree/master/promo) to spread the word!
 
-* Set up focus group a MLK Jr Dream Lab and/or write and distribute a printed questionnaire to library patrons
-* Do more outreach with local education and literacy non-profits and DCPS librarians, teachers, students, and parents
-* Streamline code to make it easier to maintain
+##Components##
 
-##So far##
+###Browser plug-ins###
 
-###Catalog feed###
+A browser extension that displays library holdings and availability when looking books, ebooks, or audiobooks on Amazon, Goodreads, and Barnes & Noble. 
+
+Download for [![ch](https://raw.githubusercontent.com/emanuelfeld/booksfordc/gh-pages/images/chrome16.png) Chrome](https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg) or [![ff](https://raw.githubusercontent.com/emanuelfeld/booksfordc/gh-pages/images/firefox16.png) Firefox](https://addons.mozilla.org/en-US/firefox/addon/booksfordc/).
+
+![extension-gif](https://github.com/emanuelfeld/booksfordc/blob/master/promo-materials/booksfordc.gif)
+
+###Catalog bot###
 
 Due to issues with the DCPL's OPAC technology, RSS feeds for its catalog do not syndicate properly. The script in scraper.py is run hourly on ScraperWiki to generate a Twitter feed of new additions to the DCPL book catalog. Follow with [@booksfordc](https://twitter.com/booksfordc). You can also subscribe to a daily or weekly email digest of new resources using [these IFTTT recipes](https://ifttt.com/p/evonfriedland/shared).
 
-###Library search-bot###
+###Search bot [deprecated]###
 
 Twitter users can also use the [@booksfordc](https://twitter.com/booksfordc) account to quickly query the library catalog. 
 
@@ -49,12 +53,6 @@ Where ```search_init``` is one of:
 And where ```search_terms``` includes either the book title and/or author or the book's ISBN.
 
 An author and title combination search will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work.
-
-###Browser plug-in###
-
-A Chrome extension that displays library holdings and availability when browsing books on Amazon, Goodreads, or Barnes & Noble. Download for free for [![ch](https://raw.githubusercontent.com/emanuelfeld/booksfordc/gh-pages/images/chrome16.png) Chrome](https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg) or [![ff](https://raw.githubusercontent.com/emanuelfeld/booksfordc/gh-pages/images/firefox16.png) Firefox](https://addons.mozilla.org/en-US/firefox/addon/booksfordc/). Safari version in the works.
-
-![screenshot](https://cloud.githubusercontent.com/assets/4269640/7082805/c70207ba-df27-11e4-940e-87dbb4d41505.png)
 
 ####License and Contributing####
 

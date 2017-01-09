@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>booksfordc options</title>
+    <style>
+        body: { padding: 10px; }
+        h2 { color: #be2026; }
+        a { font-weight: bold; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        li { padding: 2px; }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div>
+            <h2>about booksfordc</h2>
+            <p>
+                 The <a href='http://booksfordc.org' target='_blank'>booksfordc</a> browser extension lets you easily determine the availability of books, ebooks, and audiobooks at the DC Public Library as you browse Amazon, Goodreads, and Barnes &amp; Noble.
+            </p>
+        </div>
+        <div>
+            <h2>make a donation</h2>
+            <p>
+                All booksfordc tools are made available at no cost to users, but you can <a href='https://booksfordc.herokuapp.com/' target='_blank'>show your support</a> for this community project by <a href='https://booksfordc.herokuapp.com/' target='_blank'>making a voluntary contribution</a>. Think of all the money it saves you!
+            </p>
+        </div>
+        <div>
+            <h2>preferences</h2>
+            <p>
+                You can change these options at any time from the Chrome extensions menu or by clicking on the booksfordc toolbar icon.
+            </p>
+            <p>
+                <select id="openTabs">
+                    <option value="false">no</option>
+                    <option value="true">yes</option>
+                </select>
+                &nbsp;open links in a new tab?
+            </p>
+            <p>
+                <ul>
+                    <li>
+                        <label><input type="checkbox" id="bookCheck">&nbsp;books</label>
+                    </li>
+                    <li>
+                        <label><input type="checkbox" id="ebookCheck">&nbsp;e-books</label>
+                    </li>
+                    <li>
+                        <label><input type="checkbox" id="audiobookCheck">&nbsp;audiobooks</label>
+                    </li>
+                </ul>
+            </p>
+
+            <button id="save">save options</button>
+            <p>
+                <div id="status"></div>
+            </p>
+        </div>
+        <div>
+            <h2>contact us</h2>
+            <p>
+                Have any questions or concerns? Send us a message at <a href="mailto:booksfordc@gmail.com">booksfordc@gmail.com</a> or to our Twitter account, <a href="https://twitter.com/booksfordc">@booksfordc</a>.
+            </p>
+            <p>
+                More information is also available on the <a href="http://booksfordc.org">booksfordc homepage</a>.
+            </p>
+        </div>
+    </main>
+    <script type="text/javascript" src="scripts/options.js"></script>
+</body>
+</html>
