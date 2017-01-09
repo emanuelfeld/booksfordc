@@ -3,7 +3,7 @@
 //////////////////////
 
 
-var debug = true;
+var debug = false;
 var LOG = debug ? console.log.bind(console) : function () {};
 
 var preferences;
@@ -115,7 +115,6 @@ function finishLayout (preferences) {
     var preferencesSet = false;
 
     ['audiobook', 'ebook', 'book'].forEach(function(media) {
-        console.log(media, preferences[media]);
         if (preferences[media]) {
             LOG('initialize: making div for ' + media + ' results');
             preferencesSet = true;

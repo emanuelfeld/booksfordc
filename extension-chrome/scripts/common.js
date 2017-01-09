@@ -3,7 +3,7 @@
 //////////////////////
 
 
-var debug = true;
+var debug = false;
 var LOG = debug ? console.log.bind(console) : function () {};
 
 var preferences;

@@ -11,7 +11,6 @@
 // }
 
 function handleOptionsClick() {
-    console.log('handling click');
     try {
         chrome.runtime.openOptionsPage(function() {
             LOG('options: open in chrome 42+');

@@ -1,6 +1,5 @@
 // Saves options to chrome.storage.sync.
 function save_options() {
-    console.log("booksfordc options: saving");
     chrome.storage.sync.set({
         'book': document.getElementById('bookCheck').checked,
         'ebook': document.getElementById('ebookCheck').checked,
@@ -16,10 +15,10 @@ function save_options() {
     });
 }
 
+
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restore_options() {
-    console.log("booksfordc options: restoring");
     chrome.storage.sync.get({
         'book': false, 
         'ebook': false, 
@@ -33,7 +32,6 @@ function restore_options() {
     });
 }
 
-console.log('on options page');
 
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click',

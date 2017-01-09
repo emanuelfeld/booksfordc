@@ -1,6 +1,5 @@
 // Saves options to browser.storage.sync.
 function saveOptions(e) {
-    console.log("options: saving");
     browser.storage.local.set({
         'book': document.getElementById('bookCheck').checked,
         'ebook': document.getElementById('ebookCheck').checked,
@@ -10,7 +9,6 @@ function saveOptions(e) {
 
     var status = document.getElementById('status');
     status.textContent = 'Options saved. Happy reading!';
-    console.log("options: saved");
     setTimeout(function() {
         status.textContent = '';
     }, 750);
@@ -20,7 +18,6 @@ function saveOptions(e) {
 // Restores select box and checkbox state using the preferences
 // stored in browser.storage.
 function restoreOptions() {
-    console.log("options: restoring");
     function setCurrentChoice(items) {
         document.getElementById('bookCheck').checked = items.book;
         document.getElementById('ebookCheck').checked = items.ebook;
@@ -37,6 +34,5 @@ function restoreOptions() {
 
 }
 
-console.log('on options page');
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.querySelector('#save').addEventListener('click', saveOptions);
