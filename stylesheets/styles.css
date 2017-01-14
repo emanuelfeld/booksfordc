@@ -100,6 +100,11 @@ img {
   max-width:100%;
 }
 
+img.center {
+  display: block;
+  margin: 0 auto;
+}
+
 header {
   width:100%;
 }
@@ -260,6 +265,15 @@ a.title:hover {
 .wrapper {
   width:100%;
   margin:0 auto;
+}
+
+.contribute {
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 3px #BF1E24;
+  /*#7BB9FF;*/
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 footer {
