@@ -126,7 +126,10 @@ function finishLayout (preferences) {
         LOG('initialize: no media type chosen');
         $('.bfdc-title:eq(0)').after("<div class='bfdc-media'> <a class='bfdc-options'> click here to set your search preferences </a>");
     } else {
-        $('div.bfdc-media:last-child').after("<div class='bfdc-media bfdc-footer'> <a class='bfdc-options'> options & info </a>");
+        $('div.bfdc-media:last-child').after(
+            "<div class='bfdc-media bfdc-footer'> <a href='https://catalog.dclibrary.org/client/en_US/dcpl/search/patronlogin/https:$002f$002fcatalog.dclibrary.org$002fclient$002fen_US$002fdcpl$002frequests$003f' target='_blank'> ask the dcpl to buy a book </a> </div> \
+            <div class='bfdc-media bfdc-footer'> <a class='bfdc-options'> options & info </a> </div>"
+        );
     }
 }
 

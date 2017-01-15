@@ -1,14 +1,21 @@
 function handleOptionsClick() {
     try {
-        chrome.runtime.openOptionsPage(function() {
-            LOG('options: open in chrome 42+');
-        });
+        chrome.runtime.openOptionsPage();
     } catch (e) {
-        LOG('options: fallback');
         window.open(chrome.runtime.getURL('options.html'));
     }
 }
 
 chrome.runtime.onMessage.addListener(handleOptionsClick);
 
-chrome.runtime.setUninstallURL('https://docs.google.com/forms/d/e/1FAIpQLSe5EC11sXP7fjPfkUcbDamddCW7FVPNgDr4VXZJTPzMb-CXKw/viewform');
+chrome.runtime.onInstalled.addListener(function (details) {
+    var version = chrome.runtime.getManifest().version;
+    // var previousVersion = details.previousVersion;
+    if (details.reason === 'install') {
+        chrome.tabs.create({
+            "url": "http://booksfordc.org/welcome-chrome?source=chrome&" + "version=" + version
+          });
+    }
+});
+
+chrome.runtime.setUninstallURL('http://bit.ly/bfdc-chrome');

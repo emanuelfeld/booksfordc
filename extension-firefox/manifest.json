@@ -1,26 +1,14 @@
 {
-    "background": {
-        "scripts": [
-            "background.js"
-        ]
-    },
-    "browser_action": {
-        "default_title": "booksfordc options",
-        "default_icon": {
-            "16": "assets/icon16.png",
-            "48": "assets/icon48.png",
-            "128": "assets/icon128.png"
-        }
-    },
+    "description": "See if books, ebooks, and audiobooks are available at the DC Public Library while browsing Amazon, Goodreads, or Barnes & Noble.",
+    "homepage_url": "http://booksfordc.org",
+    "manifest_version": 2,
+    "name": "booksfordc-test",
+    "version": "1.2.2",
     "applications": {
         "gecko": {
             "id": "jid1-v7ed49nPsxBrKA@jetpack"
         }
     },
-    "description": "See if books, ebooks, and audiobooks are available at the DC Public Library while browsing Amazon, Goodreads, or Barnes & Noble.",
-    "homepage_url": "http://booksfordc.org",
-    "manifest_version": 2,
-    "name": "booksfordc",
     "options_ui": {
         "page": "options.html"
     },
@@ -37,6 +25,19 @@
         "https://*.goodreads.com/*",
         "storage"
     ],
+    "browser_action": {
+        "default_title": "booksfordc options",
+        "default_icon": {
+            "16": "assets/icon16.png",
+            "48": "assets/icon48.png",
+            "128": "assets/icon128.png"
+        }
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
     "content_scripts": [
         {
             "css": [
@@ -99,6 +100,5 @@
         "16": "assets/icon16.png",
         "48": "assets/icon48.png",
         "128": "assets/icon128.png"
-    },
-    "version": "1.2.1"
+    }
 }

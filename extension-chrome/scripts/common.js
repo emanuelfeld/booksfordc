@@ -176,7 +176,7 @@ function setUp (site) {
                          </div> \
                          <div class='bfdc-availability'> \
                             <div class='bfdc-title'> \
-                                <a href = 'http://booksfordc.org' target='_blank'> booksfordc </a> \
+                                <a href = 'http://booksfordc.org?source=chrome' target='_blank'> booksfordc </a> \
                             </div> \
                          </div>";
 
