@@ -21,15 +21,23 @@
   <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
   <script src="javascripts/scale.fix.js">
   </script>
-  <script type="text/javascript">
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-61298225-1', 'auto');
+    ga('send', 'pageview');
+
   </script>
-  <script type="text/javascript">
-        try {
-          var pageTracker = _gat._getTracker("UA-61298225-1");
-        pageTracker._trackPageview();
-        } catch(err) {}
+  <script>
+    var trackOutboundLink = function(url) {
+       ga('send', 'event', 'outbound', 'click', url, {
+         'transport': 'beacon',
+         'hitCallback': function(){document.location = url;}
+       });
+    }
   </script>
   <script async="async" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55306ce65a1d09fe" type="text/javascript">
   </script>
@@ -52,10 +60,10 @@
 
 
     <section>
-      <p>Thanks for installing the <a href="http://booksfordc.org">booksfordc</a> Firefox add-on! The instructions below will get you up and running in no time.</p>
+      <p>Thanks for installing the <a href="/">booksfordc</a> Firefox add-on! The instructions below will get you up and running in no time.</p>
 
 
-      <p>If you find it useful, let us know with a <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/reviews/add" target="_blank">quick review</a> or a <a href="https://booksfordc.herokuapp.com" target="_blank">small donation to our tip jar</a>.</p>
+      <p>If you find it useful, let us know with a <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/reviews/add" onclick="trackOutboundLink('https://addons.mozilla.org/en-US/firefox/addon/booksfordc/reviews/add'); return false;">quick review</a> or a <a href="https://booksfordc.herokuapp.com" onclick="trackOutboundLink('https://booksfordc.herokuapp.com'); return false;">small donation to our tip jar</a>.</p>
 
 
       <h2><a aria-hidden="true" class="anchor" href="#set-up" id="set-up"></a> Set up and instructions</h2>
@@ -85,27 +93,27 @@
       </p>
 
 
-      <p>When you look at a book's page on <a href="https://www.amazon.com/" target="_blank">Amazon</a>, <a href="http://www.barnesandnoble.com/" target="_blank">Barnes &amp; Noble</a>, or <a href="https://www.goodreads.com/" target="_blank">Goodreads</a>, <strong>booksfordc</strong> will now get to work finding it in the DC Public Library's catalog.</p>
+      <p>When you look at a book's page on <a href="https://www.amazon.com/" onclick="trackOutboundLink('https://www.amazon.com/'); return false;">Amazon</a>, <a href="http://www.barnesandnoble.com/" onclick="trackOutboundLink('http://www.barnesandnoble.com/'); return false;">Barnes &amp; Noble</a>, or <a href="https://www.goodreads.com/" onclick="trackOutboundLink('https://www.goodreads.com/'); return false;">Goodreads</a>, <strong>booksfordc</strong> will now get to work finding it in the DC Public Library's catalog.</p>
 
 
-      <p>The video below shows what that looks like (<a href="https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/promo-materials/booksfordc.gif" target="_blank">click to view larger</a>).</p>
+      <p>The video below shows what that looks like (<a href="https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/promo-materials/booksfordc.gif" onclick="trackOutboundLink('https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/promo-materials/booksfordc.gif'); return false;">click to view larger</a>).</p>
 
 
-      <p><a href="https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/promo-materials/booksfordc.gif" target="_blank"><img class="center" src="https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/promo-materials/booksfordc.gif"></a>
+      <p><a href="https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/promo-materials/booksfordc.gif" onclick="trackOutboundLink('https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/promo-materials/booksfordc.gif'); return false;"><img class="center" src="https://raw.githubusercontent.com/emanuelfeld/booksfordc/master/promo-materials/booksfordc.gif"></a>
       </p>
 
       <h2><a aria-hidden="true" class="anchor" href="#contact" id="contact"></a> Contact</h2>
 
 
-      <p>Books for DC is a project of <a href="https://emanuelfeld.github.io">Emanuel Feld</a>.</p>
+      <p>Books for DC is a project of <a href="https://emanuelfeld.github.io" onclick="trackOutboundLink('https://emanuelfeld.github.io'); return false;">Emanuel Feld</a>.</p>
 
 
-      <p>Send questions, issues, ideas, feature requests, rants, or raves on <a href="https://twitter.com/evonfriedland">Twitter</a> or by email at booksfordc at gmail dot com.</p>
+      <p>Send questions, issues, ideas, feature requests, rants, or raves on <a href="https://twitter.com/evonfriedland" onclick="trackOutboundLink('https://twitter.com/evonfriedland'); return false;">Twitter</a> or by email at booksfordc at gmail dot com.</p>
 
     </section>
 
       <footer>
-        This project's <a href="https://github.com/emanuelfeld/booksfordc/">code</a> is offered under a <a href="LICENSE.txt">GPLv2 license</a>.
+        This project's <a href="https://github.com/emanuelfeld/booksfordc/" onclick="trackOutboundLink('https://github.com/emanuelfeld/booksfordc/'); return false;">code</a> is offered under a <a href="LICENSE.txt">GPLv2 license</a>.
       </footer>
   </div>
 </body>

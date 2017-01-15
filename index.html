@@ -21,15 +21,24 @@
   <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
   <script src="javascripts/scale.fix.js">
   </script>
-  <script type="text/javascript">
-       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-       document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-61298225-1', 'auto');
+    ga('send', 'pageview');
+
   </script>
-  <script type="text/javascript">
-       try {
-         var pageTracker = _gat._getTracker("UA-61298225-1");
-       pageTracker._trackPageview();
-       } catch(err) {}
+  <script>
+    var trackOutboundLink = function(url) {
+      console.log('link clicked %s', url);
+       ga('send', 'event', 'outbound', 'click', url, {
+         'transport': 'beacon',
+         'hitCallback': function(){document.location = url;}
+       });
+    }
   </script>
   <script async="async" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55306ce65a1d09fe" type="text/javascript">
   </script>
@@ -57,7 +66,7 @@
 
       <h2><a aria-hidden="true" class="anchor" href="#browser-plug-in" id="browser-plug-in"></a> Browser plug-in</h2>
 
-      <p>Download for free for <a href="https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg"><img alt="chrome_logo" src="images/chrome16.png"> Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/"><img alt="firefox_logo" src="images/firefox16.png"> Firefox</a>.</p>
+      <p>Download for free for <a href="https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg" onclick="trackOutboundLink('https://chrome.google.com/webstore/detail/booksfordc/plbkclaloadjhljkijjnlingopbahndg'); return false;"><img alt="chrome_logo" src="images/chrome16.png"> Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/booksfordc/" onclick="trackOutboundLink('https://addons.mozilla.org/en-US/firefox/addon/booksfordc/'); return false;"><img alt="firefox_logo" src="images/firefox16.png"> Firefox</a>.</p>
 
       <p>With the booksfordc browser extension, you can now easily determine the availability of books, ebooks, and audiobooks at the DCPL as you browse Amazon, Goodreads, and Barnes &amp; Noble.</p>
 
@@ -71,13 +80,50 @@
       <p>Wish you could keep up with the latest additions to the DCPL book catalog? Now you can.</p>
 
 
-      <p>Just follow the <a href="https://twitter.com/booksfordc">@booksfordc</a> Twitter account, which tweets out new books at the DCPL as they come in. In addition to this feed, you can subscribe to a daily or weekly email digest of new holdings using <a href="https://ifttt.com/p/evonfriedland/shared">these IFTTT recipes</a>.</p>
+      <p>Just follow the <a href="https://twitter.com/booksfordc" onclick="trackOutboundLink('https://twitter.com/booksfordc'); return false;">@booksfordc</a> Twitter account, which tweets out new books at the DCPL as they come in. In addition to this feed, you can subscribe to a daily or weekly email digest of new holdings using <a href="https://ifttt.com/p/evonfriedland/shared" onclick="trackOutboundLink('https://ifttt.com/p/evonfriedland/shared'); return false;">these IFTTT recipes</a>.</p>
 
 
-      <p><a class="twitter-timeline" data-widget-id="581949709092257793" href="https://twitter.com/booksfordc">Tweets by @booksfordc</a> 
+      <p><a class="twitter-timeline" data-widget-id="581949709092257793" href="https://twitter.com/booksfordc" onclick="trackOutboundLink('https://twitter.com/booksfordc'); return false;">Tweets by @booksfordc</a> 
       <script>
       !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
       </script></p>
+
+      <div class="contribute">
+        <h2><a aria-hidden="false" class="anchor" href="https://booksfordc.herokuapp.com" id="contribute" onclick="trackOutboundLink('https://booksfordc.herokuapp.com'); return false;">Support the project</a>
+        </h2>
+
+
+        <p>All booksfordc tools, including its browser extensions, catalog feed, and newsletters, are made available at no cost, but you can <a href="https://booksfordc.herokuapp.com" onclick="trackOutboundLink('https://booksfordc.herokuapp.com'); return false;">show your support</a> by making an <a href="https://booksfordc.herokuapp.com" onclick="trackOutboundLink('https://booksfordc.herokuapp.com'); return false;">optional contribution at this link</a>!</p>
+
+
+        <div><img src="/images/powered_by_stripe.png">
+        </div>
+      </div>
+
+
+      <h2><a aria-hidden="true" class="anchor" href="#advertise" id="advertise"></a> Spread the word</h2>
+
+
+      <p>Download any of our <a href="https://github.com/emanuelfeld/booksfordc/tree/master/promo-materials" onclick="trackOutboundLink('https://github.com/emanuelfeld/booksfordc/tree/master/promo-materials'); return false;">promotional images and flyers</a> to let others in your community know about booksfordc's tools.</p>
+
+
+      <h2><a aria-hidden="true" class="anchor" href="#in-the-news" id="in-the-news"><span class="octicon octicon-link"></span></a> In the news</h2>
+
+
+      <p>WAMU 88.5: <a href="http://wamu.org/news/15/03/16/why_buy_a_book_when_you_can_go_to_dc_public_library_theres_an_app_for_that" onclick="trackOutboundLink('http://wamu.org/news/15/03/16/why_buy_a_book_when_you_can_go_to_dc_public_library_theres_an_app_for_that'); return false;">New Browser Extension May Get You Going To The D.C. Public Library More</a></p>
+
+
+      <p>Technical.ly DC: <a href="https://technical.ly/dc/2015/03/04/bookdsfordc-library-twitter-feed/" onclick="trackOutboundLink('https://technical.ly/dc/2015/03/04/bookdsfordc-library-twitter-feed/'); return false;">This Twitter feed lists books just added to the DC Public Library system</a></p>
+
+
+      <h2><a aria-hidden="true" class="anchor" href="#contact" id="contact"></a> Contact</h2>
+
+
+      <p>Books for DC is a project of <a href="https://emanuelfeld.github.io" onclick="trackOutboundLink('https://emanuelfeld.github.io'); return false;">Emanuel Feld</a>.</p>
+
+
+      <p>Send questions, issues, ideas, feature requests, rants, or raves on <a href="https://twitter.com/evonfriedland" onclick="trackOutboundLink('https://twitter.com/evonfriedland'); return false;">Twitter</a> or by email at booksfordc at gmail dot com.</p>
+
       <!--<h2>-->
       <!--  <a id="twitter-bot" class="anchor" href="#twitter-bot" aria-hidden="true">-->
       <!--  </a>-->
@@ -115,47 +161,11 @@
       <!--  An author and title combination search will yield the best results. If you only use one of those, you're more likely to end up with multiple possible matches. If you use the ISBN, you run the risk of an erroneous 'Not found' response, since the DCPL might have a different edition (with different ISBN). If you do use ISBN, it should be ISBN-13 and not ISBN-10. The latter will not work.-->
       <!--</p>-->
 
-
-      <div class="contribute">
-        <h2><a aria-hidden="false" class="anchor" href="https://booksfordc.herokuapp.com" id="contribute" target="_blank">Support the project</a>
-        </h2>
-
-
-        <p>All booksfordc tools, including its browser extensions, catalog feed, and newsletters, are made available at no cost, but you can <a href="https://booksfordc.herokuapp.com" target="_blank">show your support</a> by making an <a href="https://booksfordc.herokuapp.com" target="_blank">optional contribution at this link</a>!</p>
-
-
-        <div><img src="/images/powered_by_stripe.png">
-        </div>
-      </div>
-
-
-      <h2><a aria-hidden="true" class="anchor" href="#advertise" id="advertise"></a> Spread the word</h2>
-
-
-      <p>Download any of our <a href="https://github.com/emanuelfeld/booksfordc/tree/master/promo-materials" target="_blank">promotional images and flyers</a> to let others in your community know about booksfordc's tools.</p>
-
-
-      <h2><a aria-hidden="true" class="anchor" href="#in-the-news" id="in-the-news"><span class="octicon octicon-link"></span></a> In the news</h2>
-
-
-      <p>WAMU 88.5: <a href="http://wamu.org/news/15/03/16/why_buy_a_book_when_you_can_go_to_dc_public_library_theres_an_app_for_that">New Browser Extension May Get You Going To The D.C. Public Library More</a></p>
-
-
-      <p>Technical.ly DC: <a href="https://technical.ly/dc/2015/03/04/bookdsfordc-library-twitter-feed/">This Twitter feed lists books just added to the DC Public Library system</a></p>
-
-
-      <h2><a aria-hidden="true" class="anchor" href="#contact" id="contact"></a> Contact</h2>
-
-
-      <p>Books for DC is a project of <a href="https://emanuelfeld.github.io">Emanuel Feld</a>.</p>
-
-
-      <p>Send questions, issues, ideas, feature requests, rants, or raves on <a href="https://twitter.com/evonfriedland">Twitter</a> or by email at booksfordc at gmail dot com.</p>
     </section>
 
 
     <footer>
-      This project's <a href="https://github.com/emanuelfeld/booksfordc/">code</a> is offered under a <a href="LICENSE.txt">GPLv2 license</a>.
+      This project's <a href="https://github.com/emanuelfeld/booksfordc/" onclick="trackOutboundLink('https://github.com/emanuelfeld/booksfordc/'); return false;">code</a> is offered under a <a href="LICENSE.txt">GPLv2 license</a>.
     </footer>
   </div>
 </body>
