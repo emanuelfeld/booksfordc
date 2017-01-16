@@ -276,6 +276,35 @@ a.title:hover {
   margin-bottom: 20px;
 }
 
+.button {
+  border: 2px solid #a93a3a;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  padding: 5px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  width: 30%;
+  overflow:hidden;
+  margin-right: 2%;
+}
+
+.button:hover {
+  border: 2px solid #00ccff;
+}
+
+.button-left {
+  float: left;
+}
+
+.button-center {
+  display: inline-block;
+}
+
+.button-container {
+  clear: both;
+}
+
 footer {
   text-align: center;
   font-size:12px;
