@@ -7,10 +7,14 @@ ga('create', 'UA-61298225-1', 'auto');
 ga('send', 'pageview');
 
 var trackOutboundLink = function(url) {
-   ga('send', 'event', 'outbound', 'click', url, {
-     'transport': 'beacon',
-     'hitCallback': function(){
-         window.open(url);
-      }
-   });
+    if(window.ga && ga.create) {
+       ga('send', 'event', 'outbound', 'click', url, {
+         'transport': 'beacon',
+         'hitCallback': function(){
+             window.open(url);
+          }
+       });
+    } else {
+       window.open(url);
+    }
 }
