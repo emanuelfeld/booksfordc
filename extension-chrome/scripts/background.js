@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
     // var previousVersion = details.previousVersion;
     if (details.reason === 'install') {
         chrome.tabs.create({
-            "url": "http://booksfordc.org/welcome-chrome?source=chrome&" + "version=" + version
+            "url": "http://booksfordc.org/welcome-chrome?utm_source=chrome&utm_campaign=install&version=" + version
           });
     }
 });

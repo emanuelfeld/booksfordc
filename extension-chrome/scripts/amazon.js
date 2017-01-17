@@ -7,7 +7,16 @@ if (/amazon\.com$/.test(document.domain)) {
 function initLayout (site, preferences) {
     var container;
 
-    if ($('div#mediaTabsGroup').length) {
+    if (!$("#nav-subnav").length) {
+        return false;
+    } 
+
+    var mediaCategory = $('#nav-subnav').attr('data-category').toLowerCase();
+    var isBook = ['books', 'book', 'digital-text', 'digital-texts'].indexOf(mediaCategory) > -1;
+
+    if (!isBook) {
+        return false;
+    } else if ($('div#mediaTabsGroup').length) {
         container = $('#mediaTab_content_landing > div');
         container.before("<div id='bfdc-amazon-new'>" + innerLayout + "</div>");
     } else if ($('div.a-box-inner').length) {

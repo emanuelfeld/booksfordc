@@ -163,29 +163,38 @@ function failureLayout (media, failure_type, failure_url) {
 function setUp (site) {
     LOG('initialize: loading preferences')
     chrome.storage.sync.get(['book', 'ebook', 'audiobook', 'openTabs'], function (p) {
+
         resource = new Resource();
 
         if ((resource.title && resource.author) || resource.isbn) {
-            LOG('initialize: on a book page');
+            LOG('initialize: resource data found');
             LOG('author:', resource.author, 'title:', resource.title, 'isbn:', resource.isbn);
+        } else {
+            LOG('initialize: resource data not found');
+            return false;
+        }
 
-            innerLayout = "<div class='bfdc-icon'> \
-                             <a class='bfdc-options'> \
-                                <img class='bfdc-icon-img' src = '" + chrome.extension.getURL('assets/icon16white.png') + "'> \
-                             </a> \
-                         </div> \
-                         <div class='bfdc-availability'> \
-                            <div class='bfdc-title'> \
-                                <a href = 'http://booksfordc.org?source=chrome' target='_blank'> booksfordc </a> \
-                            </div> \
-                         </div>";
+        innerLayout = "<div class='bfdc-icon'> \
+                         <a class='bfdc-options'> \
+                            <img class='bfdc-icon-img' src = '" + chrome.extension.getURL('assets/icon16white.png') + "'> \
+                         </a> \
+                     </div> \
+                     <div class='bfdc-availability'> \
+                        <div class='bfdc-title'> \
+                            <a href = 'http://booksfordc.org?utm_source=chrome&utm_campaign=" + site + "' target='_blank'> booksfordc </a> \
+                        </div> \
+                     </div>";
 
-            preferences = p;
+        preferences = p;
+
+        var onPage = initLayout(site, preferences);
+
+        if (onPage) {
             reference = new Reference();
-            initLayout(site, preferences);
             initSearch(preferences);
         } else {
-            LOG('Initialize: Not on resource page');
+            LOG('initialize: not on resource page');
+            return false;
         }
     });
 }
