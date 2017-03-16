@@ -159,7 +159,7 @@ function failureLayout (media, failure_type, failure_url) {
 
 function setUp (site) {
     LOG('initialize: loading preferences')
-    chrome.storage.sync.get(['book', 'ebook', 'audiobook', 'openTabs'], function (p) {
+    chrome.storage.sync.get(['book', 'ebook', 'audiobook', 'openTabs', 'prefLang'], function (p) {
         resource = new Resource();
 
         if ((resource.title && resource.author) || resource.isbn) {
@@ -202,7 +202,7 @@ function Reference () {
     var base = 'https://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=';
     var oTitle = overdriveTitle(resource.title);
     var oAuthor = overdriveAuthor(resource.author);
-    var overdriveURL = 'https://dclibrary.overdrive.com/search/title?query=' + encodeURIComponent(oTitle) + '&creator=' + encodeURIComponent(oAuthor) + '&sortBy=relevance';
+    var overdriveURL = 'https://dclibrary.overdrive.com/search/title?query=' + encodeURIComponent(oTitle) + '&creator=' + encodeURIComponent(oAuthor) + '&language=' + preferences.prefLang +'&sortBy=relevance';
 
     this.book = {
         'search': [
@@ -318,18 +318,62 @@ function sirsiAvailability (data, media, urlIndex) {
 
 function overdriveAvailability (data, media) {
     try {
-        var item = $(data).find('.title-container.' + media)[0];
-        var availability = $(item).find('.copies-available')[0].innerText;
-
-        resource[media].available = parseInt(availability.match(/(\d+)/g)[0], 10);
-        resource[media].total = parseInt(availability.match(/(\d+)/g)[1], 10);
+    
+        // OverDrive availability is currently stored in a 'window.OverDrive.mediaItems' variable
+        // Change this value if OverDrive ever stores its availability data elsewhere
+        var overdriveVariable = "window.OverDrive.mediaItems";
+                
+        // OverDrive appears now to have result data in JSON within a <script> tag
+        parser = new DOMParser();
+        data = parser.parseFromString(data, "text/html");
+        
+        // Check each of the <script> tags for the JSON containing item availability
+        for (var i = 0; i < data.scripts.length; i++) {
+            if (data.scripts[i].textContent.indexOf(overdriveVariable) != -1) {
+                
+                // extract and parse JSON
+                results = overdriveJson($(data.scripts[i]).text(), overdriveVariable);
+                
+            }
+        }
+                
+        // check each of the results for this media type and save quantities if match
+        for (var mediaID in results) {
+        
+            // choose one that has copies available, if possible
+            if (results[mediaID]["type"]["id"] === media && (results[mediaID]["availableCopies"] >= results[mediaID]["ownedCopies"])) {
+                resource[media].available = results[mediaID]["availableCopies"]
+                resource[media].total = results[mediaID]["ownedCopies"]
+                var itemHREF = mediaID;
+            }
+        }
+        
+        // if we couldn't show one with copies available, choose whichever has the lowest hold ratio (# of people waiting per copy)
+        if (!resource[media].total) {
+        
+            i = 0;
+        
+            for (mediaID in results) {
+        
+                if (results[mediaID]["type"]["id"] === media && i === 0) {
+                    resource[media].available = results[mediaID]["availableCopies"]
+                    resource[media].total = results[mediaID]["ownedCopies"]
+                    holdRatio = results[mediaID]["holdsRatio"]
+                    var itemHREF = mediaID;
+                } else if (results[mediaID]["type"]["id"] === media && (results[mediaID]["holdsRatio"] < holdRatio)) {
+                    resource[media].available = results[mediaID]["availableCopies"]
+                    resource[media].total = results[mediaID]["ownedCopies"]
+                    holdRatio = results[mediaID]["holdsRatio"]
+                    itemHREF = mediaID;
+                }
+            }
+        }
 
         if (!resource[media].total) {
             throw RangeError;
         }
 
-        var itemHREF = $(item).find('.title-name > a:first-of-type')[0].getAttribute('href');
-        var itemURL = 'https://dclibrary.overdrive.com' + itemHREF;
+        var itemURL = 'https://dclibrary.overdrive.com/media/' + itemHREF;
 
         successLayout(media, itemURL);
         LOG(media + ': located in overdrive');
@@ -337,4 +381,18 @@ function overdriveAvailability (data, media) {
         LOG(media + ': not located in overdrive');
         failureLayout(media, 'not_located', reference[media].fail);
     }
+}
+
+
+function overdriveJson (data, overdriveVariable) {
+
+    var overdriveVariable = overdriveVariable + " =";
+    
+    // Extract the JSON string we want
+    var mediaItems = data.substring(data.search(overdriveVariable) + overdriveVariable.length, data.length);
+    mediaItems = mediaItems.substring(0, mediaItems.search("}};")+2);
+
+    result = JSON.parse(mediaItems);
+    
+    return result;
 }
