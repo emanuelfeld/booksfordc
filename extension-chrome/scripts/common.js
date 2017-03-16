@@ -159,7 +159,7 @@ function failureLayout (media, failure_type, failure_url) {
 
 function setUp (site) {
     LOG('initialize: loading preferences')
-    chrome.storage.sync.get(['book', 'ebook', 'audiobook', 'openTabs'], function (p) {
+    chrome.storage.sync.get(['book', 'ebook', 'audiobook', 'openTabs', 'prefLang'], function (p) {
         resource = new Resource();
 
         if ((resource.title && resource.author) || resource.isbn) {
@@ -202,7 +202,7 @@ function Reference () {
     var base = 'https://catalog.dclibrary.org/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=';
     var oTitle = overdriveTitle(resource.title);
     var oAuthor = overdriveAuthor(resource.author);
-    var overdriveURL = 'https://dclibrary.overdrive.com/search/title?query=' + encodeURIComponent(oTitle) + '&creator=' + encodeURIComponent(oAuthor) + '&sortBy=relevance';
+    var overdriveURL = 'https://dclibrary.overdrive.com/search/title?query=' + encodeURIComponent(oTitle) + '&creator=' + encodeURIComponent(oAuthor) + '&language=' + preferences.prefLang +'&sortBy=relevance';
 
     this.book = {
         'search': [
