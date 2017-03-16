@@ -5,7 +5,8 @@ function saveOptions(e) {
         'book': document.getElementById('bookCheck').checked,
         'ebook': document.getElementById('ebookCheck').checked,
         'audiobook': document.getElementById('audiobookCheck').checked,
-        'openTabs': document.getElementById('openTabs').value == "true"
+        'openTabs': document.getElementById('openTabs').value == "true",
+        'prefLang': document.getElementById('prefLang').value
     });
 
     var status = document.getElementById('status');
@@ -26,13 +27,14 @@ function restoreOptions() {
         document.getElementById('ebookCheck').checked = items.ebook;
         document.getElementById('audiobookCheck').checked = items.audiobook;
         document.getElementById('openTabs').value = items.openTabs || "false";
+        document.getElementById('prefLang').value = items.prefLang;
     }
 
       function onError(error) {
         console.log(`Error: ${error}`);
       }
 
-        var getting = browser.storage.local.get(['book', 'ebook', 'audiobook', 'openTabs']);
+        var getting = browser.storage.local.get(['book', 'ebook', 'audiobook', 'openTabs', 'prefLang']);
         getting.then(setCurrentChoice, onError);
 
 }
