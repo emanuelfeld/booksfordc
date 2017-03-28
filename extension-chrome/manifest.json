@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "booksfordc",
     "description": "See if books, ebooks, and audiobooks are available at the DC Public Library while browsing Amazon, Goodreads, or Barnes & Noble.",
-    "version": "1.2.3",
+    "version": "1.3.2",
     "author": "Emanuel Feld",
     "homepage_url": "http://booksfordc.org",
     "options_ui": {
@@ -24,9 +24,6 @@
         "css/booksfordc.css",
         "scripts/options.js",
         "scripts/common.js",
-        "scripts/amazon.js",
-        "scripts/bn.js",
-        "scripts/goodreads.js",
         "assets/ajax-loader.gif",
         "assets/icon16white.png",
         "options.html"
@@ -38,40 +35,13 @@
             ],
             "js": [
                 "scripts/jquery.min.js",
-                "scripts/common.js",
-                "scripts/goodreads.js"
+                "scripts/common.js"
             ],
             "matches": [
                 "http://*.goodreads.com/book/show/*",
-                "https://*.goodreads.com/book/show/*"
-            ],
-            "run_at": "document_end"
-        },
-        {
-            "css": [
-                "css/booksfordc.css"
-            ],
-            "js": [
-                "scripts/jquery.min.js",
-                "scripts/common.js",
-                "scripts/bn.js"
-            ],
-            "matches": [
+                "https://*.goodreads.com/book/show/*",
                 "http://*.barnesandnoble.com/w/*",
-                "https://*.barnesandnoble.com/w/*"
-            ],
-            "run_at": "document_end"
-        },
-        {
-            "css": [
-                "css/booksfordc.css"
-            ],
-            "js": [
-                "scripts/jquery.min.js",
-                "scripts/common.js",
-                "scripts/amazon.js"
-            ],
-            "matches": [
+                "https://*.barnesandnoble.com/w/*",
                 "http://*.amazon.com/*",
                 "https://*.amazon.com/*"
             ],
