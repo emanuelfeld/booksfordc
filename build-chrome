@@ -1,0 +1,17 @@
+#!/bin/bash
+
+chrome_dir="extension-chrome"
+
+cp -r extension-chrome extension-chrome-production
+
+script_dir="$chrome_dir-production/scripts"
+
+for file in $script_dir/*.js; do
+    filename=${file##*/}
+    grep -v "console.log" < "$script_dir/$filename" > "$script_dir/tmp_$filename"
+    mv "$script_dir/tmp_$filename" "$file"
+done
+
+zip $chrome_dir-production $chrome_dir-production
+
+rm -rf $chrome_dir-production
