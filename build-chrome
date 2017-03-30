@@ -2,7 +2,9 @@
 
 chrome_dir="extension-chrome"
 
-cp -r extension-chrome extension-chrome-production
+rm -rf $chrome_dir-production || true
+
+cp -r $chrome_dir $chrome_dir-production
 
 script_dir="$chrome_dir-production/scripts"
 
@@ -12,6 +14,4 @@ for file in $script_dir/*.js; do
     mv "$script_dir/tmp_$filename" "$file"
 done
 
-zip $chrome_dir-production $chrome_dir-production
-
-rm -rf $chrome_dir-production
+zip -r $chrome_dir-production $chrome_dir-production

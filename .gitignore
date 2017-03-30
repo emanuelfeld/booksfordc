@@ -61,3 +61,7 @@ target/
 setup_env.sh
 
 *.crx
+
+# Production builds
+
+*-production/
