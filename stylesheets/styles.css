@@ -168,7 +168,7 @@ header ul a strong {
 
 section {
   width:500px;
-  padding:50px auto 50px auto;
+  padding:20px;
   margin:0 auto;
 }
 
@@ -273,10 +273,34 @@ a.title:hover {
   border-radius: 5px;
   border: solid 3px #BF1E24;
   padding: 10px;
-  margin-bottom: 20px;
+  margin: 0 -10px 20px -10px;
   -webkit-box-shadow: 0px 0px 18px 8px rgba(0,0,0,0.08);
   -moz-box-shadow: 0px 0px 18px 8px rgba(0,0,0,0.08);
   box-shadow: 0px 0px 18px 8px rgba(0,0,0,0.08);
+}
+
+.contribute-amount-wrapper {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.contribute-frequency-wrapper {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.contribute-amount {
+  margin-right: 10px;
+}
+
+.contribute-amount-input {
+  width: 90px;
+  font-size: 16px;
+}
+
+div.option input[type=radio] {
+  margin-right: 5px;
+  margin-left: 10px;
 }
 
 .button {
