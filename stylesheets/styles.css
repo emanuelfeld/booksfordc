@@ -293,7 +293,7 @@ a.title:hover {
   margin-right: 10px;
 }
 
-.contribute-amount-input {
+#contribute-amount-input {
   width: 90px;
   font-size: 16px;
 }
