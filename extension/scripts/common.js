@@ -1,20 +1,46 @@
 (function () {
   'use strict'
+  
+  // Check browser type 
+  if (!!window.chrome) {
+    window.browser = window.chrome
+  } else {
+    window.browser = browser
+  }
 
-  chrome.storage.sync.get(['book', 'ebook', 'audiobook', 'openTabs'], function (settings) {
-    let extension = new Extension(settings)
+  console.log(`SETUP: using {{browserType}}`)
 
-    extension.validatePage()
+  // Determine if storage.sync is enabled and then run
+  window.browser.storage.sync.get(['testSync'], function (res) {
+    let browserStorage
 
-    if (extension.page.onBookPage) {
-      extension.page.initializeLayout()
-      extension.listenForOptionsClick()
-      if (extension.mediaTypes.length) {
-        let request = extension.page.getDetails()
-        extension.run(request)        
-      }
+    try {
+      let syncEnabled = res.testSync
+      browserStorage = window.browser.storage.sync
+      console.log(`SETUP: using storage sync`)
+    } catch (e) {
+      browserStorage = window.browser.storage.local
+      console.log(`SETUP: using storage local`)
     }
+
+    run(browserStorage)
   })
+
+  var run = function (browserStorage) {
+    browserStorage.get(['book', 'ebook', 'audiobook', 'openTabs'], function (settings) {
+      let extension = new Extension(settings)
+      extension.validatePage()
+
+      if (extension.page.onBookPage) {
+        extension.page.initializeLayout()
+        extension.listenForOptionsClick()
+        if (extension.mediaTypes.length) {
+          let request = extension.page.getDetails()
+          extension.run(request)        
+        }
+      }
+    })    
+  }
 
   var Extension = function (settings) {
     this.settings = settings
@@ -28,7 +54,7 @@
     // Open Books for DC options page
     listenForOptionsClick: function () {
       $('.bfdc-options').click(function () {
-        chrome.runtime.sendMessage({'options': true})
+        window.browser.runtime.sendMessage({'options': true})
       })
     },
 
@@ -212,7 +238,7 @@
 
     // Inject the plugin's initial content into the book page
     initializeLayout: function () {
-      let iconURL = chrome.extension.getURL('assets/icon16white.png')
+      let iconURL = window.browser.extension.getURL('assets/icon16white.png')
       let pluginBox = `<div id='bfdc-${this.extension.site}' class='bfdc-container'>
                          <div class='bfdc-icon'>
                            <a class='bfdc-options'>
@@ -221,7 +247,7 @@
                          </div>
                          <div class='bfdc-availability'>
                             <div class='bfdc-title'>
-                                <a href = 'http://booksfordc.org?utm_source=chrome&utm_campaign=${this.extension.site}' target='_blank'>
+                                <a href = 'http://booksfordc.org?utm_source={{browserType}}&utm_campaign=${this.extension.site}' target='_blank'>
                                   booksfordc
                                 </a>
                             </div>
@@ -233,7 +259,7 @@
 
       // Require that the user check at least one media type
       if (this.extension.mediaTypes.length) {
-        let loaderGifUrl = chrome.extension.getURL('assets/ajax-loader.gif')
+        let loaderGifUrl = window.browser.extension.getURL('assets/ajax-loader.gif')
 
         // Insert a placeholder div for each media type
         this.extension.mediaTypes.forEach(function (mediaType) {

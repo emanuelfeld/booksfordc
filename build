@@ -1,0 +1,50 @@
+#!/bin/bash
+
+status='production'
+
+for i in "$@"
+do
+case $i in
+    -p|--production)
+    status="production"
+    shift
+    ;;
+    -d|--development)
+    status="development"
+    shift
+    ;;
+    *)
+
+    ;;
+esac
+done
+
+
+function run {
+    echo $1 $2
+    main_dir="extension"
+    new_dir=$main_dir-$1-$2 
+
+    rm -rf $new_dir || true
+
+    cp -r $main_dir $new_dir
+
+    sed -i '' "s/{{browserType}}/$1/g" $new_dir/scripts/*
+    sed -i '' "s/{{browserType}}/$1/g" $new_dir/*.html
+
+    if [ $2 == "production" ]; then
+        script_dir="$new_dir/scripts"
+
+        for file in $script_dir/*.js; do
+            filename=${file##*/}
+            grep -v "console.log" < "$script_dir/$filename" > "$script_dir/tmp_$filename"
+            mv "$script_dir/tmp_$filename" "$file"
+        done
+
+        zip -r $new_dir $new_dir
+        rm -rf $new_dir
+    fi
+}
+
+run "chrome" "$status"
+run "firefox" "$status"

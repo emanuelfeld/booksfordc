@@ -65,3 +65,4 @@ setup_env.sh
 # Production builds
 
 *-production/
+*-development/
