@@ -283,7 +283,12 @@
             </div>
             <div class='bfdc-media bfdc-footer'>
               <a class='bfdc-options'>
-                options & support
+                options
+              </a>
+            </div>
+            <div class='bfdc-media bfdc-footer'>
+              <a href='https://booksfordc.herokuapp.com/contribute?utm_source={{browserType}}&utm_campaign=${this.extension.site}' target='_blank'>
+                donate
               </a>
             </div>`
         )
