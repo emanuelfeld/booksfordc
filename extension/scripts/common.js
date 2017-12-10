@@ -172,7 +172,7 @@
     } else if (data.getElementById('no_results_wrapper')) {
       return false
     } else {
-      this.status = 'uncertain'
+      this.status = 'maybe found'
       return false
     }
   }
@@ -296,7 +296,7 @@
         $('.bfdc-title:eq(0)').after(
           `<div class='bfdc-media'>
             <a class='bfdc-options'>
-              click here to set your search preferences
+              click here to set your search preferences and then reload this window
             </a>
           </div>`
         )
