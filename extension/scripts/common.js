@@ -247,7 +247,7 @@
                          </div>
                          <div class='bfdc-availability'>
                             <div class='bfdc-title'>
-                                <a href = 'http://booksfordc.org?utm_source={{browserType}}&utm_campaign=${this.extension.site}' target='_blank'>
+                                <a href = 'https://booksfordc.org?utm_source={{browserType}}&utm_campaign=${this.extension.site}' target='_blank'>
                                   booksfordc
                                 </a>
                             </div>

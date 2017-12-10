@@ -21,8 +21,15 @@
     var version = window.browser.runtime.getManifest().version
     if (details.reason === 'install') {
       window.browser.tabs.create({
-        'url': `http://booksfordc.org/welcome-{{browserType}}?utm_source={{browserType}}&utm_campaign=install&version=` + version
+        'url': `https://booksfordc.org/welcome-{{browserType}}?utm_source={{browserType}}&utm_campaign=install&version=` + version
       })
+      window.browser.tabs.create({
+        'url': `https://booksfordc.org/update?utm_source={{browserType}}&utm_campaign=update&version=` + version
+      })      
+    } else if (details.reason === 'update') {
+      window.browser.tabs.create({
+        'url': `https://booksfordc.org/update?utm_source={{browserType}}&utm_campaign=update&version=` + version
+      })      
     }
   })
 
