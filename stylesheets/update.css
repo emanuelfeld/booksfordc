@@ -1,0 +1,32 @@
+section {
+  width: 750px;
+  max-width: 100%;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+div.tote-text {
+  width: 500px;
+  margin-right: 50px;
+  max-width: 100%;
+  float: left;
+  overflow: auto;
+}
+
+@media print, screen and (max-width:750px) {
+  div.tote-text {
+    width: 450px;
+    max-width: 100%;
+    float: left;
+    overflow: auto;
+  }
+}
+
+@media print, screen and (max-width:700px) {
+  div.tote-text {
+    width: 100%;
+    max-width: 100%;
+    float: left;
+    overflow: auto;
+  }
+}
