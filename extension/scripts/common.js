@@ -158,6 +158,7 @@
     } else {
       let self = this
       $.get(this.baseUrl + availabilityURL[1], function (data) {
+        console.log(data)
         self.copies = parseInt(data.match(/"copyCount" : "(\d+)"/)[1], 10)
         self.available = parseInt(data.match(/"availableCount" : "(\d+)"/)[1], 10)
         self.status = 'found'
@@ -237,7 +238,7 @@
                          <div class='bfdc-availability'>
                             <div class='bfdc-title'>
                                 <a href = 'https://booksfordc.org?utm_source={{browserType}}&utm_campaign=${this.extension.site}' target='_blank'>
-                                  booksfordc
+                                  Books for DC
                                 </a>
                             </div>
                          </div>
@@ -372,7 +373,7 @@
     }
 
     let amazonMediaCategory = $('#nav-subnav').attr('data-category').toLowerCase()
-    let isBookPage = ['books', 'book', 'digital-text', 'digital-texts'].indexOf(amazonMediaCategory) > -1
+    let isBookPage = ['books', 'book', 'digital-text', 'digital-texts', 'audible'].indexOf(amazonMediaCategory) > -1
 
     if (!isBookPage) {
       return false
@@ -398,6 +399,7 @@
   AmazonBookPage.prototype.getTitle = function () {
     let title = $('#productTitle').text() ||
                 $('#ebookProductTitle').text() ||
+                $('#ebooksProductTitle').text() ||
                 $('#btAsinTitle').text() || ''
 
     return title
@@ -446,9 +448,9 @@
   // Barnes and Noble Page subclass
 
   var BNPage = function (extension) {
-    if ($('.format-content').length) {
+    if ($('#commerce-zone').length) {
       this.extension = extension
-      this.container = $('.format-content')
+      this.container = $('#commerce-zone')
       this.onBookPage = true
     }
   }
@@ -456,7 +458,7 @@
   BNPage.prototype = new Page()
 
   BNPage.prototype.getTitle = function () {
-    return $('#prodSummary h1').text() || ''
+    return $('#pdp-header-info h1').text() || ''
   }
 
   BNPage.prototype.getAuthor = function () {
@@ -464,7 +466,7 @@
   }
 
   BNPage.prototype.getISBN = function () {
-    let isbn13 = $('#ProductDetailsTab dd:first').text() || ''
+    let isbn13 = $('#ProductDetailsTab td:first').text() || ''
     let isbn = isbn13.replace(/\D/g, '')
     return isbn
   }
