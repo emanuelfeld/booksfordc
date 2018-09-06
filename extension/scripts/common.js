@@ -1,8 +1,8 @@
 (function () {
   'use strict'
-  
-  // Check browser type 
-  if (!!window.chrome) {
+
+  // Check browser type
+  if (window.chrome) {
     window.browser = window.chrome
   } else {
     window.browser = browser
@@ -36,10 +36,10 @@
         extension.listenForOptionsClick()
         if (extension.mediaTypes.length) {
           let request = extension.page.getDetails()
-          extension.run(request)        
+          extension.run(request)
         }
       }
-    })    
+    })
   }
 
   var Extension = function (settings) {
@@ -105,21 +105,16 @@
     // Check search URLs (ISBN, title/author) until match found or no more URLs
     search: function () {
       let self = this
+      console.log(self.searchUrls)
       let url = self.searchUrls.shift()
 
       if (url) {
         $.get(url, function (data) {
           self.url = url
-          if (self.parseAvailability(data)) {
-            self.page.updateLayout(self.extension, self)
-            return true
-          } else {
-            self.search()
-          }
+          self.parseAvailability(data)
         })
       } else {
         self.page.updateLayout(self.extension, self)
-        return false
       }
     },
 
@@ -140,40 +135,34 @@
     this.extension = extension
     this.page = extension.page
     this.mediaType = 'book'
-    this.baseUrl = 'https://catalog.dclibrary.org/'
+    this.baseUrl = 'https://catalog.dclibrary.org'
     this.searchUrls = [
-      this.baseUrl + 'client/en_US/dcpl/search/results?ln=en_US&rt=&qu=' + request.isbn + '&te=&lm=BOOKS',
-      this.baseUrl + 'client/en_US/dcpl/search/results?ln=en_US&rt=&qu=' + encodeURIComponent(request.title + ' ' + request.author).replace(/'/g, '%27') + '&qu=-%22sound+recording%22&te=&lm=BOOKS'
+      this.baseUrl + '/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=' + request.isbn + '&te=&lm=BOOKS',
+      this.baseUrl + '/client/en_US/dcpl/search/results?ln=en_US&rt=&qu=' + encodeURIComponent(request.title + ' ' + request.author).replace(/'/g, '%27') + '&qu=-%22sound+recording%22&te=&lm=BOOKS'
     ]
   }
 
   SirsiCatalog.prototype = new Catalog()
 
   SirsiCatalog.prototype.parseAvailability = function (data) {
+    let availabilityURL = data.match("url: '(.*ajax:lookupavailability.*)\\?")
+
     let parser = new window.DOMParser()
     data = parser.parseFromString(data, 'text/html')
 
-    let scripts = data.scripts
-    let availabilityData
-
-    for (let i = 0; i < scripts.length; i++) {
-      if (scripts[i].textContent.indexOf('parseDetailAvailabilityJSON') > -1) {
-        let results = data.scripts[i].textContent
-        availabilityData = JSON.parse(results.split('parseDetailAvailabilityJSON(')[1].split(')')[0])
-        break
-      }
-    }
-
-    if (availabilityData) {
-      this.copies = parseInt(availabilityData.copies[0].match(/(\d+)$/)[1], 10)
-      this.available = parseInt(availabilityData.totalAvailable.toString(), 10)
-      this.status = 'found'
-      return true
-    } else if (data.getElementById('no_results_wrapper')) {
-      return false
-    } else {
+    if (data.getElementById('no_results_wrapper')) {
+      this.search()
+    } else if (data.getElementById('results_wrapper')) {
       this.status = 'maybe found'
-      return false
+      this.search()
+    } else {
+      let self = this
+      $.get(this.baseUrl + availabilityURL[1], function (data) {
+        self.copies = parseInt(data.match(/"copyCount" : "(\d+)"/)[1], 10)
+        self.available = parseInt(data.match(/"availableCount" : "(\d+)"/)[1], 10)
+        self.status = 'found'
+        self.page.updateLayout(self.extension, self)
+      })
     }
   }
 
@@ -211,10 +200,10 @@
       this.copies = parseInt(availabilityData.ownedCopies, 10)
       this.available = parseInt(availabilityData.availableCopies, 10)
       this.status = 'found'
-      return true
+      this.page.updateLayout(this.extension, this)
     } else {
       this.url = this.baseUrl
-      return false
+      this.search()
     }
   }
 

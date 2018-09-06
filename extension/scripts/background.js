@@ -24,11 +24,11 @@
         'url': `https://booksfordc.org/welcome-{{browserType}}?utm_source={{browserType}}&utm_campaign=install&version=` + version
       })
       window.browser.tabs.create({
-        'url': `https://booksfordc.org/update?utm_source={{browserType}}&utm_campaign=update&version=` + version
+        'url': `https://booksfordc.org/update-1-3-6?utm_source={{browserType}}&utm_campaign=update&version=` + version
       })      
     } else if (details.reason === 'update') {
       window.browser.tabs.create({
-        'url': `https://booksfordc.org/update?utm_source={{browserType}}&utm_campaign=update&version=` + version
+        'url': `https://booksfordc.org/update-1-3-6?utm_source={{browserType}}&utm_campaign=update&version=` + version
       })      
     }
   })
